@@ -113,20 +113,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+// ... (kode lainnya tetap sama) ...
+
     function rollDice() {
         new Audio('sounds/kocok-dadu.mp3').play();
         lastDiceRoll = 0; // Reset
         let rollCount = 0;
+        
+        // Ganti class 'shake' (jika masih ada) dengan 'spinning'
+        diceImg.classList.add('spinning'); 
+
         const rollInterval = setInterval(() => {
             const randomResult = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${randomResult}.png`;
             rollCount++;
             if (rollCount > 10) {
                 clearInterval(rollInterval);
+                
+                // Hapus class 'spinning' setelah animasi selesai
+                diceImg.classList.remove('spinning'); 
+                
                 finishRoll(randomResult);
             }
         }, 100);
     }
+
+// ... (kode lainnya tetap sama) ...
     
     function finishRoll(result) {
         lastDiceRoll = result;
