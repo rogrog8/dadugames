@@ -6,6 +6,7 @@
     --shadow-light: #ffffff;
     --shadow-dark: #a3b1c6;
     --text-primary: #3d4a5e;
+    --text-secondary: #6c757d;
     --accent-blue: #007bff;
     --accent-green: #28a745;
     --accent-red: #dc3545;
@@ -27,8 +28,8 @@ body {
 
 .container {
     background: var(--base-color);
-    padding: clamp(20px, 5vw, 40px); /* Padding responsif */
-    border-radius: 30px; /* Sudut lebih melengkung */
+    padding: clamp(20px, 5vw, 40px);
+    border-radius: 30px;
     box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light);
     text-align: center;
     width: 100%;
@@ -41,19 +42,23 @@ body {
 
 h1 {
     font-weight: 700;
-    font-size: clamp(1.5rem, 4vw, 2rem); /* Ukuran font responsif */
+    font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
-/* --- ANIMASI DADU --- */
+/* --- ANIMASI --- */
 @keyframes spin-animation {
     from { transform: rotate(0deg) scale(1); }
-    to { transform: rotate(360deg) scale(1.1); } /* Tambahkan scale untuk efek pop */
+    to { transform: rotate(360deg) scale(1.1); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 .spinning {
     animation: spin-animation 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* --- TOMBOL GAYA NEUMORPHISM (DISEMPURNAKAN) --- */
+/* --- TOMBOL GAYA NEUMORPHISM --- */
 .neumorphic-button {
     border-radius: 12px;
     border: none;
@@ -79,12 +84,12 @@ h1 {
     box-shadow: inset 3px 3px 7px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);
 }
 
-/* Penerapan gaya ke tombol spesifik */
+/* Penerapan gaya ke tombol spesifik (dengan warna dari variabel) */
 .level-icon { width: 80px; height: 80px; font-size: 2.2em; color: var(--accent-green); }
-.level-icon.locked { color: #8899a6; box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light); }
+.level-icon.locked { color: var(--text-secondary); box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light); }
 #roll-button { padding: 15px 30px; font-size: 18px; color: var(--accent-blue); }
 #restart-button { padding: 15px 30px; font-size: 18px; color: var(--accent-yellow); }
-#back-to-map-button { padding: 5px 10px; color: #6c757d; font-size: 0.9em; }
+#back-to-map-button { padding: 5px 10px; color: var(--text-secondary); font-size: 0.9em; }
 .option-button { padding: 12px 10px; font-size: 1em; color: var(--accent-blue); }
 
 .option-button.correct { box-shadow: inset 5px 5px 10px #1e7e34, inset -5px -5px 10px #32d056; color: var(--accent-green); }
@@ -107,10 +112,14 @@ h1 {
     font-size: 3em;
     color: var(--base-color);
     user-select: none;
-    background: linear-gradient(145deg, #1565c0, #007bff); /* Gradient biru yang lebih hidup */
+    background: linear-gradient(145deg, #1565c0, #007bff);
     box-shadow: 5px 5px 15px var(--shadow-dark), -5px -5px 15px var(--shadow-light);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+/* Efek hover baru untuk kotak misteri */
+.mystery-box:not(.completed):hover {
+    transform: translateY(-5px);
 }
 .mystery-box.completed {
     background: linear-gradient(145deg, #1e7e34, #28a745);
@@ -122,8 +131,14 @@ h1 {
     transform: scale(1.05);
 }
 .dice-area { display: flex; flex-direction: column; align-items: center; gap: 15px; }
-#dice-img { width: 80px; height: 80px; filter: drop-shadow(5px 5px 5px var(--shadow-dark)); /* Tambah bayangan pada dadu */ }
-#info-text { font-size: 1.1em; font-weight: 600; color: #0d47a1; min-height: 25px; transition: color 0.3s ease; }
+#dice-img { width: 80px; height: 80px; filter: drop-shadow(5px 5px 5px var(--shadow-dark)); }
+#info-text {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #0d47a1;
+    min-height: 25px;
+    animation: fadeIn 0.5s ease; /* Animasi fade-in saat teks berubah */
+}
 
 /* --- POP-UP SOAL (MODAL) --- */
 #question-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
@@ -131,7 +146,7 @@ h1 {
 .modal-content { background: var(--base-color); padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; text-align: center; box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light); transform: scale(0.9); transition: transform 0.3s ease; }
 #question-modal.visible .modal-content { transform: scale(1); }
 #question-text { color: #1a237e; font-size: 1.3em; line-height: 1.4; font-weight: 500;}
-#timer-container { width: 100%; height: 10px; border-radius: 5px; margin: 15px 0 25px 0; overflow: hidden; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);}
+#timer-container { width: 100%; height: 10px; border-radius: 5px; margin: 15px 0 25px 0; overflow: hidden; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);}
 #timer-bar { height: 100%; width: 100%; background: var(--accent-green); border-radius: 5px; transition: width 0.5s linear; }
 .options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 #result-text { font-weight: 700; font-size: 1.1em; margin-top: 25px; min-height: 28px; }
