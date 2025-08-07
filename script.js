@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastDiceRoll = 0;
     let currentQuestion = {};
     let timer;
+    let isRolling = false; // **PENYEMPURNAAN 1: Tambahkan state untuk mencegah klik saat dadu berputar**
     const TIME_LIMIT = 10;
     
     // === INISIALISASI GAME ===
@@ -36,11 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadQuestions() {
         try {
             const response = await fetch('database.json');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             questions = await response.json();
         } catch (error) {
             console.error("Gagal memuat soal:", error);
-            // Tampilkan pesan error di layar utama jika database gagal dimuat
-            levelMap.innerHTML = "<p>Gagal memuat data permainan. Silakan coba lagi nanti.</p>";
+            levelMap.innerHTML = "<p>Gagal memuat data permainan. Pastikan file database.json ada dan formatnya benar.</p>";
         }
     }
 
@@ -66,6 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderLevelMap() {
         levelMap.innerHTML = '';
         const totalLevels = Object.keys(questions).length;
+        // **PENYEMPURNAAN 2: Handle jika tidak ada level sama sekali**
+        if (totalLevels === 0 && levelMap.textContent.includes('Gagal')) {
+            return; // Jangan tampilkan apa-apa jika database gagal dimuat
+        }
         for (let i = 1; i <= totalLevels; i++) {
             const icon = document.createElement('button');
             icon.classList.add('neumorphic-button', 'level-icon');
@@ -112,10 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function rollDice() {
+        if (isRolling) return; // Mencegah klik ganda
+        isRolling = true; // Set status menjadi sedang berputar
         new Audio('sounds/kocok-dadu.mp3').play();
         lastDiceRoll = 0; 
         infoText.textContent = 'Mengocok...';
-        rollButton.disabled = true; // Nonaktifkan tombol selama animasi
+        rollButton.disabled = true;
         diceImg.classList.add('spinning');
         
         setTimeout(() => {
@@ -127,8 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function finishRoll(result) {
-        lastDiceRoll = result; // Simpan hasil dadu
-        rollButton.disabled = false; // Aktifkan kembali tombol setelah animasi selesai
+        lastDiceRoll = result;
+        rollButton.disabled = false;
+        isRolling = false; // Selesai berputar
         document.querySelectorAll('.mystery-box').forEach(b => b.classList.remove('highlight'));
         
         if (completedBoxes[lastDiceRoll - 1]) {
@@ -141,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleBoxClick(boxId) {
+        if (isRolling) return; // Mencegah klik kotak saat dadu berputar
         if (lastDiceRoll === 0) {
             infoText.textContent = 'Anda harus mengocok dadu terlebih dahulu!';
             return;
@@ -226,9 +235,9 @@ document.addEventListener('DOMContentLoaded', () => {
         new Audio('sounds/naik-level.mp3').play();
         infoText.textContent = `Selamat! Anda telah menyelesaikan Level ${currentLevel}!`;
         rollButton.disabled = true;
-        if (currentLevel === unlockedLevel) {
-            unlockedLevel++;
-            localStorage.setItem('unlockedLevel', unlockedLevel);
+        if (currentLevel === unlockedLevel && questions[`level${currentLevel + 1}`]) {
+             unlockedLevel++;
+             localStorage.setItem('unlockedLevel', unlockedLevel);
         }
         setTimeout(showLevelSelect, 3000);
     }
