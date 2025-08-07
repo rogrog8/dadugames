@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('database.json');
             if (!response.ok) throw new Error(`Gagal mengambil data: ${response.statusText}`);
             questions = await response.json();
-            // Inisialisasi daftar soal yang tersedia untuk level 1
             resetAvailableQuestionsForLevel(1); 
             rollButton.disabled = false;
         } catch (error) {
@@ -48,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (levelData) {
             availableQuestions = JSON.parse(JSON.stringify(levelData));
         } else {
-            // Handle jika soal untuk level selanjutnya tidak ada (tamat)
             availableQuestions = {};
         }
     }
@@ -76,23 +74,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. Menampilkan soal berdasarkan LEVEL dan angka dadu
     function displayQuestion(diceNumber) {
-        // Jika soal untuk level saat ini sudah habis, reset
+        const currentLevelKey = `level${currentLevel}`;
+        
+        // Cek apakah level ada di database
+        if (!questions[currentLevelKey]) {
+            questionText.textContent = `Selamat! Anda telah menamatkan semua level!`;
+            optionsContainer.innerHTML = '';
+            questionArea.style.display = 'block';
+            rollButton.disabled = true; // Nonaktifkan tombol karena game tamat
+            return;
+        }
+
         if (!availableQuestions[diceNumber] || availableQuestions[diceNumber].length === 0) {
-            const levelData = questions[`level${currentLevel}`];
-            if(levelData && levelData[diceNumber]) {
-                availableQuestions[diceNumber] = [...levelData[diceNumber]];
-            }
+            availableQuestions[diceNumber] = [...questions[currentLevelKey][diceNumber]];
         }
         
         const questionList = availableQuestions[diceNumber];
-
-        if (!questionList || questionList.length === 0) {
-            // Handle jika tidak ada soal (misalnya level terakhir sudah tamat)
-            questionText.textContent = `Selamat! Anda telah menyelesaikan semua soal di Level ${currentLevel}!`;
-            optionsContainer.innerHTML = '';
-            questionArea.style.display = 'block';
-            return;
-        }
 
         const randomIndex = Math.floor(Math.random() * questionList.length);
         currentQuestion = questionList.splice(randomIndex, 1)[0];
@@ -115,11 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. Fungsi baru untuk menangani proses NAIK LEVEL
     function levelUp() {
         currentLevel++;
-        scoreToNextLevel *= 2; // Target skor untuk level berikutnya digandakan
+        scoreToNextLevel *= 2; 
         resultText.textContent = `🎉 SELAMAT, ANDA NAIK KE LEVEL ${currentLevel}! 🎉`;
-        resultText.className = 'correct'; // Pakai style warna hijau
-        resetAvailableQuestionsForLevel(currentLevel); // Siapkan soal untuk level baru
-        updateStatsDisplay(); // Perbarui tampilan level di layar
+        resultText.className = 'correct';
+        resetAvailableQuestionsForLevel(currentLevel); 
+        updateStatsDisplay();
     }
 
     // 7. Memeriksa jawaban, menambahkan SKOR, dan cek NAIK LEVEL
@@ -135,11 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (isCorrect) {
-            score += POINTS_PER_CORRECT_ANSWER; // Tambah skor
-            updateStatsDisplay(); // Perbarui tampilan skor
+            score += POINTS_PER_CORRECT_ANSWER;
+            updateStatsDisplay();
 
             if (score >= scoreToNextLevel) {
-                levelUp(); // Cek jika skor cukup untuk naik level
+                levelUp();
             } else {
                 resultText.textContent = 'Jawaban Anda benar! 🎉';
                 resultText.className = 'correct';
@@ -150,15 +147,18 @@ document.addEventListener('DOMContentLoaded', () => {
             resultText.textContent = 'Jawaban Anda salah.';
             resultText.className = 'incorrect';
         }
-
-        // Aktifkan kembali tombol kocok setelah jeda singkat
+        
         setTimeout(() => {
-            rollButton.disabled = false;
+            // Cek apakah game sudah tamat sebelum mengaktifkan tombol lagi
+            if(questions[`level${currentLevel}`]) {
+                 rollButton.disabled = false;
+            }
         }, 2000);
     }
 
     // --- EVENT LISTENERS ---
     rollButton.disabled = true;
-    loadQuestions(); // Mulai game
+    loadQuestions();
+    updateStatsDisplay(); // <-- PERBAIKAN DITAMBAHKAN DI SINI
     rollButton.addEventListener('click', rollDice);
 });
