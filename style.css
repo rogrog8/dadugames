@@ -1,139 +1,234 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+document.addEventListener('DOMContentLoaded', () => {
+    // === PEMILIHAN ELEMEN ===
+    const levelSelectScreen = document.getElementById('level-select-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const questionModal = document.getElementById('question-modal');
+    const levelMap = document.getElementById('level-map');
+    const levelTitle = document.getElementById('level-title');
+    const backToMapButton = document.getElementById('back-to-map-button');
+    const mysteryBoxesContainer = document.getElementById('mystery-boxes-container');
+    const diceImg = document.getElementById('dice-img');
+    const rollButton = document.getElementById('roll-button');
+    const infoText = document.getElementById('info-text');
+    const questionText = document.getElementById('question-text');
+    const timerBar = document.getElementById('timer-bar');
+    const optionsContainer = document.getElementById('options-container');
+    const resultText = document.getElementById('result-text');
 
-/* --- PENGATURAN DASAR & LATAR BELAKANG --- */
-:root {
-    --base-color: #e0e5ec;
-    --shadow-light: #ffffff;
-    --shadow-dark: #a3b1c6;
-    --text-primary: #3d4a5e;
-    --accent-blue: #007bff;
-    --accent-green: #28a745;
-    --accent-red: #dc3545;
-    --accent-yellow: #ffc107;
-}
+    // === STATE PERMAINAN ===
+    let questions = {};
+    let unlockedLevel = 1;
+    let currentLevel = 1;
+    let levelQuestions = [];
+    let completedBoxes = [];
+    let lastDiceRoll = 0;
+    let currentQuestion = {};
+    let timer;
+    const TIME_LIMIT = 10;
+    
+    // === INISIALISASI GAME ===
+    async function initGame() {
+        await loadQuestions();
+        loadProgress();
+        showLevelSelect();
+    }
+    
+    async function loadQuestions() {
+        try {
+            const response = await fetch('database.json');
+            questions = await response.json();
+        } catch (error) {
+            console.error("Gagal memuat soal:", error);
+        }
+    }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: var(--base-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 15px;
-    box-sizing: border-box;
-    color: var(--text-primary);
-}
+    function loadProgress() {
+        const savedProgress = localStorage.getItem('unlockedLevel');
+        unlockedLevel = savedProgress ? parseInt(savedProgress, 10) : 1;
+    }
 
-.container {
-    background: var(--base-color);
-    padding: clamp(20px, 5vw, 40px); /* Padding responsif */
-    border-radius: 30px; /* Sudut lebih melengkung */
-    box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light);
-    text-align: center;
-    width: 100%;
-    max-width: 600px;
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+    // === NAVIGASI LAYAR ===
+    function showLevelSelect() {
+        levelSelectScreen.style.display = 'block';
+        gameScreen.style.display = 'none';
+        questionModal.classList.remove('visible');
+        renderLevelMap();
+    }
 
-h1 {
-    font-weight: 700;
-    font-size: clamp(1.5rem, 4vw, 2rem); /* Ukuran font responsif */
-}
+    function showGameScreen() {
+        levelSelectScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
+    }
+    
+    // === LOGIKA PETA LEVEL ===
+    function renderLevelMap() {
+        levelMap.innerHTML = '';
+        const totalLevels = Object.keys(questions).length;
+        for (let i = 1; i <= totalLevels; i++) {
+            const icon = document.createElement('button');
+            icon.classList.add('neumorphic-button', 'level-icon');
+            icon.dataset.level = i;
+            icon.textContent = i;
+            if (i <= unlockedLevel) {
+                icon.classList.add('unlocked');
+                icon.addEventListener('click', () => startGame(i));
+            } else {
+                icon.classList.add('locked');
+            }
+            levelMap.appendChild(icon);
+        }
+    }
 
-/* --- ANIMASI DADU --- */
-@keyframes spin-animation {
-    from { transform: rotate(0deg) scale(1); }
-    to { transform: rotate(360deg) scale(1.1); } /* Tambahkan scale untuk efek pop */
-}
-.spinning {
-    animation: spin-animation 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
+    // === LOGIKA PERMAINAN ===
+    function startGame(levelNumber) {
+        currentLevel = levelNumber;
+        levelTitle.textContent = `Level ${currentLevel}`;
+        levelQuestions = [...questions[`level${currentLevel}`]];
+        completedBoxes = [false, false, false, false, false, false];
+        lastDiceRoll = 0;
+        infoText.textContent = 'Kocok dadu untuk memulai!';
+        rollButton.disabled = false;
+        renderMysteryBoxes();
+        showGameScreen();
+    }
 
-/* --- TOMBOL GAYA NEUMORPHISM (DISEMPURNAKAN) --- */
-.neumorphic-button {
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.15s ease-in-out;
-    background: var(--base-color);
-    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
-    color: var(--text-primary);
-}
-.neumorphic-button:hover:not(:disabled) {
-    box-shadow: 7px 7px 12px var(--shadow-dark), -7px -7px 12px var(--shadow-light);
-    transform: translateY(-2px);
-}
-.neumorphic-button:active:not(:disabled) {
-    box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
-    transform: translateY(1px);
-    font-size: 0.98em;
-}
-.neumorphic-button:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    box-shadow: inset 3px 3px 7px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);
-}
+    function renderMysteryBoxes() {
+        mysteryBoxesContainer.innerHTML = '';
+        for (let i = 1; i <= 6; i++) {
+            const box = document.createElement('div');
+            box.classList.add('mystery-box');
+            box.dataset.boxId = i;
+            if (completedBoxes[i - 1]) {
+                box.classList.add('completed');
+                box.textContent = '✅';
+            } else {
+                box.textContent = '?';
+                box.addEventListener('click', () => handleBoxClick(i));
+            }
+            mysteryBoxesContainer.appendChild(box);
+        }
+    }
 
-/* Penerapan gaya ke tombol spesifik */
-.level-icon { width: 80px; height: 80px; font-size: 2.2em; color: var(--accent-green); }
-.level-icon.locked { color: #8899a6; box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light); }
-#roll-button { padding: 15px 30px; font-size: 18px; color: var(--accent-blue); }
-#restart-button { padding: 15px 30px; font-size: 18px; color: var(--accent-yellow); }
-#back-to-map-button { padding: 5px 10px; color: #6c757d; font-size: 0.9em; }
-.option-button { padding: 12px 10px; font-size: 1em; color: var(--accent-blue); }
+    function rollDice() {
+        new Audio('sounds/kocok-dadu.mp3').play();
+        lastDiceRoll = 0; 
+        infoText.textContent = 'Mengocok...';
+        diceImg.classList.add('spinning');
+        
+        setTimeout(() => {
+            const result = Math.floor(Math.random() * 6) + 1;
+            diceImg.src = `images/dice-${result}.png`;
+            diceImg.classList.remove('spinning');
+            finishRoll(result);
+        }, 600);
+    }
+    
+    function finishRoll(result) {
+        lastDiceRoll = result;
+        document.querySelectorAll('.mystery-box').forEach(b => b.classList.remove('highlight'));
+        
+        if (completedBoxes[lastDiceRoll - 1]) {
+            infoText.textContent = `Kotak ${lastDiceRoll} sudah terbuka. Kocok lagi!`;
+        } else {
+            infoText.textContent = `Silakan klik kotak nomor ${lastDiceRoll}!`;
+            const targetBox = document.querySelector(`.mystery-box[data-box-id="${lastDiceRoll}"]`);
+            if (targetBox) targetBox.classList.add('highlight');
+        }
+    }
 
-.option-button.correct { box-shadow: inset 5px 5px 10px #1e7e34, inset -5px -5px 10px #32d056; color: var(--accent-green); }
-.option-button.incorrect { box-shadow: inset 5px 5px 10px #b21f2d, inset -5px -5px 10px #ff4b5d; color: var(--accent-red); }
+    function handleBoxClick(boxId) {
+        if (boxId !== lastDiceRoll) {
+            infoText.textContent = `Anda harus mendapatkan angka ${boxId} untuk membuka kotak ini!`;
+            return;
+        }
+        if (completedBoxes[boxId - 1]) return;
 
-/* --- LAYAR PETA LEVEL --- */
-#level-select-screen .subtitle { margin-bottom: 30px; color: #555; font-size: 1.1em; }
-#level-map { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 20px; padding: 10px; }
+        currentQuestion = { ...levelQuestions[boxId - 1], boxId: boxId };
+        displayQuestionModal();
+    }
 
-/* --- LAYAR ARENA GAME --- */
-.game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-#level-title { margin: 0; font-size: 1.8em; color: var(--text-primary); }
-#mystery-boxes-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-.mystery-box {
-    height: 100px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3em;
-    color: var(--base-color);
-    user-select: none;
-    background: linear-gradient(145deg, #1565c0, #007bff); /* Gradient biru yang lebih hidup */
-    box-shadow: 5px 5px 15px var(--shadow-dark), -5px -5px 15px var(--shadow-light);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.mystery-box.completed {
-    background: linear-gradient(145deg, #1e7e34, #28a745);
-    transform: scale(0.95);
-    opacity: 0.8;
-}
-.mystery-box.highlight {
-    box-shadow: 0 0 25px 8px var(--accent-yellow);
-    transform: scale(1.05);
-}
-.dice-area { display: flex; flex-direction: column; align-items: center; gap: 15px; }
-#dice-img { width: 80px; height: 80px; filter: drop-shadow(5px 5px 5px var(--shadow-dark)); /* Tambah bayangan pada dadu */ }
-#info-text { font-size: 1.1em; font-weight: 600; color: #0d47a1; min-height: 25px; transition: color 0.3s ease; }
+    function displayQuestionModal() {
+        questionText.textContent = currentQuestion.question;
+        optionsContainer.innerHTML = '';
+        currentQuestion.options.forEach(option => {
+            const button = document.createElement('button');
+            button.classList.add('neumorphic-button', 'option-button');
+            button.textContent = option;
+            button.addEventListener('click', () => checkAnswer(option));
+            optionsContainer.appendChild(button);
+        });
+        resultText.textContent = '';
+        questionModal.classList.add('visible');
+        startTimer();
+    }
 
-/* --- POP-UP SOAL (MODAL) --- */
-#question-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-#question-modal.visible { opacity: 1; visibility: visible; }
-.modal-content { background: var(--base-color); padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; text-align: center; box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light); transform: scale(0.9); transition: transform 0.3s ease; }
-#question-modal.visible .modal-content { transform: scale(1); }
-#question-text { color: #1a237e; font-size: 1.3em; line-height: 1.4; font-weight: 500;}
-#timer-container { width: 100%; height: 10px; border-radius: 5px; margin: 15px 0 25px 0; overflow: hidden; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);}
-#timer-bar { height: 100%; width: 100%; background: var(--accent-green); border-radius: 5px; transition: width 0.5s linear; }
-.options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-#result-text { font-weight: 700; font-size: 1.1em; margin-top: 25px; min-height: 28px; }
-.correct { color: var(--accent-green); }
-.incorrect { color: var(--accent-red); }
+    function startTimer() {
+        let timeLeft = TIME_LIMIT;
+        timerBar.style.transition = 'none';
+        timerBar.style.width = '100%';
+        setTimeout(() => {
+            timerBar.style.transition = `width ${TIME_LIMIT}s linear`;
+            timerBar.style.width = '0%';
+        }, 100);
+        clearInterval(timer);
+        timer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft < 0) {
+                clearInterval(timer);
+                checkAnswer(null);
+            }
+        }, 1000);
+    }
+    
+    function checkAnswer(selectedOption) {
+        clearInterval(timer);
+        const isCorrect = selectedOption ? selectedOption.toLowerCase() === currentQuestion.answer.toLowerCase() : false;
+
+        document.querySelectorAll('.modal-content .option-button').forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+                btn.classList.add('correct');
+            }
+        });
+
+        if (isCorrect) {
+            new Audio('sounds/jawaban-benar.mp3').play();
+            resultText.textContent = 'Benar! 🎉';
+            resultText.className = 'correct';
+            completedBoxes[currentQuestion.boxId - 1] = true;
+
+            if (completedBoxes.every(status => status === true)) {
+                setTimeout(levelComplete, 1500);
+            }
+        } else {
+            new Audio('sounds/jawaban-salah.mp3').play();
+            resultText.textContent = selectedOption === null ? 'Waktu Habis!' : 'Jawaban Salah!';
+            resultText.className = 'incorrect';
+        }
+
+        setTimeout(() => {
+            questionModal.classList.remove('visible');
+            renderMysteryBoxes();
+            infoText.textContent = 'Kocok dadu untuk melanjutkan!';
+            lastDiceRoll = 0;
+        }, 2000);
+    }
+
+    function levelComplete() {
+        new Audio('sounds/naik-level.mp3').play();
+        infoText.textContent = `Selamat! Anda telah menyelesaikan Level ${currentLevel}!`;
+        rollButton.disabled = true;
+        if (currentLevel === unlockedLevel) {
+            unlockedLevel++;
+            localStorage.setItem('unlockedLevel', unlockedLevel);
+        }
+        setTimeout(showLevelSelect, 3000);
+    }
+    
+    // === EVENT LISTENERS AWAL ===
+    backToMapButton.addEventListener('click', showLevelSelect);
+    rollButton.addEventListener('click', rollDice);
+
+    // === MULAI GAME ===
+    initGame();
+});
