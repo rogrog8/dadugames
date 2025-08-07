@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultText = document.getElementById('result-text');
     const levelText = document.getElementById('level-text');
     const scoreText = document.getElementById('score-text');
+    
+    // --- ELEMEN BARU UNTUK HIGH SCORE ---
+    const highScoreText = document.getElementById('high-score-text');
 
     // --- STATE PERMAINAN ---
     let currentQuestion;
@@ -16,12 +19,29 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLevel = 1;
     let score = 0;
     let scoreToNextLevel = 50;
+
+    // --- VARIABEL BARU UNTUK HIGH SCORE ---
+    let highScore = 0;
+
     const POINTS_PER_CORRECT_ANSWER = 10;
     const ANIMATION_DURATION = 700;
 
     // --- FUNGSI UTAMA ---
+    
+    // Fungsi baru untuk memuat high score dari localStorage
+    function loadHighScore() {
+        const savedHighScore = localStorage.getItem('highScore');
+        if (savedHighScore) {
+            highScore = parseInt(savedHighScore, 10);
+        }
+        updateHighScoreDisplay();
+    }
 
-    // 1. Memuat soal dan menginisialisasi game
+    // Fungsi baru untuk memperbarui tampilan high score
+    function updateHighScoreDisplay() {
+        highScoreText.textContent = highScore;
+    }
+
     async function loadQuestions() {
         try {
             const response = await fetch('database.json');
@@ -36,23 +56,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Fungsi untuk mereset daftar soal pada level tertentu
     function resetAvailableQuestionsForLevel(level) {
         const levelData = questions[`level${level}`];
         if (levelData) {
             availableQuestions = JSON.parse(JSON.stringify(levelData));
         } else {
-            availableQuestions = {}; // Tidak ada soal lagi untuk level ini (tamat)
+            availableQuestions = {};
         }
     }
 
-    // 3. Fungsi untuk memperbarui tampilan statistik
     function updateStatsDisplay() {
         levelText.textContent = currentLevel;
         scoreText.textContent = score;
     }
 
-    // 4. Fungsi untuk mengocok dadu
     function rollDice() {
         new Audio('sounds/kocok-dadu.mp3').play();
         rollButton.disabled = true;
@@ -68,11 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }, ANIMATION_DURATION);
     }
 
-    // 5. Menampilkan soal berdasarkan LEVEL dan angka dadu
     function displayQuestion(diceNumber) {
+        // ... (Fungsi ini tidak ada perubahan) ...
         const currentLevelKey = `level${currentLevel}`;
-
-        // Cek apakah game sudah tamat
         if (!questions[currentLevelKey]) {
             questionText.textContent = `Selamat! Anda telah menamatkan semua level!`;
             optionsContainer.innerHTML = '';
@@ -80,20 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
             rollButton.disabled = true;
             return;
         }
-
-        // Jika soal untuk angka dadu ini habis, isi ulang dari master list level ini
         if (!availableQuestions[diceNumber] || availableQuestions[diceNumber].length === 0) {
             availableQuestions[diceNumber] = [...questions[currentLevelKey][diceNumber]];
         }
-        
         const questionList = availableQuestions[diceNumber];
-
         const randomIndex = Math.floor(Math.random() * questionList.length);
         currentQuestion = questionList.splice(randomIndex, 1)[0];
-
         questionText.textContent = currentQuestion.question;
         optionsContainer.innerHTML = '';
-
         const shuffledOptions = currentQuestion.options.sort(() => Math.random() - 0.5);
         shuffledOptions.forEach(option => {
             const button = document.createElement('button');
@@ -102,11 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', () => checkAnswer(option, button));
             optionsContainer.appendChild(button);
         });
-
         questionArea.style.display = 'block';
     }
     
-    // 6. Fungsi untuk menangani proses NAIK LEVEL
     function levelUp() {
         new Audio('sounds/naik-level.mp3').play();
         currentLevel++;
@@ -117,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateStatsDisplay();
     }
 
-    // 7. Memeriksa jawaban, menambahkan SKOR, dan cek NAIK LEVEL
     function checkAnswer(selectedOption, selectedButton) {
         const isCorrect = selectedOption.toLowerCase() === currentQuestion.answer.toLowerCase();
         
@@ -134,6 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
             score += POINTS_PER_CORRECT_ANSWER;
             updateStatsDisplay();
 
+            // --- LOGIKA UNTUK CEK & SIMPAN HIGH SCORE ---
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('highScore', highScore); // Simpan ke localStorage
+                updateHighScoreDisplay(); // Perbarui tampilan
+            }
+
             if (score >= scoreToNextLevel) {
                 levelUp();
             } else {
@@ -148,16 +161,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         setTimeout(() => {
-            // Cek apakah game sudah tamat sebelum mengaktifkan tombol lagi
             if(questions[`level${currentLevel}`]) {
                  rollButton.disabled = false;
             }
         }, 2000);
     }
 
-    // --- EVENT LISTENERS ---
+    // --- EVENT LISTENERS (DIPERBARUI) ---
     rollButton.disabled = true;
-    loadQuestions();
-    updateStatsDisplay();
+    loadQuestions();      // Muat soal
+    loadHighScore();      // Muat high score dari penyimpanan
+    updateStatsDisplay(); // Perbarui tampilan skor dan level awal
     rollButton.addEventListener('click', rollDice);
 });

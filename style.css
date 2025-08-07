@@ -169,9 +169,11 @@ h1 {
 /* ... (semua kode CSS sebelumnya) ... */
 
 /* 8. Style untuk Statistik Pemain */
+/* 8. Style untuk Statistik Pemain */
 .game-stats {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; /* <-- Ubah dari space-around */
+    align-items: center;
     background-color: #e3f2fd;
     padding: 10px 20px;
     border-radius: 12px;
