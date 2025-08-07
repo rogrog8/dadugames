@@ -18,6 +18,14 @@ body {
     max-width: 480px;
 }
 
+h1 {
+    color: #333;
+}
+
+.game-area {
+    margin-bottom: 20px;
+}
+
 .dice-container {
     margin-bottom: 20px;
 }
@@ -27,7 +35,6 @@ body {
     height: 100px;
 }
 
-/* Animasi untuk mengocok dadu */
 .shake {
     animation: shake-animation 0.5s ease-in-out;
 }
@@ -39,8 +46,7 @@ body {
     100% { transform: rotate(0deg) scale(1); }
 }
 
-/* Tombol dengan state yang lebih jelas */
-#roll-button, #submit-button {
+#roll-button {
     padding: 12px 25px;
     font-size: 16px;
     cursor: pointer;
@@ -52,15 +58,15 @@ body {
     transition: background-color 0.2s, transform 0.1s;
 }
 
-#roll-button:hover, #submit-button:hover {
+#roll-button:hover {
     background-color: #0056b3;
 }
 
-#roll-button:active, #submit-button:active {
+#roll-button:active {
     transform: scale(0.98);
 }
 
-#roll-button:disabled, #submit-button:disabled {
+#roll-button:disabled {
     background-color: #a0c3e6;
     cursor: not-allowed;
 }
@@ -69,23 +75,57 @@ body {
     margin-top: 25px;
     padding-top: 20px;
     border-top: 1px solid #eee;
-    /* Awalnya disembunyikan oleh JavaScript */
     display: none; 
 }
 
-#answer-input {
-    padding: 10px;
-    margin: 10px 0;
-    width: 80%;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+/* Wadah untuk tombol pilihan ganda */
+.options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 kolom */
+    gap: 10px; /* Jarak antar tombol */
+    margin-top: 20px;
+}
+
+/* Style untuk setiap tombol pilihan ganda */
+.option-button {
+    padding: 12px 10px;
     font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #007bff;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.option-button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.option-button:disabled {
+    cursor: not-allowed;
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    color: #6c757d;
+}
+
+.option-button.correct {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.option-button.incorrect {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
 }
 
 #result-text {
     font-weight: bold;
-    margin-top: 10px;
-    min-height: 24px; /* Mencegah layout 'loncat' saat teks muncul */
+    margin-top: 20px;
+    min-height: 24px;
 }
 
 .correct {
