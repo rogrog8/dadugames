@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+/* --- PENGATURAN DASAR & LATAR BELAKANG --- */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
@@ -10,6 +11,7 @@ body {
     margin: 0;
     padding: 15px;
     box-sizing: border-box;
+    color: #333; /* Warna teks default */
 }
 
 .container {
@@ -23,24 +25,29 @@ body {
     width: 100%;
     max-width: 600px;
     min-height: 500px;
+    display: flex; /* Menggunakan flexbox untuk mengatur layar */
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* --- LAYAR PETA LEVEL --- */
 #level-select-screen .subtitle {
     margin-bottom: 30px;
     color: #555;
+    font-size: 1.1em;
 }
 #level-map {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 20px;
+    padding: 10px;
 }
 .level-icon {
     width: 80px;
     height: 80px;
     border-radius: 15px;
     border: 3px solid;
-    font-size: 2em;
+    font-size: 2.2em;
     font-weight: 700;
     display: flex;
     justify-content: center;
@@ -55,8 +62,8 @@ body {
     box-shadow: 0 4px 10px rgba(40, 167, 69, 0.5);
 }
 .level-icon.unlocked:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.6);
+    transform: translateY(-5px) scale(1.1); /* Efek mengangkat */
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
 }
 .level-icon.locked {
     background-color: #6c757d;
@@ -81,9 +88,15 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    transition: all 0.2s ease;
+}
+#back-to-map-button:hover {
+    background-color: #6c757d;
+    color: white;
 }
 #level-title {
     margin: 0;
+    font-size: 1.8em;
 }
 #mystery-boxes-container {
     display: grid;
@@ -104,16 +117,19 @@ body {
     background-color: #007bff;
     transition: all 0.3s ease;
     border: 3px solid #0056b3;
+    user-select: none; /* Mencegah teks '?' terseleksi */
 }
 .mystery-box.completed {
     background-color: #28a745;
     border-color: #1e7e34;
     cursor: default;
     transform: scale(0.95);
+    opacity: 0.8;
 }
 .mystery-box.highlight {
-    box-shadow: 0 0 20px 5px #ffc107;
+    box-shadow: 0 0 25px 8px #ffc107;
     transform: scale(1.05);
+    border-color: #ffc107;
 }
 .dice-area {
     display: flex;
@@ -122,12 +138,32 @@ body {
     gap: 15px;
 }
 #dice-img { width: 80px; height: 80px; }
-#roll-button { /* Style lama bisa dipakai atau disesuaikan */ }
+#roll-button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+    transition: all 0.2s ease-in-out;
+}
+#roll-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+}
+#roll-button:disabled {
+    background: #a0c3e6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 #info-text {
     font-size: 1.1em;
     font-weight: 600;
-    color: #333;
+    color: #0d47a1; /* Ubah warna agar lebih menonjol */
     min-height: 25px;
+    transition: color 0.3s ease;
 }
 
 /* --- POP-UP SOAL (MODAL) --- */
@@ -142,6 +178,13 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+#question-modal.visible {
+    opacity: 1;
+    visibility: visible;
 }
 .modal-content {
     background-color: white;
@@ -150,12 +193,51 @@ body {
     width: 90%;
     max-width: 500px;
     text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
 }
-#question-text { color: #1a237e; font-size: 1.25em; }
+#question-modal.visible .modal-content {
+    transform: scale(1);
+}
+#question-text {
+    color: #1a237e;
+    font-size: 1.3em; /* Perbesar sedikit */
+    line-height: 1.4; /* Tambah jarak antar baris */
+}
 #timer-container { width: 100%; height: 10px; background-color: #e9ecef; border-radius: 5px; margin-top: 15px; margin-bottom: 25px; overflow: hidden; }
 #timer-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #28a745, #20c997); border-radius: 5px; transition: width 0.5s linear; }
 .options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-.option-button { /* Style lama bisa dipakai */ }
+.option-button {
+    padding: 12px 10px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid #b3e5fc;
+    border-radius: 10px;
+    background-color: #f0f8ff;
+    color: #0277bd;
+    transition: all 0.2s ease;
+}
+.option-button:hover:not(:disabled) {
+    background-color: #0277bd;
+    color: white;
+    border-color: #0277bd;
+    transform: scale(1.05);
+}
+.option-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.option-button.correct {
+    background-color: #28a745;
+    border-color: #1e7e34;
+    color: white;
+}
+.option-button.incorrect {
+    background-color: #dc3545;
+    border-color: #b21f2d;
+    color: white;
+}
 #result-text { font-weight: 700; font-size: 1.1em; margin-top: 25px; min-height: 28px; }
 .correct { color: #28a745; }
 .incorrect { color: #dc3545; }
