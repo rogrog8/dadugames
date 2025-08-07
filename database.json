@@ -1,66 +1,40 @@
 {
+  "anak": {
     "level1": [
-        { 
-            "question": "Apa nama ibu kota Thailand?", 
-            "options": ["Hanoi", "Kuala Lumpur", "Bangkok", "Manila"],
-            "answer": "Bangkok" 
-        },
-        { 
-            "question": "Berapa jumlah provinsi di Indonesia saat ini?", 
-            "options": ["34", "36", "37", "38"],
-            "answer": "38" 
-        },
-        { 
-            "question": "Siapa penulis novel 'Laskar Pelangi'?", 
-            "options": ["Tere Liye", "Pramoedya Ananta Toer", "Andrea Hirata", "Dewi Lestari"],
-            "answer": "Andrea Hirata" 
-        },
-        { 
-            "question": "Alat musik yang dipetik dan berasal dari Spanyol adalah...", 
-            "options": ["Biola", "Gitar", "Piano", "Suling"],
-            "answer": "Gitar" 
-        },
-        { 
-            "question": "Apa singkatan dari 'WWW' dalam konteks internet?", 
-            "options": ["World Wide Web", "World Web Wide", "Web World Wide", "Wide World Web"],
-            "answer": "World Wide Web" 
-        },
-        { 
-            "question": "Berapa jumlah pemain dalam satu tim sepak bola?", 
-            "options": ["9", "10", "11", "12"],
-            "answer": "11" 
-        }
+      { "question": "Apa warna buah apel yang paling umum?", "options": ["Biru", "Jingga", "Merah", "Ungu"], "answer": "Merah" },
+      { "question": "Manakah hewan yang hidup di air?", "options": ["Ayam", "Kucing", "Ikan", "Monyet"], "answer": "Ikan" },
+      { "question": "Berapa jumlah jari di satu tangan?", "options": ["3", "4", "5", "6"], "answer": "5" },
+      { "question": "Suara anjing adalah...", "options": ["Meong", "Moo", "Kwek", "Guk-guk"], "answer": "Guk-guk" },
+      { "question": "Alat transportasi yang terbang di udara adalah...", "options": ["Mobil", "Kapal", "Pesawat", "Kereta"], "answer": "Pesawat" },
+      { "question": "Tempat kita membeli buku adalah...", "options": ["Apotek", "Pasar", "Toko Buku", "Restoran"], "answer": "Toko Buku" }
+    ]
+  },
+  "remaja": {
+    "level1": [
+      { "question": "Apa nama ibu kota Thailand?", "options": ["Hanoi", "Kuala Lumpur", "Bangkok", "Manila"], "answer": "Bangkok" },
+      { "question": "Siapa penulis novel 'Laskar Pelangi'?", "options": ["Tere Liye", "Pramoedya Ananta Toer", "Andrea Hirata", "Dewi Lestari"], "answer": "Andrea Hirata" },
+      { "question": "Planet terbesar di Tata Surya adalah...", "options": ["Mars", "Jupiter", "Saturnus", "Bumi"], "answer": "Jupiter" },
+      { "question": "Apa singkatan dari 'WWW' dalam konteks internet?", "options": ["World Wide Web", "World Web Wide", "Web World Wide", "Wide World Web"], "answer": "World Wide Web" },
+      { "question": "Berapa jumlah pemain dalam satu tim sepak bola?", "options": ["9", "10", "11", "12"], "answer": "11" },
+      { "question": "Pada tahun berapa film Titanic dirilis?", "options": ["1995", "1997", "1999", "2001"], "answer": "1997" }
     ],
     "level2": [
-        { 
-            "question": "Pada tahun berapa Indonesia merdeka?", 
-            "options": ["1942", "1945", "1948", "1950"],
-            "answer": "1945" 
-        },
-        { 
-            "question": "Apa nama galaksi tempat Tata Surya kita berada?", 
-            "options": ["Andromeda", "Triangulum", "Bima Sakti", "Magellan"],
-            "answer": "Bima Sakti" 
-        },
-        { 
-            "question": "Formula kimia untuk air adalah...", 
-            "options": ["CO2", "O2", "H2O", "NaCl"],
-            "answer": "H2O" 
-        },
-        { 
-            "question": "Siapakah yang dijuluki sebagai 'Bapak Pendidikan Nasional'?", 
-            "options": ["Soekarno", "Ki Hajar Dewantara", "Mohammad Hatta", "R.A. Kartini"],
-            "answer": "Ki Hajar Dewantara" 
-        },
-        { 
-            "question": "Benua terluas di dunia adalah...", 
-            "options": ["Afrika", "Eropa", "Amerika", "Asia"],
-            "answer": "Asia" 
-        },
-        { 
-            "question": "Apa mata uang negara Jepang?", 
-            "options": ["Won", "Yuan", "Yen", "Ringgit"],
-            "answer": "Yen" 
-        }
+      { "question": "Apa nama galaksi tempat Tata Surya kita berada?", "options": ["Andromeda", "Triangulum", "Bima Sakti", "Magellan"], "answer": "Bima Sakti" },
+      { "question": "Siapakah yang dijuluki sebagai 'Bapak Pendidikan Nasional'?", "options": ["Soekarno", "Ki Hajar Dewantara", "Mohammad Hatta", "R.A. Kartini"], "answer": "Ki Hajar Dewantara" },
+      { "question": "Benua terluas di dunia adalah...", "options": ["Afrika", "Eropa", "Amerika", "Asia"], "answer": "Asia" },
+      { "question": "Apa mata uang negara Jepang?", "options": ["Won", "Yuan", "Yen", "Ringgit"], "answer": "Yen" },
+      { "question": "Siapa sutradara film 'Avengers: Endgame'?", "options": ["James Cameron", "Christopher Nolan", "Russo Brothers", "Steven Spielberg"], "answer": "Russo Brothers" },
+      { "question": "Lagu 'Bohemian Rhapsody' dipopulerkan oleh band...", "options": ["The Beatles", "Led Zeppelin", "Queen", "The Rolling Stones"], "answer": "Queen" }
     ]
+  },
+  "dewasa": {
+    "level1": [
+      { "question": "Pada tahun berapa Perang Dunia I dimulai?", "options": ["1914", "1918", "1939", "1945"], "answer": "1914" },
+      { "question": "Apa unsur kimia dengan simbol 'Fe'?", "options": ["Emas", "Perak", "Besi", "Tembaga"], "answer": "Besi" },
+      { "question": "Siapa filsuf Yunani yang merupakan guru dari Alexander Agung?", "options": ["Socrates", "Plato", "Aristoteles", "Pythagoras"], "answer": "Aristoteles" },
+      { "question": "Dalam bidang komputer, apa kepanjangan dari 'SQL'?", "options": ["Structured Query Language", "Simple Question Language", "Standard Query Logic", "System Query Language"], "answer": "Structured Query Language" },
+      { "question": "Lukisan 'Mona Lisa' saat ini dipajang di museum mana?", "options": ["The Met, New York", "Prado, Madrid", "British Museum, London", "Louvre, Paris"], "answer": "Louvre, Paris" },
+      { "question": "Vatican City terletak di dalam kota apa?", "options": ["Milan", "Venesia", "Roma", "Florence"], "answer": "Roma" }
+    ]
+  }
 }
