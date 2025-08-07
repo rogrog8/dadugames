@@ -24,29 +24,4 @@
         { "question": "Apa nama bahasa pemrograman yang digunakan untuk membuat web?", "answer": "JavaScript" },
         { "question": "Apa nama samudra terbesar di dunia?", "answer": "Pasifik" }
     ]
-{
-    "1": [
-        { "question": "Siapakah presiden pertama Indonesia?", "answer": "Soekarno" },
-        { "question": "Apa nama ibu kota Jepang?", "answer": "Tokyo" }
-    ],
-    "2": [
-        { "question": "Berapa hasil dari 7 x 8?", "answer": "56" },
-        { "question": "Sebuah segitiga memiliki tiga sisi. Berapa sudut yang dimiliki segitiga?", "answer": "3" }
-    ],
-    "3": [
-        { "question": "Apa nama planet terdekat dengan Matahari?", "answer": "Merkurius" },
-        { "question": "Berapa jumlah hari dalam satu tahun kabisat?", "answer": "366" }
-    ],
-    "4": [
-        { "question": "Apa nama sungai terpanjang di dunia?", "answer": "Nil" },
-        { "question": "Apa ibu kota Australia?", "answer": "Canberra" }
-    ],
-    "5": [
-        { "question": "Siapa penemu lampu pijar?", "answer": "Thomas Edison" },
-        { "question": "Apa nama tulang terbesar di kaki manusia?", "answer": "Femur" }
-    ],
-    "6": [
-        { "question": "Apa nama bahasa pemrograman yang digunakan untuk membuat web?", "answer": "JavaScript" },
-        { "question": "Apa nama samudra terbesar di dunia?", "answer": "Pasifik" }
-    ]
 }
