@@ -1,55 +1,150 @@
 {
     "level1": {
         "1": [
-            { "question": "Apa warna bendera Indonesia?", "options": ["Merah-Putih", "Putih-Merah", "Biru-Putih", "Merah-Kuning"], "answer": "Merah-Putih" },
-            { "question": "Hewan yang bisa terbang adalah...", "options": ["Kucing", "Ayam", "Burung", "Ikan"], "answer": "Burung" }
+            { 
+                "question": "Apa warna bendera Indonesia?", 
+                "options": ["Merah-Putih", "Putih-Merah", "Biru-Putih", "Merah-Kuning"],
+                "answer": "Merah-Putih" 
+            },
+            { 
+                "question": "Hewan yang bisa terbang adalah...", 
+                "options": ["Kucing", "Ayam", "Burung", "Ikan"],
+                "answer": "Burung" 
+            }
         ],
         "2": [
-            { "question": "Berapa hasil dari 2 + 2?", "options": ["3", "4", "5", "6"], "answer": "4" },
-            { "question": "Ibu kota Indonesia adalah?", "options": ["Bandung", "Surabaya", "Medan", "Jakarta"], "answer": "Jakarta" }
+            { 
+                "question": "Berapa hasil dari 2 + 2?", 
+                "options": ["3", "4", "5", "6"],
+                "answer": "4" 
+            },
+            { 
+                "question": "Ibu kota Indonesia adalah?", 
+                "options": ["Bandung", "Surabaya", "Medan", "Jakarta"],
+                "answer": "Jakarta" 
+            }
         ],
         "3": [
-            { "question": "Matahari terbit dari arah...", "options": ["Barat", "Timur", "Utara", "Selatan"], "answer": "Timur" },
-            { "question": "Alat untuk menulis di papan tulis adalah...", "options": ["Pulpen", "Spidol", "Pensil", "Kuas"], "answer": "Spidol" }
+            { 
+                "question": "Matahari terbit dari arah...", 
+                "options": ["Barat", "Timur", "Utara", "Selatan"],
+                "answer": "Timur" 
+            },
+            { 
+                "question": "Alat untuk menulis di papan tulis adalah...", 
+                "options": ["Pulpen", "Spidol", "Pensil", "Kuas"],
+                "answer": "Spidol" 
+            }
         ],
         "4": [
-            { "question": "Berapa jumlah roda pada mobil?", "options": ["2", "3", "4", "6"], "answer": "4" },
-            { "question": "Suara kucing adalah...", "options": ["Guk", "Moo", "Meong", "Kwek"], "answer": "Meong" }
+            { 
+                "question": "Berapa jumlah roda pada mobil?", 
+                "options": ["2", "3", "4", "6"],
+                "answer": "4" 
+            },
+            { 
+                "question": "Suara kucing adalah...", 
+                "options": ["Guk", "Moo", "Meong", "Kwek"],
+                "answer": "Meong" 
+            }
         ],
         "5": [
-            { "question": "Kita minum menggunakan...", "options": ["Piring", "Gelas", "Sendok", "Garpu"], "answer": "Gelas" },
-            { "question": "Warna langit saat cerah adalah...", "options": ["Hijau", "Hitam", "Biru", "Merah"], "answer": "Biru" }
+            { 
+                "question": "Kita minum menggunakan...", 
+                "options": ["Piring", "Gelas", "Sendok", "Garpu"],
+                "answer": "Gelas" 
+            },
+            { 
+                "question": "Warna langit saat cerah adalah...", 
+                "options": ["Hijau", "Hitam", "Biru", "Merah"],
+                "answer": "Biru" 
+            }
         ],
         "6": [
-            { "question": "Presiden Indonesia saat ini (2025) adalah...", "options": ["Joko Widodo", "Prabowo Subianto", "Megawati", "Susilo Bambang Yudhoyono"], "answer": "Prabowo Subianto" },
-            { "question": "Setelah hari Selasa adalah hari...", "options": ["Senin", "Rabu", "Kamis", "Jumat"], "answer": "Rabu" }
+            { 
+                "question": "Presiden Indonesia saat ini (2025) adalah...", 
+                "options": ["Joko Widodo", "Prabowo Subianto", "Megawati", "Susilo Bambang Yudhoyono"],
+                "answer": "Prabowo Subianto" 
+            },
+            { 
+                "question": "Setelah hari Selasa adalah hari...", 
+                "options": ["Senin", "Rabu", "Kamis", "Jumat"],
+                "answer": "Rabu" 
+            }
         ]
     },
     "level2": {
         "1": [
-            { "question": "Siapa yang menulis naskah proklamasi?", "options": ["Mohammad Hatta", "Soekarno", "Ahmad Soebardjo", "Sayuti Melik"], "answer": "Soekarno" },
-            { "question": "CPU adalah singkatan dari...", "options": ["Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Core Processing Unit"], "answer": "Central Processing Unit" }
+            { 
+                "question": "Siapa yang mengetik naskah proklamasi?", 
+                "options": ["Mohammad Hatta", "Soekarno", "Ahmad Soebardjo", "Sayuti Melik"],
+                "answer": "Sayuti Melik" 
+            },
+            { 
+                "question": "CPU adalah singkatan dari...", 
+                "options": ["Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Core Processing Unit"],
+                "answer": "Central Processing Unit" 
+            }
         ],
         "2": [
-            { "question": "Berapa hasil dari 12 x 12?", "options": ["124", "134", "144", "154"], "answer": "144" },
-            { "question": "Gunung tertinggi di dunia adalah...", "options": ["Gunung Fuji", "Gunung Everest", "Gunung Kilimanjaro", "Gunung Jaya Wijaya"], "answer": "Gunung Everest" }
+            { 
+                "question": "Berapa hasil dari 12 x 12?", 
+                "options": ["124", "134", "144", "154"],
+                "answer": "144" 
+            },
+            { 
+                "question": "Gunung tertinggi di dunia adalah...", 
+                "options": ["Gunung Fuji", "Gunung Everest", "Gunung Kilimanjaro", "Gunung Jaya Wijaya"],
+                "answer": "Gunung Everest" 
+            }
         ],
         "3": [
-            { "question": "Planet manakah yang dikenal sebagai 'Planet Merah'?", "options": ["Venus", "Mars", "Jupiter", "Saturnus"], "answer": "Mars" },
-            { "question": "Apa nama lautan terdalam di dunia?", "options": ["Palung Mariana", "Palung Jawa", "Palung Tonga", "Palung Filipina"], "answer": "Palung Mariana" }
+            { 
+                "question": "Planet manakah yang dikenal sebagai 'Planet Merah'?", 
+                "options": ["Venus", "Mars", "Jupiter", "Saturnus"],
+                "answer": "Mars" 
+            },
+            { 
+                "question": "Apa nama lautan terdalam di dunia?", 
+                "options": ["Palung Mariana", "Palung Jawa", "Palung Tonga", "Palung Filipina"],
+                "answer": "Palung Mariana" 
+            }
         ],
         "4": [
-            { "question": "Siapakah penemu telepon?", "options": ["Thomas Edison", "Nikola Tesla", "Alexander Graham Bell", "Guglielmo Marconi"], "answer": "Alexander Graham Bell" },
-            { "question": "Negara dengan populasi terbanyak di dunia adalah...", "options": ["China", "Amerika Serikat", "India", "Indonesia"], "answer": "India" }
+            { 
+                "question": "Siapakah penemu telepon?", 
+                "options": ["Thomas Edison", "Nikola Tesla", "Alexander Graham Bell", "Guglielmo Marconi"],
+                "answer": "Alexander Graham Bell" 
+            },
+            { 
+                "question": "Negara dengan populasi terbanyak di dunia adalah...", 
+                "options": ["China", "Amerika Serikat", "India", "Indonesia"],
+                "answer": "India" 
+            }
         ],
         "5": [
-            { "question": "Apa unsur kimia dengan simbol 'Au'?", "options": ["Perak", "Aluminium", "Tembaga", "Emas"], "answer": "Emas" },
-            { "question": "Tahun berapa Perang Dunia II berakhir?", "options": ["1942", "1945", "1948", "1950"], "answer": "1945" }
+            { 
+                "question": "Apa unsur kimia dengan simbol 'Au'?", 
+                "options": ["Perak", "Aluminium", "Tembaga", "Emas"],
+                "answer": "Emas" 
+            },
+            { 
+                "question": "Tahun berapa Perang Dunia II berakhir?", 
+                "options": ["1942", "1945", "1948", "1950"],
+                "answer": "1945" 
+            }
         ],
         "6": [
-            { "question": "Dalam mitologi Yunani, siapa nama dewa laut?", "options": ["Zeus", "Hades", "Poseidon", "Apollo"], "answer": "Poseidon" },
-            { "question": "Apa ibukota dari Kanada?", "options": ["Toronto", "Vancouver", "Montreal", "Ottawa"], "answer": "Ottawa" }
+            { 
+                "question": "Dalam mitologi Yunani, siapa nama dewa laut?", 
+                "options": ["Zeus", "Hades", "Poseidon", "Apollo"],
+                "answer": "Poseidon" 
+            },
+            { 
+                "question": "Apa ibukota dari Kanada?", 
+                "options": ["Toronto", "Vancouver", "Montreal", "Ottawa"],
+                "answer": "Ottawa" 
+            }
         ]
     }
-}
 }
