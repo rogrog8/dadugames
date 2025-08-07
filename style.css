@@ -1,10 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 /* --- PENGATURAN DASAR & LATAR BELAKANG --- */
+:root {
+    --base-color: #e0e5ec;
+    --shadow-light: #ffffff;
+    --shadow-dark: #a3b1c6;
+    --text-primary: #3d4a5e;
+    --accent-blue: #007bff;
+    --accent-green: #28a745;
+    --accent-red: #dc3545;
+    --accent-yellow: #ffc107;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
-    /* Warna latar belakang Neumorphism yang umum */
-    background: #e0e5ec; 
+    background: var(--base-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,15 +22,14 @@ body {
     margin: 0;
     padding: 15px;
     box-sizing: border-box;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .container {
-    background: #e0e5ec; /* Samakan dengan body */
-    padding: 30px 40px;
-    border-radius: 20px;
-    /* Bayangan untuk efek Neumorphism pada container */
-    box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff;
+    background: var(--base-color);
+    padding: clamp(20px, 5vw, 40px); /* Padding responsif */
+    border-radius: 30px; /* Sudut lebih melengkung */
+    box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light);
     text-align: center;
     width: 100%;
     max-width: 600px;
@@ -30,96 +39,101 @@ body {
     justify-content: center;
 }
 
-/* --- ANIMASI DADU BARU --- */
+h1 {
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2rem); /* Ukuran font responsif */
+}
+
+/* --- ANIMASI DADU --- */
 @keyframes spin-animation {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg) scale(1); }
+    to { transform: rotate(360deg) scale(1.1); } /* Tambahkan scale untuk efek pop */
 }
-
 .spinning {
-    animation: spin-animation 0.5s ease-out;
+    animation: spin-animation 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* --- TOMBOL GAYA NEUMORPHISM --- */
-.level-icon, #roll-button, #back-to-map-button, .age-button, .option-button, #restart-button {
+/* --- TOMBOL GAYA NEUMORPHISM (DISEMPURNAKAN) --- */
+.neumorphic-button {
     border-radius: 12px;
     border: none;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.2s ease-in-out;
-    background: #e0e5ec;
-    /* Bayangan utama Neumorphism (efek timbul) */
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    transition: all 0.15s ease-in-out;
+    background: var(--base-color);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+    color: var(--text-primary);
 }
-
-.level-icon:hover, #roll-button:hover, #back-to-map-button:hover, .age-button:hover, .option-button:hover:not(:disabled), #restart-button:hover {
-    /* Sedikit memperjelas bayangan saat hover */
-    box-shadow: 7px 7px 12px #a3b1c6, -7px -7px 12px #ffffff;
+.neumorphic-button:hover:not(:disabled) {
+    box-shadow: 7px 7px 12px var(--shadow-dark), -7px -7px 12px var(--shadow-light);
+    transform: translateY(-2px);
 }
-
-.level-icon:active, #roll-button:active, #back-to-map-button:active, .age-button:active, .option-button:active:not(:disabled), #restart-button:active {
-    /* Bayangan ke dalam untuk efek ditekan */
-    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-    font-size: 0.98em; /* Efek tombol sedikit mengecil */
+.neumorphic-button:active:not(:disabled) {
+    box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+    transform: translateY(1px);
+    font-size: 0.98em;
 }
-
-/* Penyesuaian spesifik untuk setiap tombol */
-.level-icon {
-    width: 80px;
-    height: 80px;
-    font-size: 2.2em;
-    color: #28a745; /* Warna untuk status unlocked */
-}
-.level-icon.locked {
-    color: #6c757d;
-    cursor: not-allowed;
+.neumorphic-button:disabled {
     opacity: 0.7;
-    /* Bayangan inset untuk efek terkunci/tidak aktif */
-    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-}
-.age-button { padding: 15px 30px; font-size: 18px; color: #007bff; width: 80%; max-width: 250px; }
-#roll-button { padding: 15px 30px; font-size: 18px; color: #007bff; }
-#restart-button { padding: 15px 30px; font-size: 18px; color: #ff9800; }
-#back-to-map-button { padding: 5px 10px; color: #6c757d; }
-.option-button { padding: 12px 10px; font-size: 1em; color: #0277bd; }
-
-.option-button:disabled {
     cursor: not-allowed;
-    opacity: 0.7;
-}
-.option-button.correct {
-    box-shadow: inset 5px 5px 10px #1e7e34, inset -5px -5px 10px #32d056;
-    color: #28a745;
-}
-.option-button.incorrect {
-    box-shadow: inset 5px 5px 10px #b21f2d, inset -5px -5px 10px #ff4b5d;
-    color: #dc3545;
+    box-shadow: inset 3px 3px 7px var(--shadow-dark), inset -3px -3px 7px var(--shadow-light);
 }
 
-/* Sisa CSS lainnya (tidak banyak berubah) */
+/* Penerapan gaya ke tombol spesifik */
+.level-icon { width: 80px; height: 80px; font-size: 2.2em; color: var(--accent-green); }
+.level-icon.locked { color: #8899a6; box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light); }
+#roll-button { padding: 15px 30px; font-size: 18px; color: var(--accent-blue); }
+#restart-button { padding: 15px 30px; font-size: 18px; color: var(--accent-yellow); }
+#back-to-map-button { padding: 5px 10px; color: #6c757d; font-size: 0.9em; }
+.option-button { padding: 12px 10px; font-size: 1em; color: var(--accent-blue); }
+
+.option-button.correct { box-shadow: inset 5px 5px 10px #1e7e34, inset -5px -5px 10px #32d056; color: var(--accent-green); }
+.option-button.incorrect { box-shadow: inset 5px 5px 10px #b21f2d, inset -5px -5px 10px #ff4b5d; color: var(--accent-red); }
+
+/* --- LAYAR PETA LEVEL --- */
 #level-select-screen .subtitle { margin-bottom: 30px; color: #555; font-size: 1.1em; }
 #level-map { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 20px; padding: 10px; }
+
+/* --- LAYAR ARENA GAME --- */
 .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-#level-title { margin: 0; font-size: 1.8em; }
+#level-title { margin: 0; font-size: 1.8em; color: var(--text-primary); }
 #mystery-boxes-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-.mystery-box { height: 100px; border-radius: 15px; display: flex; justify-content: center; align-items: center; font-size: 3em; color: white; user-select: none; background-color: #007bff; border: 3px solid #0056b3; transition: all 0.3s ease; }
-.mystery-box.completed { background-color: #28a745; border-color: #1e7e34; transform: scale(0.95); opacity: 0.8; }
-.mystery-box.highlight { box-shadow: 0 0 25px 8px #ffc107; transform: scale(1.05); border-color: #ffc107; }
+.mystery-box {
+    height: 100px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    color: var(--base-color);
+    user-select: none;
+    background: linear-gradient(145deg, #1565c0, #007bff); /* Gradient biru yang lebih hidup */
+    box-shadow: 5px 5px 15px var(--shadow-dark), -5px -5px 15px var(--shadow-light);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.mystery-box.completed {
+    background: linear-gradient(145deg, #1e7e34, #28a745);
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+.mystery-box.highlight {
+    box-shadow: 0 0 25px 8px var(--accent-yellow);
+    transform: scale(1.05);
+}
 .dice-area { display: flex; flex-direction: column; align-items: center; gap: 15px; }
-#dice-img { width: 80px; height: 80px; }
+#dice-img { width: 80px; height: 80px; filter: drop-shadow(5px 5px 5px var(--shadow-dark)); /* Tambah bayangan pada dadu */ }
 #info-text { font-size: 1.1em; font-weight: 600; color: #0d47a1; min-height: 25px; transition: color 0.3s ease; }
+
+/* --- POP-UP SOAL (MODAL) --- */
 #question-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
 #question-modal.visible { opacity: 1; visibility: visible; }
-.modal-content { background-color: #e0e5ec; padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; text-align: center; box-shadow: 9px 9px 16px #a3b1c6, -9px -9px 16px #ffffff; transform: scale(0.9); transition: transform 0.3s ease; }
+.modal-content { background: var(--base-color); padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; text-align: center; box-shadow: 20px 20px 60px var(--shadow-dark), -20px -20px 60px var(--shadow-light); transform: scale(0.9); transition: transform 0.3s ease; }
 #question-modal.visible .modal-content { transform: scale(1); }
-#question-text { color: #1a237e; font-size: 1.3em; line-height: 1.4; }
-#timer-container { width: 100%; height: 10px; border-radius: 5px; margin: 15px 0 25px 0; overflow: hidden; box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;}
-#timer-bar { height: 100%; width: 100%; background: #28a745; border-radius: 5px; transition: width 0.5s linear; }
-.options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+#question-text { color: #1a237e; font-size: 1.3em; line-height: 1.4; font-weight: 500;}
+#timer-container { width: 100%; height: 10px; border-radius: 5px; margin: 15px 0 25px 0; overflow: hidden; box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);}
+#timer-bar { height: 100%; width: 100%; background: var(--accent-green); border-radius: 5px; transition: width 0.5s linear; }
+.options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 #result-text { font-weight: 700; font-size: 1.1em; margin-top: 25px; min-height: 28px; }
-.correct { color: #28a745; }
-.incorrect { color: #dc3545; }
+.correct { color: var(--accent-green); }
+.incorrect { color: var(--accent-red); }
