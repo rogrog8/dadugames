@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mainkan Petualangan Kuis Dadu, sebuah game asah otak yang seru dan menantang dengan berbagai level.">
+    
     <title>Petualangan Kuis Dadu</title>
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <div id="level-select-screen">
+    <main class="container">
+        
+        <section id="level-select-screen">
             <h1>Petualangan Kuis Dadu 🎲</h1>
             <p class="subtitle">Selesaikan setiap level untuk membuka level berikutnya!</p>
             <div id="level-map">
                 </div>
-        </div>
+        </section>
 
-        <div id="game-screen" style="display: none;">
-            <div class="game-header">
-                <button id="back-to-map-button">⬅️ Peta Level</button>
+        <section id="game-screen" style="display: none;">
+            <header class="game-header">
+                <button id="back-to-map-button">
+                    <span aria-hidden="true">⬅️</span> Peta Level
+                </button>
                 <h2 id="level-title">Level 1</h2>
-            </div>
+            </header>
             <div id="mystery-boxes-container">
                 </div>
             <div class="dice-area">
-                <img id="dice-img" src="images/dice-1.png" alt="Gambar Dadu">
+                <img id="dice-img" src="images/dice-1.png" alt="Dadu menunjukkan angka satu">
                 <button id="roll-button">Kocok Dadu!</button>
             </div>
             <p id="info-text">Kocok dadu untuk memulai!</p>
-        </div>
-    </div>
+        </section>
+
+    </main>
 
     <div id="question-modal" style="display: none;">
         <div class="modal-content">
@@ -42,6 +50,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
