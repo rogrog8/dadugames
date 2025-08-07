@@ -1,7 +1,6 @@
-
 body {
-    font-family: sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,8 +12,10 @@ body {
     text-align: center;
     background-color: white;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 480px;
 }
 
 .dice-container {
@@ -24,41 +25,73 @@ body {
 #dice-img {
     width: 100px;
     height: 100px;
-    transition: transform 0.3s ease;
 }
 
+/* Animasi untuk mengocok dadu */
+.shake {
+    animation: shake-animation 0.5s ease-in-out;
+}
+
+@keyframes shake-animation {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-15deg) scale(1.1); }
+    50% { transform: rotate(15deg) scale(1.1); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Tombol dengan state yang lebih jelas */
 #roll-button, #submit-button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 16px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #007bff;
     color: white;
     margin: 5px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+#roll-button:hover, #submit-button:hover {
+    background-color: #0056b3;
+}
+
+#roll-button:active, #submit-button:active {
+    transform: scale(0.98);
+}
+
+#roll-button:disabled, #submit-button:disabled {
+    background-color: #a0c3e6;
+    cursor: not-allowed;
 }
 
 .question-area {
-    margin-top: 20px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    /* Awalnya disembunyikan oleh JavaScript */
+    display: none; 
 }
 
 #answer-input {
-    padding: 8px;
+    padding: 10px;
     margin: 10px 0;
-    width: 200px;
+    width: 80%;
     border-radius: 5px;
     border: 1px solid #ccc;
+    font-size: 16px;
 }
 
 #result-text {
     font-weight: bold;
     margin-top: 10px;
+    min-height: 24px; /* Mencegah layout 'loncat' saat teks muncul */
 }
 
-/* Anda bisa menambahkan kelas untuk warna hasil */
 .correct {
-    color: green;
+    color: #28a745;
 }
 
 .incorrect {
-    color: red;
+    color: #dc3545;
+}
