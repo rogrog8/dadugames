@@ -1,9 +1,5 @@
-/* --- Tampilan Baru & Modern --- */
-
-/* 1. Impor Font dari Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-/* 2. Style Dasar untuk Body dengan Gradient */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
@@ -16,9 +12,8 @@ body {
     box-sizing: border-box;
 }
 
-/* 3. Container Utama dengan Efek Kaca Buram (Frosted Glass) */
 .container {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
     padding: 30px 40px;
     border-radius: 20px;
@@ -26,256 +21,141 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.18);
     text-align: center;
     width: 100%;
-    max-width: 500px;
-    transition: all 0.3s ease;
+    max-width: 600px;
+    min-height: 500px;
 }
 
-h1 {
-    color: #333;
-    font-weight: 700;
-    margin-bottom: 25px;
+/* --- LAYAR PETA LEVEL --- */
+#level-select-screen .subtitle {
+    margin-bottom: 30px;
+    color: #555;
 }
-
-/* 4. Area Dadu dan Tombol Kocok Utama */
-.game-area {
-    margin-bottom: 25px;
-}
-
-#dice-img {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 25px;
-}
-
-.shake {
-    animation: shake-animation 0.5s ease-in-out;
-}
-
-@keyframes shake-animation {
-    0% { transform: rotate(0deg) scale(1); }
-    25% { transform: rotate(-15deg) scale(1.1); }
-    50% { transform: rotate(15deg) scale(1.1); }
-    100% { transform: rotate(0deg) scale(1); }
-}
-
-/* Tombol Kocok Dadu yang Menonjol */
-#roll-button {
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(45deg, #007bff, #0056b3);
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-    transition: all 0.2s ease-in-out;
-}
-
-#roll-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
-}
-
-#roll-button:active {
-    transform: translateY(1px);
-}
-
-#roll-button:disabled {
-    background: #a0c3e6;
-    box-shadow: none;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* 5. Area Pertanyaan dengan Tampilan yang Jelas */
-.question-area {
-    margin-top: 25px;
-    padding-top: 25px;
-    border-top: 1px solid #ddd;
-    display: none; 
-}
-
-/* Inilah bagian yang Anda minta! */
-#question-text {
-    color: #1a237e; /* Warna biru tua untuk pertanyaan */
-    font-weight: 600;
-    font-size: 1.25em; /* Sedikit lebih besar */
-    margin-bottom: 20px;
-}
-
-/* 6. Tombol Pilihan Ganda yang Elegan */
-.options-container {
+#level-map {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 20px;
 }
-
-.option-button {
-    padding: 12px 10px;
-    font-size: 16px;
-    font-weight: 600;
+.level-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    border: 3px solid;
+    font-size: 2em;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    border: 2px solid #b3e5fc;
-    border-radius: 10px;
-    background-color: #f0f8ff;
-    color: #0277bd;
     transition: all 0.2s ease;
 }
-
-.option-button:hover:not(:disabled) {
-    background-color: #0277bd;
+.level-icon.unlocked {
+    background-color: #28a745;
+    border-color: #1e7e34;
     color: white;
-    border-color: #0277bd;
-    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.5);
 }
-
-.option-button:disabled {
+.level-icon.unlocked:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.6);
+}
+.level-icon.locked {
+    background-color: #6c757d;
+    border-color: #495057;
+    color: #ced4da;
     cursor: not-allowed;
     opacity: 0.7;
 }
 
-/* Style untuk jawaban benar dan salah */
-.option-button.correct {
-    background-color: #28a745;
-    border-color: #1e7e34;
-    color: white;
-    transform: scale(1.05);
-}
-
-.option-button.incorrect {
-    background-color: #dc3545;
-    border-color: #b21f2d;
-    color: white;
-    transform: scale(1.05);
-}
-
-/* 7. Teks Hasil Jawaban */
-#result-text {
-    font-weight: 700;
-    font-size: 1.1em;
-    margin-top: 25px;
-    min-height: 28px;
-}
-
-.correct {
-    color: #28a745;
-}
-
-.incorrect {
-    color: #dc3545;
-}
-/* ... (semua kode CSS sebelumnya) ... */
-
-/* 8. Style untuk Statistik Pemain */
-/* 8. Style untuk Statistik Pemain */
-.game-stats {
+/* --- LAYAR ARENA GAME --- */
+.game-header {
     display: flex;
-    justify-content: space-between; /* <-- Ubah dari space-around */
+    justify-content: space-between;
     align-items: center;
-    background-color: #e3f2fd;
-    padding: 10px 20px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    border: 2px solid #bbdefb;
-}
-
-.stat-item {
-    color: #0d47a1;
-    font-size: 1.1em;
-    font-weight: 600;
-}
-
-#level-text, #score-text {
-    background-color: #0d47a1;
-    color: white;
-    padding: 2px 10px;
-    border-radius: 8px;
-
-}
-
-/* Style untuk tombol ulangi level */
-#restart-button {
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(45deg, #ffc107, #ff9800); /* Warna oranye/kuning */
-    color: white;
-    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
-    transition: all 0.2s ease-in-out;
-    margin-top: 10px; /* Beri jarak jika muncul di bawah tombol kocok */
-}
-
-#restart-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.5);
-}
-
-/* Style untuk wadah timer */
-#timer-container {
-    width: 100%;
-    height: 10px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    overflow: hidden; /* Penting agar bar tidak keluar dari wadah */
-}
-
-/* Style untuk bar waktu yang akan bergerak */
-#timer-bar {
-    height: 100%;
-    width: 100%; /* Mulai dari penuh */
-    background: linear-gradient(90deg, #28a745, #20c997); /* Gradient hijau */
-    border-radius: 5px;
-    transition: width 0.5s linear; /* Transisi agar pergerakan mulus */
-}
-
-/* ... (semua kode CSS sebelumnya tetap di atas) ... */
-
-/* 9. Style untuk Layar Mulai */
-#start-screen {
-    text-align: center;
-}
-
-#start-screen .subtitle {
-    font-size: 1.1em;
-    color: #555;
-    margin-bottom: 30px;
-}
-
-#start-screen .age-prompt {
-    color: #333;
     margin-bottom: 20px;
 }
-
-.age-selection {
+#back-to-map-button {
+    background: none;
+    border: 2px solid #6c757d;
+    color: #6c757d;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+#level-title {
+    margin: 0;
+}
+#mystery-boxes-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.mystery-box {
+    height: 100px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    background-color: #007bff;
+    transition: all 0.3s ease;
+    border: 3px solid #0056b3;
+}
+.mystery-box.completed {
+    background-color: #28a745;
+    border-color: #1e7e34;
+    cursor: default;
+    transform: scale(0.95);
+}
+.mystery-box.highlight {
+    box-shadow: 0 0 20px 5px #ffc107;
+    transform: scale(1.05);
+}
+.dice-area {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     align-items: center;
+    gap: 15px;
 }
-
-.age-button {
-    padding: 15px 30px;
-    font-size: 18px;
+#dice-img { width: 80px; height: 80px; }
+#roll-button { /* Style lama bisa dipakai atau disesuaikan */ }
+#info-text {
+    font-size: 1.1em;
     font-weight: 600;
-    cursor: pointer;
-    border: 2px solid #007bff;
-    border-radius: 12px;
-    background-color: #fff;
-    color: #007bff;
-    width: 80%;
-    max-width: 250px;
-    transition: all 0.2s ease-in-out;
+    color: #333;
+    min-height: 25px;
 }
 
-.age-button:hover {
-    background-color: #007bff;
-    color: white;
-    transform: translateY(-3px);
+/* --- POP-UP SOAL (MODAL) --- */
+#question-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+#question-text { color: #1a237e; font-size: 1.25em; }
+#timer-container { width: 100%; height: 10px; background-color: #e9ecef; border-radius: 5px; margin-top: 15px; margin-bottom: 25px; overflow: hidden; }
+#timer-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #28a745, #20c997); border-radius: 5px; transition: width 0.5s linear; }
+.options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+.option-button { /* Style lama bisa dipakai */ }
+#result-text { font-weight: 700; font-size: 1.1em; margin-top: 25px; min-height: 28px; }
+.correct { color: #28a745; }
+.incorrect { color: #dc3545; }
