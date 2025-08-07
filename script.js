@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mengambil elemen-elemen dari HTML
+    // --- PEMILIHAN ELEMEN ---
+    // Layar
+    const startScreen = document.getElementById('start-screen');
+    const gameScreen = document.getElementById('game-screen');
+    // Tombol Usia
+    const ageButtons = document.querySelectorAll('.age-button');
+    // Elemen Game
     const rollButton = document.getElementById('roll-button');
     const restartButton = document.getElementById('restart-button');
     const diceImg = document.getElementById('dice-img');
@@ -22,11 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let perfectRun = true;
     let timer;
     let timeLeft = 10;
+    let selectedAgeGroup = ''; // State baru untuk menyimpan kelompok usia
     const TIME_LIMIT = 10;
     const POINTS_PER_CORRECT_ANSWER = 10;
     const ANIMATION_DURATION = 700;
 
-    // --- FUNGSI UTAMA ---
+    // --- FUNGSI-FUNGSI ---
     
     function loadHighScore() {
         const savedHighScore = localStorage.getItem('highScore') || 0;
@@ -52,8 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Fungsi ini sekarang menggunakan selectedAgeGroup
     function resetAvailableQuestionsForLevel(level) {
-        const levelData = questions[`level${level}`];
+        const levelData = questions[selectedAgeGroup]?.[`level${level}`];
         if (levelData) {
             availableQuestions = [...levelData];
         } else {
@@ -71,16 +79,69 @@ document.addEventListener('DOMContentLoaded', () => {
         return availableQuestions.length === 0;
     }
 
+    function startTimer() { /* ... fungsi ini tetap sama ... */ }
+    function rollDice() { /* ... fungsi ini tetap sama ... */ }
+    function displayQuestion() { /* ... fungsi ini tetap sama ... */ }
+    
+    // Fungsi ini sekarang menggunakan selectedAgeGroup
+    function levelUp() {
+        currentLevel++;
+        if (!questions[selectedAgeGroup]?.[`level${currentLevel}`]) {
+            new Audio('sounds/naik-level.mp3').play();
+            resultText.textContent = `🏆 SELAMAT, ANDA TELAH MENAMATKAN SEMUA LEVEL! 🏆`;
+            resultText.className = 'correct';
+            rollButton.style.display = 'none';
+            restartButton.style.display = 'none';
+            return;
+        }
+        new Audio('sounds/naik-level.mp3').play();
+        resultText.textContent = `🎉 SELAMAT, ANDA NAIK KE LEVEL ${currentLevel}! 🎉`;
+        resultText.className = 'correct';
+        resetAvailableQuestionsForLevel(currentLevel);
+        updateStatsDisplay();
+        setTimeout(() => {
+            rollButton.disabled = false;
+            questionArea.style.display = 'none';
+        }, 2500);
+    }
+
+    function restartLevel() { /* ... fungsi ini tetap sama ... */ }
+    function checkAnswer(selectedOption, selectedButton) { /* ... fungsi ini tetap sama ... */ }
+
+    // --- FUNGSI BARU UNTUK MEMULAI GAME ---
+    function startGame(ageGroup) {
+        selectedAgeGroup = ageGroup;
+        startScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
+
+        // Muat semua data yang diperlukan untuk memulai game
+        loadQuestions();
+        loadHighScore();
+        updateStatsDisplay();
+    }
+
+    // --- EVENT LISTENERS ---
+    // Tambahkan event listener untuk setiap tombol usia
+    ageButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const ageGroup = button.dataset.age;
+            startGame(ageGroup);
+        });
+    });
+
+    // Event listener untuk elemen game
+    rollButton.addEventListener('click', rollDice);
+    restartButton.addEventListener('click', restartLevel);
+
+    // --- Re-paste fungsi yang tidak berubah untuk kelengkapan ---
     function startTimer() {
         timeLeft = TIME_LIMIT;
         timerBar.style.transition = 'none';
         timerBar.style.width = '100%';
-        
         setTimeout(() => {
             timerBar.style.transition = `width ${TIME_LIMIT}s linear`;
             timerBar.style.width = '0%';
         }, 100);
-
         clearInterval(timer);
         timer = setInterval(() => {
             timeLeft--;
@@ -90,14 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 1000);
     }
-
     function rollDice() {
         new Audio('sounds/kocok-dadu.mp3').play();
         rollButton.disabled = true;
         questionArea.style.display = 'none';
         resultText.textContent = '';
         diceImg.classList.add('shake');
-
         setTimeout(() => {
             const result = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${result}.png`;
@@ -105,11 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
             displayQuestion();
         }, ANIMATION_DURATION);
     }
-
     function displayQuestion() {
         const randomIndex = Math.floor(Math.random() * availableQuestions.length);
         currentQuestion = availableQuestions.splice(randomIndex, 1)[0];
-
         questionText.textContent = currentQuestion.question;
         optionsContainer.innerHTML = '';
         const shuffledOptions = currentQuestion.options.sort(() => Math.random() - 0.5);
@@ -123,32 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
         questionArea.style.display = 'block';
         startTimer();
     }
-    
-    // BAGIAN YANG HILANG SEBELUMNYA
-    function levelUp() {
-        currentLevel++;
-        if (!questions[`level${currentLevel}`]) {
-            new Audio('sounds/naik-level.mp3').play();
-            resultText.textContent = `🏆 SELAMAT, ANDA TELAH MENAMATKAN GAME INI! 🏆`;
-            resultText.className = 'correct';
-            rollButton.style.display = 'none';
-            restartButton.style.display = 'none';
-            return;
-        }
-        
-        new Audio('sounds/naik-level.mp3').play();
-        resultText.textContent = `🎉 SELAMAT, ANDA NAIK KE LEVEL ${currentLevel}! 🎉`;
-        resultText.className = 'correct';
-        resetAvailableQuestionsForLevel(currentLevel);
-        updateStatsDisplay();
-
-        setTimeout(() => {
-            rollButton.disabled = false;
-            questionArea.style.display = 'none';
-        }, 2500);
-    }
-
-    // BAGIAN YANG HILANG SEBELUMNYA
     function restartLevel() {
         new Audio('sounds/kocok-dadu.mp3').play();
         resetAvailableQuestionsForLevel(currentLevel);
@@ -158,12 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
         rollButton.style.display = 'block';
         rollButton.disabled = false;
     }
-
     function checkAnswer(selectedOption, selectedButton) {
         clearInterval(timer);
-        
         const isCorrect = selectedOption ? selectedOption.toLowerCase() === currentQuestion.answer.toLowerCase() : false;
-        
         const allOptionButtons = optionsContainer.querySelectorAll('.option-button');
         allOptionButtons.forEach(btn => {
             btn.disabled = true;
@@ -171,22 +199,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('correct');
             }
         });
-
         if (isCorrect) {
-            // BAGIAN YANG HILANG SEBELUMNYA
             new Audio('sounds/jawaban-benar.mp3').play();
             score += POINTS_PER_CORRECT_ANSWER;
             updateStatsDisplay();
-
             if (score > highScore) {
                 highScore = score;
                 localStorage.setItem('highScore', highScore);
                 updateHighScoreDisplay();
             }
-
             resultText.textContent = 'Jawaban Anda benar! 🎉';
             resultText.className = 'correct';
-
         } else {
             new Audio('sounds/jawaban-salah.mp3').play();
             if (selectedButton) {
@@ -196,9 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resultText.className = 'incorrect';
             perfectRun = false;
         }
-        
         if (isLevelComplete()) {
-            // BAGIAN YANG HILANG SEBELUMNYA
             rollButton.disabled = true;
             if (perfectRun) {
                 resultText.textContent = 'Benar! Semua soal level ini selesai dengan sempurna!';
@@ -214,12 +235,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         }
     }
-
-    // --- EVENT LISTENERS ---
-    rollButton.disabled = true;
-    loadQuestions();
-    loadHighScore();
-    updateStatsDisplay();
-    rollButton.addEventListener('click', rollDice);
-    restartButton.addEventListener('click', restartLevel);
 });
