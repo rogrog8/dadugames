@@ -1,40 +1,18 @@
 {
-  "anak": {
-    "level1": [
-      { "question": "Apa warna buah apel yang paling umum?", "options": ["Biru", "Jingga", "Merah", "Ungu"], "answer": "Merah" },
-      { "question": "Manakah hewan yang hidup di air?", "options": ["Ayam", "Kucing", "Ikan", "Monyet"], "answer": "Ikan" },
-      { "question": "Berapa jumlah jari di satu tangan?", "options": ["3", "4", "5", "6"], "answer": "5" },
-      { "question": "Suara anjing adalah...", "options": ["Meong", "Moo", "Kwek", "Guk-guk"], "answer": "Guk-guk" },
-      { "question": "Alat transportasi yang terbang di udara adalah...", "options": ["Mobil", "Kapal", "Pesawat", "Kereta"], "answer": "Pesawat" },
-      { "question": "Tempat kita membeli buku adalah...", "options": ["Apotek", "Pasar", "Toko Buku", "Restoran"], "answer": "Toko Buku" }
-    ]
-  },
-  "remaja": {
-    "level1": [
-      { "question": "Apa nama ibu kota Thailand?", "options": ["Hanoi", "Kuala Lumpur", "Bangkok", "Manila"], "answer": "Bangkok" },
-      { "question": "Siapa penulis novel 'Laskar Pelangi'?", "options": ["Tere Liye", "Pramoedya Ananta Toer", "Andrea Hirata", "Dewi Lestari"], "answer": "Andrea Hirata" },
-      { "question": "Planet terbesar di Tata Surya adalah...", "options": ["Mars", "Jupiter", "Saturnus", "Bumi"], "answer": "Jupiter" },
-      { "question": "Apa singkatan dari 'WWW' dalam konteks internet?", "options": ["World Wide Web", "World Web Wide", "Web World Wide", "Wide World Web"], "answer": "World Wide Web" },
-      { "question": "Berapa jumlah pemain dalam satu tim sepak bola?", "options": ["9", "10", "11", "12"], "answer": "11" },
-      { "question": "Pada tahun berapa film Titanic dirilis?", "options": ["1995", "1997", "1999", "2001"], "answer": "1997" }
-    ],
-    "level2": [
-      { "question": "Apa nama galaksi tempat Tata Surya kita berada?", "options": ["Andromeda", "Triangulum", "Bima Sakti", "Magellan"], "answer": "Bima Sakti" },
-      { "question": "Siapakah yang dijuluki sebagai 'Bapak Pendidikan Nasional'?", "options": ["Soekarno", "Ki Hajar Dewantara", "Mohammad Hatta", "R.A. Kartini"], "answer": "Ki Hajar Dewantara" },
-      { "question": "Benua terluas di dunia adalah...", "options": ["Afrika", "Eropa", "Amerika", "Asia"], "answer": "Asia" },
-      { "question": "Apa mata uang negara Jepang?", "options": ["Won", "Yuan", "Yen", "Ringgit"], "answer": "Yen" },
-      { "question": "Siapa sutradara film 'Avengers: Endgame'?", "options": ["James Cameron", "Christopher Nolan", "Russo Brothers", "Steven Spielberg"], "answer": "Russo Brothers" },
-      { "question": "Lagu 'Bohemian Rhapsody' dipopulerkan oleh band...", "options": ["The Beatles", "Led Zeppelin", "Queen", "The Rolling Stones"], "answer": "Queen" }
-    ]
-  },
-  "dewasa": {
-    "level1": [
-      { "question": "Pada tahun berapa Perang Dunia I dimulai?", "options": ["1914", "1918", "1939", "1945"], "answer": "1914" },
-      { "question": "Apa unsur kimia dengan simbol 'Fe'?", "options": ["Emas", "Perak", "Besi", "Tembaga"], "answer": "Besi" },
-      { "question": "Siapa filsuf Yunani yang merupakan guru dari Alexander Agung?", "options": ["Socrates", "Plato", "Aristoteles", "Pythagoras"], "answer": "Aristoteles" },
-      { "question": "Dalam bidang komputer, apa kepanjangan dari 'SQL'?", "options": ["Structured Query Language", "Simple Question Language", "Standard Query Logic", "System Query Language"], "answer": "Structured Query Language" },
-      { "question": "Lukisan 'Mona Lisa' saat ini dipajang di museum mana?", "options": ["The Met, New York", "Prado, Madrid", "British Museum, London", "Louvre, Paris"], "answer": "Louvre, Paris" },
-      { "question": "Vatican City terletak di dalam kota apa?", "options": ["Milan", "Venesia", "Roma", "Florence"], "answer": "Roma" }
-    ]
-  }
+  "level1": [
+    { "question": "Apa nama ibu kota Korea Selatan?", "options": ["Pyongyang", "Tokyo", "Beijing", "Seoul"], "answer": "Seoul" },
+    { "question": "Berapa jumlah sisi pada sebuah kubus?", "options": ["4", "6", "8", "12"], "answer": "6" },
+    { "question": "Siapa karakter utama dalam serial novel 'Harry Potter'?", "options": ["Hermione Granger", "Ron Weasley", "Harry Potter", "Albus Dumbledore"], "answer": "Harry Potter" },
+    { "question": "Mana dari berikut ini yang merupakan mamalia laut?", "options": ["Hiu", "Paus", "Gurita", "Ikan Tuna"], "answer": "Paus" },
+    { "question": "Alat optik yang digunakan untuk melihat benda-benda jauh di angkasa adalah...", "options": ["Mikroskop", "Teleskop", "Periskop", "Lup"], "answer": "Teleskop" },
+    { "question": "Dalam satu jam ada berapa menit?", "options": ["30", "60", "90", "120"], "answer": "60" }
+  ],
+  "level2": [
+    { "question": "Apa nama samudra yang memisahkan benua Amerika dari Eropa dan Afrika?", "options": ["Pasifik", "Atlantik", "Hindia", "Arktik"], "answer": "Atlantik" },
+    { "question": "Siapa pelukis terkenal yang melukis 'The Starry Night'?", "options": ["Pablo Picasso", "Leonardo da Vinci", "Vincent van Gogh", "Claude Monet"], "answer": "Vincent van Gogh" },
+    { "question": "Berapa titik didih air pada tekanan atmosfer standar?", "options": ["90°C", "100°C", "110°C", "120°C"], "answer": "100°C" },
+    { "question": "Negara manakah yang dikenal dengan julukan 'Negeri Kincir Angin'?", "options": ["Jerman", "Belgia", "Denmark", "Belanda"], "answer": "Belanda" },
+    { "question": "Apa nama ibukota Selandia Baru?", "options": ["Auckland", "Christchurch", "Wellington", "Queenstown"], "answer": "Wellington" },
+    { "question": "Dalam serial TV 'Game of Thrones', apa motto dari House Stark?", "options": ["Hear Me Roar!", "Ours is the Fury", "Winter Is Coming", "Family, Duty, Honor"], "answer": "Winter Is Coming" }
+  ]
 }
