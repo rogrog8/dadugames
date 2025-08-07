@@ -1,27 +1,54 @@
-
 {
-    "1": [
-        { "question": "Siapakah presiden pertama Indonesia?", "answer": "Soekarno" },
-        { "question": "Apa nama ibu kota Jepang?", "answer": "Tokyo" }
-    ],
-    "2": [
-        { "question": "Berapa hasil dari 7 x 8?", "answer": "56" },
-        { "question": "Sebuah segitiga memiliki tiga sisi. Berapa sudut yang dimiliki segitiga?", "answer": "3" }
-    ],
-    "3": [
-        { "question": "Apa nama planet terdekat dengan Matahari?", "answer": "Merkurius" },
-        { "question": "Berapa jumlah hari dalam satu tahun kabisat?", "answer": "366" }
-    ],
-    "4": [
-        { "question": "Apa nama sungai terpanjang di dunia?", "answer": "Nil" },
-        { "question": "Apa ibu kota Australia?", "answer": "Canberra" }
-    ],
-    "5": [
-        { "question": "Siapa penemu lampu pijar?", "answer": "Thomas Edison" },
-        { "question": "Apa nama tulang terbesar di kaki manusia?", "answer": "Femur" }
-    ],
-    "6": [
-        { "question": "Apa nama bahasa pemrograman yang digunakan untuk membuat web?", "answer": "JavaScript" },
-        { "question": "Apa nama samudra terbesar di dunia?", "answer": "Pasifik" }
-    ]
+    "level1": {
+        "1": [
+            { "question": "Apa warna bendera Indonesia?", "options": ["Merah-Putih", "Putih-Merah", "Biru-Putih", "Merah-Kuning"], "answer": "Merah-Putih" },
+            { "question": "Hewan yang bisa terbang adalah...", "options": ["Kucing", "Ayam", "Burung", "Ikan"], "answer": "Burung" }
+        ],
+        "2": [
+            { "question": "Berapa hasil dari 2 + 2?", "options": ["3", "4", "5", "6"], "answer": "4" },
+            { "question": "Ibu kota Indonesia adalah?", "options": ["Bandung", "Surabaya", "Medan", "Jakarta"], "answer": "Jakarta" }
+        ],
+        "3": [
+            { "question": "Matahari terbit dari arah...", "options": ["Barat", "Timur", "Utara", "Selatan"], "answer": "Timur" },
+            { "question": "Alat untuk menulis di papan tulis adalah...", "options": ["Pulpen", "Spidol", "Pensil", "Kuas"], "answer": "Spidol" }
+        ],
+        "4": [
+            { "question": "Berapa jumlah roda pada mobil?", "options": ["2", "3", "4", "6"], "answer": "4" },
+            { "question": "Suara kucing adalah...", "options": ["Guk", "Moo", "Meong", "Kwek"], "answer": "Meong" }
+        ],
+        "5": [
+            { "question": "Kita minum menggunakan...", "options": ["Piring", "Gelas", "Sendok", "Garpu"], "answer": "Gelas" },
+            { "question": "Warna langit saat cerah adalah...", "options": ["Hijau", "Hitam", "Biru", "Merah"], "answer": "Biru" }
+        ],
+        "6": [
+            { "question": "Presiden Indonesia saat ini (2025) adalah...", "options": ["Joko Widodo", "Prabowo Subianto", "Megawati", "Susilo Bambang Yudhoyono"], "answer": "Prabowo Subianto" },
+            { "question": "Setelah hari Selasa adalah hari...", "options": ["Senin", "Rabu", "Kamis", "Jumat"], "answer": "Rabu" }
+        ]
+    },
+    "level2": {
+        "1": [
+            { "question": "Siapa yang menulis naskah proklamasi?", "options": ["Mohammad Hatta", "Soekarno", "Ahmad Soebardjo", "Sayuti Melik"], "answer": "Soekarno" },
+            { "question": "CPU adalah singkatan dari...", "options": ["Central Processing Unit", "Computer Personal Unit", "Central Power Unit", "Core Processing Unit"], "answer": "Central Processing Unit" }
+        ],
+        "2": [
+            { "question": "Berapa hasil dari 12 x 12?", "options": ["124", "134", "144", "154"], "answer": "144" },
+            { "question": "Gunung tertinggi di dunia adalah...", "options": ["Gunung Fuji", "Gunung Everest", "Gunung Kilimanjaro", "Gunung Jaya Wijaya"], "answer": "Gunung Everest" }
+        ],
+        "3": [
+            { "question": "Planet manakah yang dikenal sebagai 'Planet Merah'?", "options": ["Venus", "Mars", "Jupiter", "Saturnus"], "answer": "Mars" },
+            { "question": "Apa nama lautan terdalam di dunia?", "options": ["Palung Mariana", "Palung Jawa", "Palung Tonga", "Palung Filipina"], "answer": "Palung Mariana" }
+        ],
+        "4": [
+            { "question": "Siapakah penemu telepon?", "options": ["Thomas Edison", "Nikola Tesla", "Alexander Graham Bell", "Guglielmo Marconi"], "answer": "Alexander Graham Bell" },
+            { "question": "Negara dengan populasi terbanyak di dunia adalah...", "options": ["China", "Amerika Serikat", "India", "Indonesia"], "answer": "India" }
+        ],
+        "5": [
+            { "question": "Apa unsur kimia dengan simbol 'Au'?", "options": ["Perak", "Aluminium", "Tembaga", "Emas"], "answer": "Emas" },
+            { "question": "Tahun berapa Perang Dunia II berakhir?", "options": ["1942", "1945", "1948", "1950"], "answer": "1945" }
+        ],
+        "6": [
+            { "question": "Dalam mitologi Yunani, siapa nama dewa laut?", "options": ["Zeus", "Hades", "Poseidon", "Apollo"], "answer": "Poseidon" },
+            { "question": "Apa ibukota dari Kanada?", "options": ["Toronto", "Vancouver", "Montreal", "Ottawa"], "answer": "Ottawa" }
+        ]
+    }
 }

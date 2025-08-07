@@ -1,33 +1,52 @@
+/* --- Tampilan Baru & Modern --- */
+
+/* 1. Impor Font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* 2. Style Dasar untuk Body dengan Gradient */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
+/* 3. Container Utama dengan Efek Kaca Buram (Frosted Glass) */
 .container {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     text-align: center;
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    width: 90%;
-    max-width: 480px;
+    width: 100%;
+    max-width: 500px;
+    transition: all 0.3s ease;
 }
 
-.dice-container {
-    margin-bottom: 20px;
+h1 {
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* 4. Area Dadu dan Tombol Kocok Utama */
+.game-area {
+    margin-bottom: 25px;
 }
 
 #dice-img {
     width: 100px;
     height: 100px;
+    margin-bottom: 25px;
 }
 
-/* Animasi untuk mengocok dadu */
 .shake {
     animation: shake-animation 0.5s ease-in-out;
 }
@@ -39,53 +58,105 @@ body {
     100% { transform: rotate(0deg) scale(1); }
 }
 
-/* Tombol dengan state yang lebih jelas */
-#roll-button, #submit-button {
-    padding: 12px 25px;
-    font-size: 16px;
+/* Tombol Kocok Dadu yang Menonjol */
+#roll-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
     cursor: pointer;
     border: none;
-    border-radius: 8px;
-    background-color: #007bff;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #007bff, #0056b3);
     color: white;
-    margin: 5px;
-    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+    transition: all 0.2s ease-in-out;
 }
 
-#roll-button:hover, #submit-button:hover {
-    background-color: #0056b3;
+#roll-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
 }
 
-#roll-button:active, #submit-button:active {
-    transform: scale(0.98);
+#roll-button:active {
+    transform: translateY(1px);
 }
 
-#roll-button:disabled, #submit-button:disabled {
-    background-color: #a0c3e6;
+#roll-button:disabled {
+    background: #a0c3e6;
+    box-shadow: none;
     cursor: not-allowed;
+    transform: none;
 }
 
+/* 5. Area Pertanyaan dengan Tampilan yang Jelas */
 .question-area {
     margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-    /* Awalnya disembunyikan oleh JavaScript */
+    padding-top: 25px;
+    border-top: 1px solid #ddd;
     display: none; 
 }
 
-#answer-input {
-    padding: 10px;
-    margin: 10px 0;
-    width: 80%;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+/* Inilah bagian yang Anda minta! */
+#question-text {
+    color: #1a237e; /* Warna biru tua untuk pertanyaan */
+    font-weight: 600;
+    font-size: 1.25em; /* Sedikit lebih besar */
+    margin-bottom: 20px;
 }
 
+/* 6. Tombol Pilihan Ganda yang Elegan */
+.options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.option-button {
+    padding: 12px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid #b3e5fc;
+    border-radius: 10px;
+    background-color: #f0f8ff;
+    color: #0277bd;
+    transition: all 0.2s ease;
+}
+
+.option-button:hover:not(:disabled) {
+    background-color: #0277bd;
+    color: white;
+    border-color: #0277bd;
+    transform: scale(1.05);
+}
+
+.option-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Style untuk jawaban benar dan salah */
+.option-button.correct {
+    background-color: #28a745;
+    border-color: #1e7e34;
+    color: white;
+    transform: scale(1.05);
+}
+
+.option-button.incorrect {
+    background-color: #dc3545;
+    border-color: #b21f2d;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* 7. Teks Hasil Jawaban */
 #result-text {
-    font-weight: bold;
-    margin-top: 10px;
-    min-height: 24px; /* Mencegah layout 'loncat' saat teks muncul */
+    font-weight: 700;
+    font-size: 1.1em;
+    margin-top: 25px;
+    min-height: 28px;
 }
 
 .correct {
@@ -94,4 +165,29 @@ body {
 
 .incorrect {
     color: #dc3545;
+}
+/* ... (semua kode CSS sebelumnya) ... */
+
+/* 8. Style untuk Statistik Pemain */
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    background-color: #e3f2fd;
+    padding: 10px 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 2px solid #bbdefb;
+}
+
+.stat-item {
+    color: #0d47a1;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+#level-text, #score-text {
+    background-color: #0d47a1;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 8px;
 }

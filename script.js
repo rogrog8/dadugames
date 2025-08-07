@@ -4,24 +4,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const diceImg = document.getElementById('dice-img');
     const questionArea = document.getElementById('question-area');
     const questionText = document.getElementById('question-text');
-    const answerInput = document.getElementById('answer-input');
-    const submitButton = document.getElementById('submit-button');
+    const optionsContainer = document.getElementById('options-container');
     const resultText = document.getElementById('result-text');
+    const levelText = document.getElementById('level-text');
+    const scoreText = document.getElementById('score-text');
 
+    // --- STATE PERMAINAN ---
     let currentQuestion;
     let questions = {};
+    let availableQuestions = {};
+    let currentLevel = 1;
+    let score = 0;
+    let scoreToNextLevel = 50;
+    const POINTS_PER_CORRECT_ANSWER = 10;
+    const ANIMATION_DURATION = 700;
 
     // --- FUNGSI UTAMA ---
 
-    // 1. Memuat soal dari file JSON saat halaman dibuka
     async function loadQuestions() {
         try {
             const response = await fetch('database.json');
-            if (!response.ok) {
-                throw new Error(`Gagal mengambil data: ${response.statusText}`);
-            }
+            if (!response.ok) throw new Error(`Gagal mengambil data: ${response.statusText}`);
             questions = await response.json();
-            // Aktifkan tombol kocok setelah soal berhasil dimuat
+            resetAvailableQuestionsForLevel(1); 
             rollButton.disabled = false;
         } catch (error) {
             console.error("Gagal memuat soal:", error);
@@ -30,83 +35,110 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Fungsi untuk mengocok dadu dengan animasi dan alur yang jelas
+    function resetAvailableQuestionsForLevel(level) {
+        const levelData = questions[`level${level}`];
+        if (levelData) {
+            availableQuestions = JSON.parse(JSON.stringify(levelData));
+        } else {
+            availableQuestions = {};
+        }
+    }
+
+    function updateStatsDisplay() {
+        levelText.textContent = currentLevel;
+        scoreText.textContent = score;
+    }
+
     function rollDice() {
-        // Nonaktifkan tombol dan sembunyikan pertanyaan lama
+        new Audio('sounds/kocok-dadu.mp3').play(); // Suara dadu dikocok
         rollButton.disabled = true;
         questionArea.style.display = 'none';
         resultText.textContent = '';
-        diceImg.classList.add('shake'); // Tambahkan animasi
+        diceImg.classList.add('shake');
 
-        // Atur jeda untuk efek animasi
         setTimeout(() => {
             const result = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${result}.png`;
-            diceImg.classList.remove('shake'); // Hapus animasi
-            
+            diceImg.classList.remove('shake');
             displayQuestion(result);
-        }, 700); // Durasi animasi 0.7 detik
+        }, ANIMATION_DURATION);
     }
 
-    // 3. Menampilkan soal berdasarkan angka dadu
     function displayQuestion(diceNumber) {
-        const questionList = questions[diceNumber];
-        if (questionList && questionList.length > 0) {
-            const randomIndex = Math.floor(Math.random() * questionList.length);
-            currentQuestion = questionList[randomIndex];
-            
-            questionText.textContent = currentQuestion.question;
-            answerInput.value = '';
-
-            // Tampilkan area pertanyaan dan aktifkan kembali input
+        const currentLevelKey = `level${currentLevel}`;
+        if (!questions[currentLevelKey]) {
+            questionText.textContent = `Selamat! Anda telah menamatkan semua level!`;
+            optionsContainer.innerHTML = '';
             questionArea.style.display = 'block';
-            answerInput.disabled = false;
-            submitButton.disabled = false;
-            answerInput.focus(); // Langsung fokus ke kolom jawaban
-        } else {
-            // Jika karena suatu hal tidak ada soal, aktifkan kembali tombol kocok
-            questionText.textContent = "Tidak ada soal untuk nomor ini.";
-            rollButton.disabled = false;
+            rollButton.disabled = true;
+            return;
         }
+        if (!availableQuestions[diceNumber] || availableQuestions[diceNumber].length === 0) {
+            availableQuestions[diceNumber] = [...questions[currentLevelKey][diceNumber]];
+        }
+        const questionList = availableQuestions[diceNumber];
+        const randomIndex = Math.floor(Math.random() * questionList.length);
+        currentQuestion = questionList.splice(randomIndex, 1)[0];
+        questionText.textContent = currentQuestion.question;
+        optionsContainer.innerHTML = ''; 
+        const shuffledOptions = currentQuestion.options.sort(() => Math.random() - 0.5);
+        shuffledOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.classList.add('option-button');
+            button.addEventListener('click', () => checkAnswer(option, button));
+            optionsContainer.appendChild(button);
+        });
+        questionArea.style.display = 'block';
+    }
+    
+    function levelUp() {
+        new Audio('sounds/naik-level.mp3').play(); // Suara naik level
+        currentLevel++;
+        scoreToNextLevel *= 2; 
+        resultText.textContent = `🎉 SELAMAT, ANDA NAIK KE LEVEL ${currentLevel}! 🎉`;
+        resultText.className = 'correct';
+        resetAvailableQuestionsForLevel(currentLevel); 
+        updateStatsDisplay();
     }
 
-    // 4. Memeriksa jawaban pengguna
-    function checkAnswer() {
-        // Ambil dan bersihkan jawaban pengguna
-        const userAnswer = answerInput.value.trim().toLowerCase();
-        if (userAnswer === '') return; // Jangan lakukan apa-apa jika kosong
+    function checkAnswer(selectedOption, selectedButton) {
+        const isCorrect = selectedOption.toLowerCase() === currentQuestion.answer.toLowerCase();
+        const allOptionButtons = optionsContainer.querySelectorAll('.option-button');
+        allOptionButtons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+                btn.classList.add('correct');
+            }
+        });
 
-        const correctAnswer = currentQuestion.answer.toLowerCase();
-        
-        // Nonaktifkan input setelah menjawab
-        answerInput.disabled = true;
-        submitButton.disabled = true;
-
-        if (userAnswer === correctAnswer) {
-            resultText.textContent = 'Jawaban Anda benar! 🎉';
-            resultText.className = 'correct';
+        if (isCorrect) {
+            new Audio('sounds/jawaban-benar.mp3').play(); // Suara jawaban benar
+            score += POINTS_PER_CORRECT_ANSWER;
+            updateStatsDisplay();
+            if (score >= scoreToNextLevel) {
+                levelUp();
+            } else {
+                resultText.textContent = 'Jawaban Anda benar! 🎉';
+                resultText.className = 'correct';
+            }
         } else {
-            resultText.textContent = `Salah. Jawaban yang benar: "${currentQuestion.answer}"`;
+            new Audio('sounds/jawaban-salah.mp3').play(); // Suara jawaban salah
+            selectedButton.classList.add('incorrect');
+            resultText.textContent = 'Jawaban Anda salah.';
             resultText.className = 'incorrect';
         }
         
-        // Aktifkan kembali tombol kocok agar bisa main lagi
-        rollButton.disabled = false; 
+        setTimeout(() => {
+            if(questions[`level${currentLevel}`]) {
+                 rollButton.disabled = false;
+            }
+        }, 2000);
     }
 
     // --- EVENT LISTENERS ---
-
-    // Mulai dengan menonaktifkan tombol kocok sampai soal termuat
     rollButton.disabled = true;
     loadQuestions();
-
+    updateStatsDisplay();
     rollButton.addEventListener('click', rollDice);
-    submitButton.addEventListener('click', checkAnswer);
-    
-    // Tambahkan fungsionalitas tombol 'Enter'
-    answerInput.addEventListener('keyup', (event) => {
-        if (event.key === 'Enter') {
-            checkAnswer();
-        }
-    });
 });
