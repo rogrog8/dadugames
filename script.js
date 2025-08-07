@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLevel = 1;
     let levelQuestions = [];
     let completedBoxes = [];
-    let lastDiceRoll = 0;
+    let lastDiceRoll = 0; // Variabel kunci untuk menentukan kotak mana yang aktif
     let currentQuestion = {};
     let timer;
     const TIME_LIMIT = 10;
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showLevelSelect() {
         levelSelectScreen.style.display = 'block';
         gameScreen.style.display = 'none';
-        questionModal.style.display = 'none';
+        questionModal.classList.remove('visible');
         renderLevelMap();
     }
 
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalLevels = Object.keys(questions).length;
         for (let i = 1; i <= totalLevels; i++) {
             const icon = document.createElement('button');
-            icon.classList.add('level-icon');
+            icon.classList.add('neumorphic-button', 'level-icon'); // Menggunakan style Neumorphism
             icon.dataset.level = i;
             icon.textContent = i;
             if (i <= unlockedLevel) {
@@ -107,42 +107,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 box.textContent = '✅';
             } else {
                 box.textContent = '?';
+                // PENTING: Event listener ditambahkan di sini
                 box.addEventListener('click', () => handleBoxClick(i));
             }
             mysteryBoxesContainer.appendChild(box);
         }
     }
 
-// ... (kode lainnya tetap sama) ...
-
     function rollDice() {
         new Audio('sounds/kocok-dadu.mp3').play();
-        lastDiceRoll = 0; // Reset
-        let rollCount = 0;
+        lastDiceRoll = 0; // Reset hasil dadu, membuat semua kotak tidak bisa diklik sementara
+        infoText.textContent = 'Mengocok...';
+        diceImg.classList.add('spinning');
         
-        // Ganti class 'shake' (jika masih ada) dengan 'spinning'
-        diceImg.classList.add('spinning'); 
-
-        const rollInterval = setInterval(() => {
-            const randomResult = Math.floor(Math.random() * 6) + 1;
-            diceImg.src = `images/dice-${randomResult}.png`;
-            rollCount++;
-            if (rollCount > 10) {
-                clearInterval(rollInterval);
-                
-                // Hapus class 'spinning' setelah animasi selesai
-                diceImg.classList.remove('spinning'); 
-                
-                finishRoll(randomResult);
-            }
-        }, 100);
+        // Simulasi animasi putaran
+        setTimeout(() => {
+            const result = Math.floor(Math.random() * 6) + 1;
+            diceImg.src = `images/dice-${result}.png`;
+            diceImg.classList.remove('spinning');
+            finishRoll(result); // Panggil fungsi ini SETELAH animasi selesai
+        }, 600); // Sesuaikan durasi dengan animasi CSS (0.6s)
     }
-
-// ... (kode lainnya tetap sama) ...
     
     function finishRoll(result) {
-        lastDiceRoll = result;
-        // Hapus highlight dari semua kotak
+        lastDiceRoll = result; // **INI BAGIAN KRITIS YANG DIPERBAIKI**
         document.querySelectorAll('.mystery-box').forEach(b => b.classList.remove('highlight'));
         
         if (completedBoxes[lastDiceRoll - 1]) {
@@ -155,11 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleBoxClick(boxId) {
+        // Pengecekan agar kotak hanya bisa diklik jika nomornya sesuai hasil dadu
         if (boxId !== lastDiceRoll) {
-            infoText.textContent = `Anda harus mengocok dadu angka ${boxId} untuk membuka kotak ini!`;
+            infoText.textContent = `Anda harus mendapatkan angka ${boxId} untuk membuka kotak ini!`;
             return;
         }
-        if (completedBoxes[boxId - 1]) return;
+        if (completedBoxes[boxId - 1]) return; // Kotak sudah selesai
 
         currentQuestion = { ...levelQuestions[boxId - 1], boxId: boxId };
         displayQuestionModal();
@@ -170,13 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
         optionsContainer.innerHTML = '';
         currentQuestion.options.forEach(option => {
             const button = document.createElement('button');
-            button.classList.add('option-button');
+            button.classList.add('neumorphic-button', 'option-button');
             button.textContent = option;
             button.addEventListener('click', () => checkAnswer(option));
             optionsContainer.appendChild(button);
         });
         resultText.textContent = '';
-        questionModal.style.display = 'flex';
+        questionModal.classList.add('visible');
         startTimer();
     }
 
@@ -199,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
             resultText.className = 'correct';
             completedBoxes[currentQuestion.boxId - 1] = true;
 
-            // Cek jika level selesai
             if (completedBoxes.every(status => status === true)) {
                 setTimeout(levelComplete, 1500);
             }
@@ -210,9 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         setTimeout(() => {
-            questionModal.style.display = 'none';
+            questionModal.classList.remove('visible');
             renderMysteryBoxes();
             infoText.textContent = 'Kocok dadu untuk melanjutkan!';
+            lastDiceRoll = 0; // Reset hasil dadu setelah menjawab
         }, 2000);
     }
 
@@ -224,11 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
             unlockedLevel++;
             localStorage.setItem('unlockedLevel', unlockedLevel);
         }
-        // Beri waktu pemain untuk melihat hasilnya sebelum kembali ke peta
         setTimeout(showLevelSelect, 3000);
     }
     
-    // Re-paste fungsi timer untuk kelengkapan
     function startTimer() {
         let timeLeft = TIME_LIMIT;
         timerBar.style.transition = 'none';
