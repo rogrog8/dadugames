@@ -3,50 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Dadu Asah Otak</title>
+    <title>Petualangan Kuis Dadu</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
-        <div id="start-screen">
-            <h1>Game Dadu Asah Otak 🎲</h1>
-            <p class="subtitle">Tantang pengetahuanmu dengan kuis dadu seru!</p>
-            <h2 class="age-prompt">Pilih Kelompok Usia:</h2>
-            <div class="age-selection">
-                <button class="age-button" data-age="anak">Anak-anak</button>
-                <button class="age-button" data-age="remaja">Remaja</button>
-                <button class="age-button" data-age="dewasa">Dewasa</button>
-            </div>
+        <div id="level-select-screen">
+            <h1>Petualangan Kuis Dadu 🎲</h1>
+            <p class="subtitle">Selesaikan setiap level untuk membuka level berikutnya!</p>
+            <div id="level-map">
+                </div>
         </div>
 
         <div id="game-screen" style="display: none;">
-            <div class="game-stats">
-                <div class="stat-item">
-                    Level: <span id="level-text">1</span>
-                </div>
-                <div class="stat-item">
-                    Skor: <span id="score-text">0</span>
-                </div>
-                <div class="stat-item">
-                    High Score: <span id="high-score-text">0</span>
-                </div>
+            <div class="game-header">
+                <button id="back-to-map-button">⬅️ Peta Level</button>
+                <h2 id="level-title">Level 1</h2>
             </div>
-            <div class="game-area">
-                <div id="dice-container" class="dice-container">
-                    <img id="dice-img" src="images/dice-1.png" alt="Gambar Dadu">
+            <div id="mystery-boxes-container">
                 </div>
+            <div class="dice-area">
+                <img id="dice-img" src="images/dice-1.png" alt="Gambar Dadu">
                 <button id="roll-button">Kocok Dadu!</button>
-                <button id="restart-button" style="display: none;">Ulangi Level</button>
             </div>
-            <div id="question-area" class="question-area">
-                <h2 id="question-text"></h2>
-                <div id="timer-container">
-                    <div id="timer-bar"></div>
-                </div>
-                <div id="options-container" class="options-container"></div>
-                <p id="result-text"></p>
+            <p id="info-text">Kocok dadu untuk memulai!</p>
+        </div>
+    </div>
+
+    <div id="question-modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="question-text"></h2>
+            <div id="timer-container">
+                <div id="timer-bar"></div>
             </div>
+            <div id="options-container" class="options-container"></div>
+            <p id="result-text"></p>
         </div>
     </div>
 
