@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Mengambil elemen-elemen dari HTML
     const rollButton = document.getElementById('roll-button');
-    const restartButton = document.getElementById('restart-button'); // Tombol baru
+    const restartButton = document.getElementById('restart-button');
     const diceImg = document.getElementById('dice-img');
     const questionArea = document.getElementById('question-area');
     const questionText = document.getElementById('question-text');
@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLevel = 1;
     let score = 0;
     let highScore = 0;
+    
+    // Variabel baru untuk melacak apakah ada kesalahan di level saat ini
+    let perfectRun = true; 
+
     const POINTS_PER_CORRECT_ANSWER = 10;
     const ANIMATION_DURATION = 700;
 
@@ -54,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             availableQuestions = {};
         }
+        perfectRun = true; // Reset pelacak kesalahan setiap kali level dimulai/diulang
     }
 
     function updateStatsDisplay() {
@@ -86,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayQuestion(diceNumber) {
-        // Aturan #2: Soal tidak akan berulang karena 'splice' menghapusnya saat ditampilkan.
         const questionList = availableQuestions[diceNumber];
 
         if (!questionList || questionList.length === 0) {
@@ -114,12 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function levelUp() {
         currentLevel++;
-        // Aturan #3: Cek apakah level berikutnya ada di database
         if (!questions[`level${currentLevel}`]) {
             new Audio('sounds/naik-level.mp3').play();
             resultText.textContent = `🏆 SELAMAT, ANDA TELAH MENAMATKAN GAME INI! 🏆`;
             resultText.className = 'correct';
-            rollButton.disabled = true;
+            rollButton.style.display = 'none';
+            restartButton.style.display = 'none';
             return;
         }
         
@@ -135,14 +139,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2500);
     }
 
-    // Fungsi baru untuk menangani restart level
     function restartLevel() {
-        new Audio('sounds/kocok-dadu.mp3').play(); // Beri suara sebagai feedback
-        resetAvailableQuestionsForLevel(currentLevel); // Isi ulang soal untuk level saat ini
+        new Audio('sounds/kocok-dadu.mp3').play();
+        resetAvailableQuestionsForLevel(currentLevel);
         questionArea.style.display = 'none';
         resultText.textContent = '';
-        restartButton.style.display = 'none'; // Sembunyikan tombol restart
-        rollButton.style.display = 'block'; // Tampilkan lagi tombol kocok
+        restartButton.style.display = 'none';
+        rollButton.style.display = 'block';
         rollButton.disabled = false;
     }
 
@@ -168,27 +171,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateHighScoreDisplay();
             }
 
-            // Aturan #1: Cek penyelesaian level hanya jika jawaban benar
-            if (isLevelComplete()) {
-                resultText.textContent = 'Benar! Semua soal level ini selesai!';
-                resultText.className = 'correct';
-                rollButton.disabled = true; // Nonaktifkan tombol kocok saat transisi level
-                setTimeout(levelUp, 2000); 
-            } else {
-                resultText.textContent = 'Jawaban Anda benar! 🎉';
-                resultText.className = 'correct';
-                setTimeout(() => { rollButton.disabled = false; }, 2000);
-            }
+            resultText.textContent = 'Jawaban Anda benar! 🎉';
+            resultText.className = 'correct';
+
         } else {
-            // Aturan Tambahan: Jika jawaban salah, WAJIB MENGULANG LEVEL
             new Audio('sounds/jawaban-salah.mp3').play();
             selectedButton.classList.add('incorrect');
-            resultText.textContent = 'Salah! Anda harus mengulang level ini dari awal.';
+            resultText.textContent = 'Jawaban Anda salah.';
             resultText.className = 'incorrect';
-            
-            // Sembunyikan tombol kocok dan tampilkan tombol restart
-            rollButton.style.display = 'none';
-            restartButton.style.display = 'block';
+            perfectRun = false; // Tandai bahwa ada kesalahan di level ini
+        }
+        
+        // Cek kondisi HANYA setelah semua soal dijawab
+        if (isLevelComplete()) {
+            rollButton.disabled = true; // Nonaktifkan tombol kocok sementara
+            if (perfectRun) {
+                // Jika tidak ada kesalahan sama sekali, naik level
+                resultText.textContent = 'Benar! Semua soal level ini selesai dengan sempurna!';
+                setTimeout(levelUp, 2000); 
+            } else {
+                // Jika ada kesalahan, tampilkan tombol ulangi
+                resultText.textContent = 'Anda menyelesaikan semua soal, tapi ada kesalahan. Ulangi level ini.';
+                rollButton.style.display = 'none';
+                restartButton.style.display = 'block';
+            }
+        } else {
+            // Jika level belum selesai, aktifkan kembali tombol kocok
+            setTimeout(() => { 
+                rollButton.disabled = false; 
+            }, 2000);
         }
     }
 
@@ -198,5 +209,5 @@ document.addEventListener('DOMContentLoaded', () => {
     loadHighScore();
     updateStatsDisplay();
     rollButton.addEventListener('click', rollDice);
-    restartButton.addEventListener('click', restartLevel); // Tambahkan event listener untuk tombol baru
+    restartButton.addEventListener('click', restartLevel);
 });
