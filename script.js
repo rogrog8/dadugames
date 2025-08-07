@@ -8,12 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitButton = document.getElementById('submit-button');
     const resultText = document.getElementById('result-text');
 
+    // Variabel state game
+    let questions = {}; // Akan menyimpan master list dari JSON
+    let availableQuestions = {}; // Menyimpan soal yang belum ditanyakan
     let currentQuestion;
-    let questions = {};
+
+    // Konstanta untuk durasi, agar mudah diubah
+    const ANIMATION_DURATION = 700; // dalam milidetik
 
     // --- FUNGSI UTAMA ---
 
-    // 1. Memuat soal dari file JSON saat halaman dibuka
+    // 1. Memuat soal dan menginisialisasi state game
     async function loadQuestions() {
         try {
             const response = await fetch('database.json');
@@ -21,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`Gagal mengambil data: ${response.statusText}`);
             }
             questions = await response.json();
-            // Aktifkan tombol kocok setelah soal berhasil dimuat
+            // Salin master list ke daftar soal yang tersedia. JSON.parse/stringify untuk deep copy.
+            availableQuestions = JSON.parse(JSON.stringify(questions));
             rollButton.disabled = false;
         } catch (error) {
             console.error("Gagal memuat soal:", error);
@@ -30,41 +36,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Fungsi untuk mengocok dadu dengan animasi dan alur yang jelas
+    // 2. Fungsi untuk mengocok dadu
     function rollDice() {
-        // Nonaktifkan tombol dan sembunyikan pertanyaan lama
         rollButton.disabled = true;
         questionArea.style.display = 'none';
         resultText.textContent = '';
-        diceImg.classList.add('shake'); // Tambahkan animasi
+        diceImg.classList.add('shake');
 
-        // Atur jeda untuk efek animasi
         setTimeout(() => {
             const result = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${result}.png`;
-            diceImg.classList.remove('shake'); // Hapus animasi
+            diceImg.classList.remove('shake');
             
             displayQuestion(result);
-        }, 700); // Durasi animasi 0.7 detik
+        }, ANIMATION_DURATION);
     }
 
-    // 3. Menampilkan soal berdasarkan angka dadu
+    // 3. Menampilkan soal (dengan logika anti-ulang)
     function displayQuestion(diceNumber) {
-        const questionList = questions[diceNumber];
+        // **PENYEMPURNAAN 1: Logika Anti-Ulang**
+        // Jika daftar soal untuk angka dadu ini sudah habis, isi ulang dari master list.
+        if (!availableQuestions[diceNumber] || availableQuestions[diceNumber].length === 0) {
+            console.log(`Mengisi ulang soal untuk dadu angka ${diceNumber}...`);
+            availableQuestions[diceNumber] = [...questions[diceNumber]];
+        }
+        
+        const questionList = availableQuestions[diceNumber];
+
         if (questionList && questionList.length > 0) {
+            // Ambil soal secara acak dan HAPUS dari daftar yang tersedia
             const randomIndex = Math.floor(Math.random() * questionList.length);
-            currentQuestion = questionList[randomIndex];
-            
+            currentQuestion = questionList.splice(randomIndex, 1)[0]; // .splice() menghapus elemen
+
             questionText.textContent = currentQuestion.question;
             answerInput.value = '';
-
-            // Tampilkan area pertanyaan dan aktifkan kembali input
+            
             questionArea.style.display = 'block';
             answerInput.disabled = false;
             submitButton.disabled = false;
-            answerInput.focus(); // Langsung fokus ke kolom jawaban
+            answerInput.focus();
         } else {
-            // Jika karena suatu hal tidak ada soal, aktifkan kembali tombol kocok
             questionText.textContent = "Tidak ada soal untuk nomor ini.";
             rollButton.disabled = false;
         }
@@ -72,41 +83,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Memeriksa jawaban pengguna
     function checkAnswer() {
-        // Ambil dan bersihkan jawaban pengguna
         const userAnswer = answerInput.value.trim().toLowerCase();
-        if (userAnswer === '') return; // Jangan lakukan apa-apa jika kosong
+        if (userAnswer === '') return;
 
         const correctAnswer = currentQuestion.answer.toLowerCase();
         
-        // Nonaktifkan input setelah menjawab
         answerInput.disabled = true;
         submitButton.disabled = true;
 
         if (userAnswer === correctAnswer) {
             resultText.textContent = 'Jawaban Anda benar! 🎉';
             resultText.className = 'correct';
+            
+            // **PENYEMPURNAAN 2: Alur Lebih Mulus**
+            // Sembunyikan area pertanyaan setelah 2 detik agar UI bersih
+            setTimeout(() => {
+                questionArea.style.display = 'none';
+                rollButton.disabled = false; // Aktifkan tombol kocok setelah UI bersih
+            }, 2000);
+
         } else {
             resultText.textContent = `Salah. Jawaban yang benar: "${currentQuestion.answer}"`;
             resultText.className = 'incorrect';
+            // Langsung aktifkan kembali tombol kocok jika salah
+            rollButton.disabled = false; 
         }
-        
-        // Aktifkan kembali tombol kocok agar bisa main lagi
-        rollButton.disabled = false; 
     }
 
     // --- EVENT LISTENERS ---
-
-    // Mulai dengan menonaktifkan tombol kocok sampai soal termuat
     rollButton.disabled = true;
     loadQuestions();
 
     rollButton.addEventListener('click', rollDice);
     submitButton.addEventListener('click', checkAnswer);
     
-    // Tambahkan fungsionalitas tombol 'Enter'
     answerInput.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
-            checkAnswer();
+            // Pastikan input tidak dinonaktifkan sebelum submit
+            if (!answerInput.disabled) {
+                checkAnswer();
+            }
         }
     });
 });
