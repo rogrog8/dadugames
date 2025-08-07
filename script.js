@@ -14,14 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- STATE PERMAINAN ---
     let currentQuestion;
     let questions = {};
-    let availableQuestions = {};
+    let availableQuestions = []; // Sekarang menjadi array, bukan objek
     let currentLevel = 1;
     let score = 0;
     let highScore = 0;
-    
-    // Variabel baru untuk melacak apakah ada kesalahan di level saat ini
     let perfectRun = true; 
-
     const POINTS_PER_CORRECT_ANSWER = 10;
     const ANIMATION_DURATION = 700;
 
@@ -54,11 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetAvailableQuestionsForLevel(level) {
         const levelData = questions[`level${level}`];
         if (levelData) {
-            availableQuestions = JSON.parse(JSON.stringify(levelData));
+            // Salin array soal untuk level saat ini
+            availableQuestions = [...levelData];
         } else {
-            availableQuestions = {};
+            availableQuestions = []; // Level tidak ada, kosongkan array
         }
-        perfectRun = true; // Reset pelacak kesalahan setiap kali level dimulai/diulang
+        perfectRun = true;
     }
 
     function updateStatsDisplay() {
@@ -67,12 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function isLevelComplete() {
-        for (const diceKey in availableQuestions) {
-            if (availableQuestions[diceKey].length > 0) {
-                return false; 
-            }
-        }
-        return true;
+        // Level selesai jika array soal yang tersedia kosong
+        return availableQuestions.length === 0;
     }
 
     function rollDice() {
@@ -86,23 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${result}.png`;
             diceImg.classList.remove('shake');
-            displayQuestion(result);
+            displayQuestion(); // Tidak perlu lagi mengirimkan angka dadu
         }, ANIMATION_DURATION);
     }
 
-    function displayQuestion(diceNumber) {
-        const questionList = availableQuestions[diceNumber];
+    function displayQuestion() {
+        const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+        currentQuestion = availableQuestions.splice(randomIndex, 1)[0];
 
-        if (!questionList || questionList.length === 0) {
-            questionText.textContent = `Soal untuk dadu angka ${diceNumber} sudah habis!`;
-            optionsContainer.innerHTML = '<p style="font-style: italic;">Silakan kocok dadu lagi.</p>';
-            questionArea.style.display = 'block';
-            rollButton.disabled = false;
-            return;
-        }
-
-        const randomIndex = Math.floor(Math.random() * questionList.length);
-        currentQuestion = questionList.splice(randomIndex, 1)[0];
         questionText.textContent = currentQuestion.question;
         optionsContainer.innerHTML = '';
         const shuffledOptions = currentQuestion.options.sort(() => Math.random() - 0.5);
@@ -179,24 +164,20 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedButton.classList.add('incorrect');
             resultText.textContent = 'Jawaban Anda salah.';
             resultText.className = 'incorrect';
-            perfectRun = false; // Tandai bahwa ada kesalahan di level ini
+            perfectRun = false;
         }
         
-        // Cek kondisi HANYA setelah semua soal dijawab
         if (isLevelComplete()) {
-            rollButton.disabled = true; // Nonaktifkan tombol kocok sementara
+            rollButton.disabled = true;
             if (perfectRun) {
-                // Jika tidak ada kesalahan sama sekali, naik level
                 resultText.textContent = 'Benar! Semua soal level ini selesai dengan sempurna!';
                 setTimeout(levelUp, 2000); 
             } else {
-                // Jika ada kesalahan, tampilkan tombol ulangi
                 resultText.textContent = 'Anda menyelesaikan semua soal, tapi ada kesalahan. Ulangi level ini.';
                 rollButton.style.display = 'none';
                 restartButton.style.display = 'block';
             }
         } else {
-            // Jika level belum selesai, aktifkan kembali tombol kocok
             setTimeout(() => { 
                 rollButton.disabled = false; 
             }, 2000);
