@@ -4,29 +4,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const diceImg = document.getElementById('dice-img');
     const questionArea = document.getElementById('question-area');
     const questionText = document.getElementById('question-text');
-    const answerInput = document.getElementById('answer-input');
-    const submitButton = document.getElementById('submit-button');
+    const optionsContainer = document.getElementById('options-container');
     const resultText = document.getElementById('result-text');
 
-    // Variabel state game
-    let questions = {}; // Akan menyimpan master list dari JSON
-    let availableQuestions = {}; // Menyimpan soal yang belum ditanyakan
     let currentQuestion;
+    let questions = {};
+    let availableQuestions = {};
 
-    // Konstanta untuk durasi, agar mudah diubah
-    const ANIMATION_DURATION = 700; // dalam milidetik
+    const ANIMATION_DURATION = 700;
 
     // --- FUNGSI UTAMA ---
 
-    // 1. Memuat soal dan menginisialisasi state game
+    // 1. Memuat soal dari file JSON
     async function loadQuestions() {
         try {
             const response = await fetch('database.json');
-            if (!response.ok) {
-                throw new Error(`Gagal mengambil data: ${response.statusText}`);
-            }
+            if (!response.ok) throw new Error(`Gagal mengambil data: ${response.statusText}`);
             questions = await response.json();
-            // Salin master list ke daftar soal yang tersedia. JSON.parse/stringify untuk deep copy.
             availableQuestions = JSON.parse(JSON.stringify(questions));
             rollButton.disabled = false;
         } catch (error) {
@@ -47,82 +41,72 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${result}.png`;
             diceImg.classList.remove('shake');
-            
             displayQuestion(result);
         }, ANIMATION_DURATION);
     }
 
-    // 3. Menampilkan soal (dengan logika anti-ulang)
+    // 3. Menampilkan soal dan membuat tombol pilihan ganda
     function displayQuestion(diceNumber) {
-        // **PENYEMPURNAAN 1: Logika Anti-Ulang**
-        // Jika daftar soal untuk angka dadu ini sudah habis, isi ulang dari master list.
         if (!availableQuestions[diceNumber] || availableQuestions[diceNumber].length === 0) {
-            console.log(`Mengisi ulang soal untuk dadu angka ${diceNumber}...`);
             availableQuestions[diceNumber] = [...questions[diceNumber]];
         }
         
         const questionList = availableQuestions[diceNumber];
+        const randomIndex = Math.floor(Math.random() * questionList.length);
+        currentQuestion = questionList.splice(randomIndex, 1)[0];
 
-        if (questionList && questionList.length > 0) {
-            // Ambil soal secara acak dan HAPUS dari daftar yang tersedia
-            const randomIndex = Math.floor(Math.random() * questionList.length);
-            currentQuestion = questionList.splice(randomIndex, 1)[0]; // .splice() menghapus elemen
+        questionText.textContent = currentQuestion.question;
+        
+        // Kosongkan wadah pilihan ganda sebelum diisi
+        optionsContainer.innerHTML = ''; 
 
-            questionText.textContent = currentQuestion.question;
-            answerInput.value = '';
-            
-            questionArea.style.display = 'block';
-            answerInput.disabled = false;
-            submitButton.disabled = false;
-            answerInput.focus();
-        } else {
-            questionText.textContent = "Tidak ada soal untuk nomor ini.";
-            rollButton.disabled = false;
-        }
+        // Acak urutan pilihan jawaban untuk variasi
+        const shuffledOptions = currentQuestion.options.sort(() => Math.random() - 0.5);
+
+        // Buat tombol untuk setiap pilihan jawaban
+        shuffledOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.classList.add('option-button');
+            button.addEventListener('click', () => checkAnswer(option, button));
+            optionsContainer.appendChild(button);
+        });
+
+        questionArea.style.display = 'block';
     }
 
-    // 4. Memeriksa jawaban pengguna
-    function checkAnswer() {
-        const userAnswer = answerInput.value.trim().toLowerCase();
-        if (userAnswer === '') return;
+    // 4. Memeriksa jawaban yang dipilih pengguna
+    function checkAnswer(selectedOption, selectedButton) {
+        const isCorrect = selectedOption.toLowerCase() === currentQuestion.answer.toLowerCase();
 
-        const correctAnswer = currentQuestion.answer.toLowerCase();
-        
-        answerInput.disabled = true;
-        submitButton.disabled = true;
+        // Nonaktifkan semua tombol pilihan ganda
+        const allOptionButtons = optionsContainer.querySelectorAll('.option-button');
+        allOptionButtons.forEach(btn => {
+            btn.disabled = true;
+            // Tandai jawaban yang benar dengan warna hijau
+            if (btn.textContent.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+                btn.classList.add('correct');
+            }
+        });
 
-        if (userAnswer === correctAnswer) {
+        if (isCorrect) {
             resultText.textContent = 'Jawaban Anda benar! 🎉';
             resultText.className = 'correct';
-            
-            // **PENYEMPURNAAN 2: Alur Lebih Mulus**
-            // Sembunyikan area pertanyaan setelah 2 detik agar UI bersih
-            setTimeout(() => {
-                questionArea.style.display = 'none';
-                rollButton.disabled = false; // Aktifkan tombol kocok setelah UI bersih
-            }, 2000);
-
         } else {
-            resultText.textContent = `Salah. Jawaban yang benar: "${currentQuestion.answer}"`;
+            // Jika salah, tandai pilihan pengguna yang salah dengan warna merah
+            selectedButton.classList.add('incorrect');
+            resultText.textContent = 'Jawaban Anda salah.';
             resultText.className = 'incorrect';
-            // Langsung aktifkan kembali tombol kocok jika salah
-            rollButton.disabled = false; 
         }
+
+        // Aktifkan kembali tombol kocok setelah jeda singkat
+        setTimeout(() => {
+            rollButton.disabled = false;
+        }, 2000); // Jeda 2 detik sebelum bisa main lagi
     }
 
     // --- EVENT LISTENERS ---
     rollButton.disabled = true;
     loadQuestions();
-
     rollButton.addEventListener('click', rollDice);
-    submitButton.addEventListener('click', checkAnswer);
-    
-    answerInput.addEventListener('keyup', (event) => {
-        if (event.key === 'Enter') {
-            // Pastikan input tidak dinonaktifkan sebelum submit
-            if (!answerInput.disabled) {
-                checkAnswer();
-            }
-        }
-    });
 });
