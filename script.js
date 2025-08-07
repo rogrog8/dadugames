@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
             questions = await response.json();
         } catch (error) {
             console.error("Gagal memuat soal:", error);
+            // Tampilkan pesan error di layar utama jika database gagal dimuat
+            levelMap.innerHTML = "<p>Gagal memuat data permainan. Silakan coba lagi nanti.</p>";
         }
     }
 
@@ -113,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Audio('sounds/kocok-dadu.mp3').play();
         lastDiceRoll = 0; 
         infoText.textContent = 'Mengocok...';
+        rollButton.disabled = true; // Nonaktifkan tombol selama animasi
         diceImg.classList.add('spinning');
         
         setTimeout(() => {
@@ -124,7 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function finishRoll(result) {
-        lastDiceRoll = result;
+        lastDiceRoll = result; // Simpan hasil dadu
+        rollButton.disabled = false; // Aktifkan kembali tombol setelah animasi selesai
         document.querySelectorAll('.mystery-box').forEach(b => b.classList.remove('highlight'));
         
         if (completedBoxes[lastDiceRoll - 1]) {
@@ -137,6 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleBoxClick(boxId) {
+        if (lastDiceRoll === 0) {
+            infoText.textContent = 'Anda harus mengocok dadu terlebih dahulu!';
+            return;
+        }
         if (boxId !== lastDiceRoll) {
             infoText.textContent = `Anda harus mendapatkan angka ${boxId} untuk membuka kotak ini!`;
             return;
