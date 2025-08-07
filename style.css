@@ -194,3 +194,23 @@ h1 {
     border-radius: 8px;
 
 }
+
+/* Style untuk tombol ulangi level */
+#restart-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #ffc107, #ff9800); /* Warna oranye/kuning */
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+    transition: all 0.2s ease-in-out;
+    margin-top: 10px; /* Beri jarak jika muncul di bawah tombol kocok */
+}
+
+#restart-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.5);
+}
