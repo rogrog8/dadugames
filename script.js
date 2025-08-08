@@ -24,8 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastDiceRoll = 0;
     let currentQuestion = {};
     let timer;
-    let isRolling = false; // **PENYEMPURNAAN 1: Tambahkan state untuk mencegah klik saat dadu berputar**
-    const TIME_LIMIT = 10;
+    let isRolling = false;
+    const TIME_LIMIT = 10000;
+    let timerStartTime;
+    
+    // === PRA-MUAT SUARA ===
+    const rollSound = new Audio('sounds/kocok-dadu.mp3');
+    const correctSound = new Audio('sounds/jawaban-benar.mp3');
+    const incorrectSound = new Audio('sounds/jawaban-salah.mp3');
+    const levelUpSound = new Audio('sounds/naik-level.mp3');
     
     // === INISIALISASI GAME ===
     async function initGame() {
@@ -47,10 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadProgress() {
         const savedProgress = localStorage.getItem('unlockedLevel');
-        unlockedLevel = savedProgress ? parseInt(savedProgress, 10) : 1;
+        const totalLevels = Object.keys(questions).length;
+        if (savedProgress) {
+            const savedLevel = parseInt(savedProgress, 10);
+            // Menyesuaikan unlockedLevel agar tidak melebihi jumlah level yang ada
+            unlockedLevel = savedLevel > totalLevels ? totalLevels : savedLevel;
+        } else {
+            unlockedLevel = 1;
+        }
     }
 
-    // === NAVIGASI LAYAR ===
     function showLevelSelect() {
         levelSelectScreen.style.display = 'block';
         gameScreen.style.display = 'none';
@@ -63,17 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
         gameScreen.style.display = 'block';
     }
     
-    // === LOGIKA PETA LEVEL ===
     function renderLevelMap() {
         levelMap.innerHTML = '';
         const totalLevels = Object.keys(questions).length;
-        // **PENYEMPURNAAN 2: Handle jika tidak ada level sama sekali**
-        if (totalLevels === 0 && levelMap.textContent.includes('Gagal')) {
-            return; // Jangan tampilkan apa-apa jika database gagal dimuat
-        }
+        if (totalLevels === 0 && levelMap.textContent.includes('Gagal')) { return; }
         for (let i = 1; i <= totalLevels; i++) {
             const icon = document.createElement('button');
-            icon.classList.add('neumorphic-button', 'level-icon');
+            icon.classList.add('level-icon');
             icon.dataset.level = i;
             icon.textContent = i;
             if (i <= unlockedLevel) {
@@ -86,12 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // === LOGIKA PERMAINAN ===
     function startGame(levelNumber) {
         currentLevel = levelNumber;
         levelTitle.textContent = `Level ${currentLevel}`;
         levelQuestions = [...questions[`level${currentLevel}`]];
-        completedBoxes = [false, false, false, false, false, false];
+        completedBoxes = Array(6).fill(false);
         lastDiceRoll = 0;
         infoText.textContent = 'Kocok dadu untuk memulai!';
         rollButton.disabled = false;
@@ -117,10 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function rollDice() {
-        if (isRolling) return; // Mencegah klik ganda
-        isRolling = true; // Set status menjadi sedang berputar
-        new Audio('sounds/kocok-dadu.mp3').play();
-        lastDiceRoll = 0; 
+        if (isRolling) return;
+        isRolling = true;
+        rollSound.currentTime = 0;
+        rollSound.play();
+        lastDiceRoll = 0;
         infoText.textContent = 'Mengocok...';
         rollButton.disabled = true;
         diceImg.classList.add('spinning');
@@ -135,12 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function finishRoll(result) {
         lastDiceRoll = result;
-        rollButton.disabled = false;
-        isRolling = false; // Selesai berputar
+        isRolling = false;
         document.querySelectorAll('.mystery-box').forEach(b => b.classList.remove('highlight'));
         
         if (completedBoxes[lastDiceRoll - 1]) {
             infoText.textContent = `Kotak ${lastDiceRoll} sudah terbuka. Kocok lagi!`;
+            rollButton.disabled = false;
         } else {
             infoText.textContent = `Silakan klik kotak nomor ${lastDiceRoll}!`;
             const targetBox = document.querySelector(`.mystery-box[data-box-id="${lastDiceRoll}"]`);
@@ -149,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleBoxClick(boxId) {
-        if (isRolling) return; // Mencegah klik kotak saat dadu berputar
+        if (isRolling) return;
         if (lastDiceRoll === 0) {
             infoText.textContent = 'Anda harus mengocok dadu terlebih dahulu!';
             return;
@@ -159,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (completedBoxes[boxId - 1]) return;
-
         currentQuestion = { ...levelQuestions[boxId - 1], boxId: boxId };
         displayQuestionModal();
     }
@@ -169,83 +177,112 @@ document.addEventListener('DOMContentLoaded', () => {
         optionsContainer.innerHTML = '';
         currentQuestion.options.forEach(option => {
             const button = document.createElement('button');
-            button.classList.add('neumorphic-button', 'option-button');
+            button.classList.add('option-button');
             button.textContent = option;
             button.addEventListener('click', () => checkAnswer(option));
             optionsContainer.appendChild(button);
         });
         resultText.textContent = '';
-        questionModal.classList.add('visible');
+        questionModal.style.display = 'flex';
+        setTimeout(() => questionModal.classList.add('visible'), 10);
         startTimer();
     }
 
     function startTimer() {
-        let timeLeft = TIME_LIMIT;
-        timerBar.style.transition = 'none';
-        timerBar.style.width = '100%';
-        setTimeout(() => {
-            timerBar.style.transition = `width ${TIME_LIMIT}s linear`;
-            timerBar.style.width = '0%';
-        }, 100);
-        clearInterval(timer);
-        timer = setInterval(() => {
-            timeLeft--;
-            if (timeLeft < 0) {
-                clearInterval(timer);
+        timerStartTime = Date.now();
+        const updateTimer = () => {
+            const elapsedTime = Date.now() - timerStartTime;
+            const timeLeft = TIME_LIMIT - elapsedTime;
+            const percentage = Math.max(0, (timeLeft / TIME_LIMIT) * 100);
+            timerBar.style.width = `${percentage}%`;
+
+            if (timeLeft <= 0) {
                 checkAnswer(null);
+            } else {
+                timer = requestAnimationFrame(updateTimer);
             }
-        }, 1000);
+        };
+        timer = requestAnimationFrame(updateTimer);
     }
     
     function checkAnswer(selectedOption) {
-        clearInterval(timer);
-        const isCorrect = selectedOption ? selectedOption.toLowerCase() === currentQuestion.answer.toLowerCase() : false;
-
+        cancelAnimationFrame(timer);
+        
+        const isCorrect = selectedOption && selectedOption.toLowerCase() === currentQuestion.answer.toLowerCase();
+        
         document.querySelectorAll('.modal-content .option-button').forEach(btn => {
             btn.disabled = true;
-            if (btn.textContent.toLowerCase() === currentQuestion.answer.toLowerCase()) {
-                btn.classList.add('correct');
+            if (isCorrect) {
+                if (btn.textContent.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+                    btn.classList.add('correct');
+                }
+            } else {
+                if (btn.textContent.toLowerCase() === selectedOption?.toLowerCase()) {
+                    btn.classList.add('incorrect');
+                }
             }
         });
-
+        
         if (isCorrect) {
-            new Audio('sounds/jawaban-benar.mp3').play();
+            correctSound.currentTime = 0;
+            correctSound.play();
             resultText.textContent = 'Benar! 🎉';
             resultText.className = 'correct';
             completedBoxes[currentQuestion.boxId - 1] = true;
-
             if (completedBoxes.every(status => status === true)) {
                 setTimeout(levelComplete, 1500);
+            } else {
+                setTimeout(closeModal, 2000);
             }
         } else {
-            new Audio('sounds/jawaban-salah.mp3').play();
+            incorrectSound.currentTime = 0;
+            incorrectSound.play();
             resultText.textContent = selectedOption === null ? 'Waktu Habis!' : 'Jawaban Salah!';
             resultText.className = 'incorrect';
+            setTimeout(closeModal, 2000);
         }
-
+    }
+    
+    function closeModal() {
+        questionModal.classList.remove('visible');
         setTimeout(() => {
-            questionModal.classList.remove('visible');
+            questionModal.style.display = 'none';
             renderMysteryBoxes();
             infoText.textContent = 'Kocok dadu untuk melanjutkan!';
             lastDiceRoll = 0;
-        }, 2000);
+            if (!completedBoxes.every(status => status === true)) {
+                rollButton.disabled = false;
+            }
+        }, 300);
     }
 
     function levelComplete() {
-        new Audio('sounds/naik-level.mp3').play();
+        levelUpSound.currentTime = 0;
+        levelUpSound.play();
         infoText.textContent = `Selamat! Anda telah menyelesaikan Level ${currentLevel}!`;
         rollButton.disabled = true;
-        if (currentLevel === unlockedLevel && questions[`level${currentLevel + 1}`]) {
-             unlockedLevel++;
-             localStorage.setItem('unlockedLevel', unlockedLevel);
+        
+        if (questions[`level${currentLevel + 1}`]) {
+            if (unlockedLevel < currentLevel + 1) { // Perbaikan di sini
+                unlockedLevel = currentLevel + 1;
+                localStorage.setItem('unlockedLevel', unlockedLevel);
+            }
+            setTimeout(() => {
+                startGame(currentLevel + 1);
+            }, 3000);
+        } else {
+            infoText.textContent = `Anda telah menyelesaikan semua level! 🎉`;
+            setTimeout(() => {
+                showLevelSelect();
+            }, 3000);
         }
-        setTimeout(showLevelSelect, 3000);
     }
     
-    // === EVENT LISTENERS AWAL ===
-    backToMapButton.addEventListener('click', showLevelSelect);
+    backToMapButton.addEventListener('click', () => {
+        cancelAnimationFrame(timer);
+        showLevelSelect();
+    });
     rollButton.addEventListener('click', rollDice);
 
-    // === MULAI GAME ===
     initGame();
 });
