@@ -14,12 +14,10 @@
     --transition-fast: 0.2s ease;
 }
 
+/* === DASAR & PERBAIKAN MOBILE === */
 body {
     font-family: var(--font-poppins);
     background: linear-gradient(120deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     margin: 0;
     padding: 15px;
@@ -29,7 +27,7 @@ body {
 
 .container {
     background: white;
-    padding: 30px 40px;
+    padding: 30px 20px;
     border-radius: var(--border-radius-large);
     box-shadow: var(--box-shadow-normal);
     text-align: center;
@@ -39,6 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 20px auto;
 }
 
 h1 { color: var(--primary-color); font-weight: 700; }
@@ -93,7 +92,7 @@ h1 { color: var(--primary-color); font-weight: 700; }
     transform: translateY(-2px);
 }
 
-/* === TAMPILAN KATEGORI & LEVEL === */
+/* === KATEGORI & LEVEL === */
 #category-select-screen, #level-select-screen {
     width: 100%;
 }
@@ -173,7 +172,7 @@ h1 { color: var(--primary-color); font-weight: 700; }
 
 .level-icon.locked { background: #bdbdbd; cursor: not-allowed; box-shadow: none; }
 
-/* === TAMPILAN GAME SCREEN === */
+/* === GAME SCREEN === */
 .game-header { 
     display: flex; 
     justify-content: space-between; 
@@ -250,30 +249,17 @@ h1 { color: var(--primary-color); font-weight: 700; }
 .dice-area { display: flex; flex-direction: column; align-items: center; gap: 15px; }
 #dice-img { width: 80px; height: 80px; }
 
-/* === PERUBAHAN ANIMASI DADU DIMULAI DI SINI === */
 @keyframes rollAnimation {
-  0% {
-    transform: rotateX(0deg) rotateY(0deg) translateY(0px) scale(1);
-  }
-  25% {
-    transform: rotateX(180deg) rotateY(90deg) translateY(-20px) scale(1.1);
-  }
-  50% {
-    transform: rotateX(360deg) rotateY(180deg) translateY(0px) scale(1);
-  }
-  75% {
-    transform: rotateX(180deg) rotateY(270deg) translateY(-10px) scale(1.05);
-  }
-  100% {
-    transform: rotateX(360deg) rotateY(360deg) translateY(0px) scale(1);
-  }
+  0%   { transform: rotateX(0deg) rotateY(0deg) translateY(0px) scale(1); }
+  25%  { transform: rotateX(180deg) rotateY(90deg) translateY(-20px) scale(1.1); }
+  50%  { transform: rotateX(360deg) rotateY(180deg) translateY(0px) scale(1); }
+  75%  { transform: rotateX(180deg) rotateY(270deg) translateY(-10px) scale(1.05); }
+  100% { transform: rotateX(360deg) rotateY(360deg) translateY(0px) scale(1); }
 }
 
 #dice-img.dice-rolling {
   animation: rollAnimation 1s ease-out;
 }
-/* === PERUBAHAN ANIMASI DADU SELESAI === */
-
 
 #roll-button { 
     padding: 15px 30px; 
@@ -298,42 +284,45 @@ h1 { color: var(--primary-color); font-weight: 700; }
 #info-text { font-size: 1.1em; font-weight: 600; color: #333; min-height: 25px; }
 
 /* === MODAL PERTANYAAN & CARA BERMAIN === */
-.modal-overlay { 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    background-color: rgba(0, 0, 0, 0.6); 
-    display: none; 
-    justify-content: center; 
-    align-items: center; 
-    z-index: 1000; 
-    opacity: 0; 
-    transition: opacity 0.3s ease; 
+.modal-overlay, #question-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
-.modal-overlay.visible { 
-    opacity: 1; 
-    display: flex; 
+.modal-overlay.visible, #question-modal.visible {
+    opacity: 1;
+    display: flex;
 }
 
-#question-modal .modal-content {
-    transform: scale(0.9); 
-    transition: transform 0.3s ease; 
+#question-modal.visible .modal-content {
+    transform: scale(1);
 }
 
-#question-modal.visible .modal-content { 
-    transform: scale(1); 
-}
-
-.modal-content { 
-    background-color: white; 
-    padding: 30px 40px; 
-    border-radius: 20px; 
-    width: 90%; 
-    max-width: 500px; 
-    text-align: center; 
+.modal-content {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+#how-to-play-modal.visible .modal-content {
+    transform: scale(1);
 }
 
 #how-to-play-modal .modal-content {
@@ -379,6 +368,7 @@ h1 { color: var(--primary-color); font-weight: 700; }
     cursor: pointer;
     line-height: 1;
 }
+
 .close-button:hover {
     color: #333;
 }
@@ -415,13 +405,25 @@ h1 { color: var(--primary-color); font-weight: 700; }
 .correct { color: #2E7D32; }
 .incorrect { color: #C62828; }
 
-/* === MEDIA QUERIES === */
+/* === MEDIA QUERIES UNTUK TAMPILAN MOBILE === */
 @media (max-width: 600px) {
     .container {
-        padding: 20px;
+        padding: 20px 15px;
         min-height: 95vh;
+        margin: 10px auto;
     }
     .options-container {
         grid-template-columns: 1fr;
+    }
+    #mystery-boxes-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .mystery-box {
+        height: 80px;
+        font-size: 2.5em;
+    }
+    .modal-content {
+        padding: 30px 20px;
     }
 }
