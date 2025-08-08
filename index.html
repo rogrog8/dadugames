@@ -12,12 +12,10 @@
 
     <main class="container">
         <section id="start-screen">
-        <h1 id="main-title">Petualangan Kuis Dadu 🎲</h1>
-        <p class="subtitle">Selesaikan setiap level untuk membuka level berikutnya!</p>
-    
-        <button id="start-button" class="primary-button">MAINKAN</button>
-    
-        <button id="how-to-play-button" class="secondary-button">Cara Bermain</button>
+            <h1 id="main-title">Petualangan Kuis Dadu 🎲</h1>
+            <p class="subtitle">Selesaikan setiap level untuk membuka level berikutnya!</p>
+            <button id="start-button" class="primary-button">MAINKAN</button>
+            <button id="how-to-play-button" class="secondary-button">Cara Bermain</button>
         </section>
 
         <section id="category-select-screen" style="display: none;" aria-labelledby="category-title">
@@ -41,6 +39,9 @@
                     <span aria-hidden="true">⬅️</span> Peta Level
                 </button>
                 <h2 id="level-title">Level 1</h2>
+                <div id="lives-container">
+                    <span id="lives-count">3</span> ❤️
+                </div>
             </header>
             <div id="mystery-boxes-container"></div>
             <div class="dice-area">
@@ -72,8 +73,8 @@
                 <li>Di papan permainan, <b>kocok dadu</b> untuk mendapatkan angka.</li>
                 <li><b>Klik kotak misteri</b> yang nomornya sesuai dengan hasil kocokan dadu.</li>
                 <li>Jawab pertanyaan yang muncul sebelum <b>waktu habis</b>.</li>
-                <li>Jika jawaban benar, kotak akan terbuka. Jika salah, kamu harus mengocok dadu lagi.</li>
-                <li>Buka semua <b>6 kotak misteri</b> untuk menyelesaikan level dan lanjut ke level berikutnya!</li>
+                <li>Jika jawaban benar, kotak akan terbuka. Jika salah, nyawamu akan berkurang.</li>
+                <li>Buka semua <b>6 kotak misteri</b> untuk menyelesaikan level sebelum nyawa habis!</li>
             </ul>
         </div>
     </div>

@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const howToPlayButton = document.getElementById('how-to-play-button');
     const howToPlayModal = document.getElementById('how-to-play-modal');
     const closeModalButton = document.getElementById('close-modal-button');
+    const livesCount = document.getElementById('lives-count'); // Elemen baru
 
     // === STATE PERMAINAN ===
     let questions = {};
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isRolling = false;
     const TIME_LIMIT = 10000;
     let timerStartTime;
+    let lives = 3; // State baru untuk nyawa
 
     // === PRA-MUAT SUARA ===
     const rollSound = new Audio('sounds/kocok-dadu.mp3');
@@ -162,6 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function startGame(levelNumber) {
         currentLevel = levelNumber;
         levelTitle.textContent = `Level ${currentLevel}`;
+        
+        lives = 3;
+        livesCount.textContent = lives;
+
         if (questions[currentCategory] && questions[currentCategory][`level${currentLevel}`]) {
             levelQuestions = [...questions[currentCategory][`level${currentLevel}`]];
         } else {
@@ -187,31 +193,20 @@ document.addEventListener('DOMContentLoaded', () => {
         infoText.textContent = 'Mengocok...';
         rollButton.disabled = true;
     
-        // Tambahkan kelas animasi baru
         diceImg.classList.add('dice-rolling');
     
-        // Buat interval untuk mengubah gambar dadu dengan cepat
         const rollingInterval = setInterval(() => {
             const randomFace = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${randomFace}.png`;
-        }, 80); // Ubah gambar setiap 80 milidetik
+        }, 80);
     
-        // Hentikan animasi dan interval setelah 1 detik
         setTimeout(() => {
-            // Hentikan interval perubahan gambar
             clearInterval(rollingInterval);
-    
-            // Hapus kelas animasi
             diceImg.classList.remove('dice-rolling');
-    
-            // Tentukan hasil akhir yang sebenarnya
             const finalResult = Math.floor(Math.random() * 6) + 1;
             diceImg.src = `images/dice-${finalResult}.png`;
-    
-            // Lanjutkan ke logika permainan dengan hasil akhir
             finishRoll(finalResult);
-    
-        }, 1000); // Durasi total animasi adalah 1000 milidetik (1 detik)
+        }, 1000);
     }
     
     function finishRoll(result) {
@@ -282,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
         timerBar.style.transition = 'none';
         timerBar.style.width = '100%';
         
-        // Sedikit jeda agar browser sempat me-render style width 100% sebelum transisi dimulai
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 timerBar.style.transition = `width ${TIME_LIMIT / 1000}s linear`;
@@ -320,6 +314,14 @@ document.addEventListener('DOMContentLoaded', () => {
             incorrectSound.play();
             resultText.textContent = selectedOption === null ? 'Waktu Habis!' : 'Jawaban Salah!';
             resultText.className = 'incorrect';
+            
+            lives--;
+            livesCount.textContent = lives;
+
+            if (lives <= 0) {
+                setTimeout(gameOver, 1500);
+                return;
+            }
         }
 
         setTimeout(() => {
@@ -382,6 +384,30 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
         setTimeout(() => showCategorySelectScreen(), 3000);
     }
+
+function gameOver() {
+    // --- PERBAIKAN DIMULAI DI SINI ---
+    // Sembunyikan modal pertanyaan sepenuhnya
+    questionModal.classList.remove('visible');
+    setTimeout(() => {
+        questionModal.style.display = 'none';
+    }, 300); // Beri jeda untuk animasi fade-out
+    // --- PERBAIKAN SELESAI ---
+
+    infoText.textContent = 'GAME OVER! Nyawa habis. 💔';
+    rollButton.disabled = true;
+    
+    // Nonaktifkan semua kotak misteri yang belum terbuka
+    document.querySelectorAll('.mystery-box:not(.completed)').forEach(box => {
+        box.style.cursor = 'not-allowed';
+        box.style.background = '#bdbdbd';
+    });
+
+    // Setelah beberapa detik, kembali ke peta level
+    setTimeout(() => {
+        showLevelSelectScreen(currentCategory);
+    }, 3000);
+}
     
     // === EVENT LISTENERS ===
     startButton.addEventListener('click', showCategorySelectScreen);
@@ -392,7 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     rollButton.addEventListener('click', rollDice);
 
-    // Event Listeners untuk Modal Cara Bermain
     howToPlayButton.addEventListener('click', () => {
         howToPlayModal.classList.add('visible');
     });
