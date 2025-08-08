@@ -20,14 +20,14 @@ body {
     background: linear-gradient(120deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
     min-height: 100vh;
     margin: 0;
-    padding: 10px; /* Mengurangi padding dasar untuk mobile */
+    padding: 15px;
     box-sizing: border-box;
     color: var(--text-color);
 }
 
 .container {
     background: white;
-    padding: 25px 20px;
+    padding: 30px 20px;
     border-radius: var(--border-radius-large);
     box-shadow: var(--box-shadow-normal);
     text-align: center;
@@ -37,7 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;
+    margin: 20px auto;
 }
 
 h1 { color: var(--primary-color); font-weight: 700; }
@@ -443,78 +443,101 @@ h1 { color: var(--primary-color); font-weight: 700; }
 .incorrect { color: #C62828; }
 
 /* ======================================================= */
-/* === MEDIA QUERIES UNTUK TAMPILAN MOBILE YANG ELEGAN === */
+/* === PENYESUAIAN TOTAL UNTUK TAMPILAN MOBILE ELEGAN === */
 /* ======================================================= */
 @media (max-width: 600px) {
     body {
-        padding: 0; /* Hapus padding di body agar container bisa menempel penuh */
+        padding: 0;
+        -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat disentuh */
     }
 
     .container {
         padding: 20px 15px;
         width: 100%;
-        height: 100vh; /* Buat container mengisi seluruh layar */
+        height: 100vh;
         min-height: 0;
-        border-radius: 0; /* Hapus radius di mobile untuk tampilan penuh */
+        border-radius: 0;
         margin: 0;
         box-shadow: none;
+        justify-content: flex-start; /* Mulai konten dari atas */
     }
 
     h1#main-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem; /* Lebih kecil */
     }
 
     .subtitle {
-        font-size: 1rem;
-        margin-bottom: 40px; /* Jarak lebih besar */
+        font-size: 0.9rem; /* Lebih kecil */
+        margin-bottom: 35px;
     }
 
     #level-select-title, #category-select-screen h2#category-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem; /* Lebih kecil */
+        padding-bottom: 8px;
+        margin-bottom: 25px;
     }
 
-    #level-map {
-        gap: 15px;
-        grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); /* Perkecil ikon level */
+    #level-select-title::after {
+        height: 3px; /* Garis bawah lebih tipis */
     }
 
-    .level-icon {
-        width: 65px;
-        height: 65px;
-        font-size: 1.5rem;
-    }
-    
-    .game-header {
-        margin-bottom: 20px;
-    }
-
-    #level-title {
-        font-size: 1.4rem;
-    }
-    
-    #lives-container {
+    .category-icon {
+        padding: 18px;
         font-size: 1.1rem;
     }
 
+    #level-map {
+        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Ikon lebih kecil */
+    }
+
+    .level-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+    }
+    
+    .game-header {
+        margin-bottom: 15px;
+        flex-wrap: wrap; /* Izinkan header untuk wrap jika perlu */
+    }
+    
+    #back-to-map-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    #level-title {
+        font-size: 1.2rem;
+    }
+    
+    #lives-container {
+        font-size: 1rem;
+        gap: 5px;
+    }
+
     #mystery-boxes-container {
-        grid-template-columns: repeat(3, 1fr); /* Tetap 3 kolom tapi lebih kecil */
+        grid-template-columns: repeat(3, 1fr);
         gap: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
+        flex-grow: 1; /* Biarkan kotak mengisi ruang tersedia */
+        align-content: center;
     }
 
     .mystery-box {
-        height: 80px;
+        height: 75px;
         font-size: 2rem;
         border-radius: 12px;
     }
 
     .dice-area {
-        gap: 12px;
+        gap: 10px;
+        margin-bottom: 10px;
     }
 
     #dice-img {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
     }
 
     #roll-button, .primary-button, .secondary-button {
@@ -525,13 +548,14 @@ h1 { color: var(--primary-color); font-weight: 700; }
     }
     
     #info-text {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        min-height: 20px;
     }
 
     /* Penyesuaian Modal di Mobile */
     .modal-content {
         padding: 25px 20px;
-        width: calc(100% - 20px); /* Agar tidak terlalu mepet tepi */
+        width: calc(100% - 30px);
     }
 
     #question-text {
