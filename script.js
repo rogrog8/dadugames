@@ -24,7 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const howToPlayButton = document.getElementById('how-to-play-button');
     const howToPlayModal = document.getElementById('how-to-play-modal');
     const closeModalButton = document.getElementById('close-modal-button');
-    const livesCount = document.getElementById('lives-count'); // Elemen baru
+    const livesCount = document.getElementById('lives-count');
+    const helpFiftyFiftyBtn = document.getElementById('help-fifty-fifty');
+    const helpShowAnswerBtn = document.getElementById('help-show-answer');
 
     // === STATE PERMAINAN ===
     let questions = {};
@@ -39,7 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let isRolling = false;
     const TIME_LIMIT = 10000;
     let timerStartTime;
-    let lives = 3; // State baru untuk nyawa
+    let lives = 3;
+    let helpUsed = { fiftyFifty: false, showAnswer: false };
 
     // === PRA-MUAT SUARA ===
     const rollSound = new Audio('sounds/kocok-dadu.mp3');
@@ -168,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
         lives = 3;
         livesCount.textContent = lives;
 
+        helpUsed = { fiftyFifty: false, showAnswer: false };
+        updateHelpButtons();
+
         if (questions[currentCategory] && questions[currentCategory][`level${currentLevel}`]) {
             levelQuestions = [...questions[currentCategory][`level${currentLevel}`]];
         } else {
@@ -203,9 +209,20 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             clearInterval(rollingInterval);
             diceImg.classList.remove('dice-rolling');
-            const finalResult = Math.floor(Math.random() * 6) + 1;
+            
+            let finalResult;
+            const remainingBoxesCount = completedBoxes.filter(status => !status).length;
+
+            if (remainingBoxesCount === 1) {
+                const lastBoxIndex = completedBoxes.findIndex(status => !status);
+                finalResult = lastBoxIndex + 1;
+            } else {
+                finalResult = Math.floor(Math.random() * 6) + 1;
+            }
+
             diceImg.src = `images/dice-${finalResult}.png`;
             finishRoll(finalResult);
+
         }, 1000);
     }
     
@@ -262,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.createElement('button');
             button.classList.add('option-button');
             button.textContent = option;
+            button.style.visibility = 'visible';
             button.addEventListener('click', () => checkAnswer(option));
             optionsContainer.appendChild(button);
         });
@@ -288,6 +306,37 @@ document.addEventListener('DOMContentLoaded', () => {
             checkAnswer(null);
         }, TIME_LIMIT);
     }
+
+    // === FUNGSI BANTUAN ===
+    function useFiftyFifty() {
+        if (helpUsed.fiftyFifty) return;
+        helpUsed.fiftyFifty = true;
+        updateHelpButtons();
+
+        const correctAnswer = currentQuestion.answer.toLowerCase();
+        const incorrectOptions = [];
+        document.querySelectorAll('#options-container .option-button').forEach(btn => {
+            if (btn.textContent.toLowerCase() !== correctAnswer) {
+                incorrectOptions.push(btn);
+            }
+        });
+
+        incorrectOptions.sort(() => 0.5 - Math.random());
+        incorrectOptions[0].style.visibility = 'hidden';
+        incorrectOptions[1].style.visibility = 'hidden';
+    }
+
+    function useShowAnswer() {
+        if (helpUsed.showAnswer) return;
+        helpUsed.showAnswer = true;
+        updateHelpButtons();
+        checkAnswer(currentQuestion.answer);
+    }
+
+    function updateHelpButtons() {
+        helpFiftyFiftyBtn.disabled = helpUsed.fiftyFifty;
+        helpShowAnswerBtn.disabled = helpUsed.showAnswer;
+    }
     
     function checkAnswer(selectedOption) {
         clearTimeout(timer);
@@ -296,10 +345,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         document.querySelectorAll('#options-container .option-button').forEach(btn => {
             btn.disabled = true;
-            if (btn.textContent.toLowerCase() === currentQuestion.answer.toLowerCase()) {
-                btn.classList.add('correct');
-            } else if (btn.textContent.toLowerCase() === selectedOption?.toLowerCase()) {
-                btn.classList.add('incorrect');
+            if (isCorrect) {
+                if (btn.textContent.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+                    btn.classList.add('correct');
+                }
+            } else {
+                if (btn.textContent.toLowerCase() === selectedOption?.toLowerCase()) {
+                    btn.classList.add('incorrect');
+                }
             }
         });
         
@@ -385,29 +438,23 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => showCategorySelectScreen(), 3000);
     }
 
-function gameOver() {
-    // --- PERBAIKAN DIMULAI DI SINI ---
-    // Sembunyikan modal pertanyaan sepenuhnya
-    questionModal.classList.remove('visible');
-    setTimeout(() => {
-        questionModal.style.display = 'none';
-    }, 300); // Beri jeda untuk animasi fade-out
-    // --- PERBAIKAN SELESAI ---
+    function gameOver() {
+        questionModal.classList.remove('visible');
+        setTimeout(() => {
+            questionModal.style.display = 'none';
+        }, 300);
 
-    infoText.textContent = 'GAME OVER! Nyawa habis. 💔';
-    rollButton.disabled = true;
-    
-    // Nonaktifkan semua kotak misteri yang belum terbuka
-    document.querySelectorAll('.mystery-box:not(.completed)').forEach(box => {
-        box.style.cursor = 'not-allowed';
-        box.style.background = '#bdbdbd';
-    });
+        infoText.textContent = 'GAME OVER! Nyawa habis. 💔';
+        rollButton.disabled = true;
+        document.querySelectorAll('.mystery-box:not(.completed)').forEach(box => {
+            box.style.cursor = 'not-allowed';
+            box.style.background = '#bdbdbd';
+        });
 
-    // Setelah beberapa detik, kembali ke peta level
-    setTimeout(() => {
-        showLevelSelectScreen(currentCategory);
-    }, 3000);
-}
+        setTimeout(() => {
+            showLevelSelectScreen(currentCategory);
+        }, 3000);
+    }
     
     // === EVENT LISTENERS ===
     startButton.addEventListener('click', showCategorySelectScreen);
@@ -417,6 +464,9 @@ function gameOver() {
         showLevelSelectScreen(currentCategory);
     });
     rollButton.addEventListener('click', rollDice);
+
+    helpFiftyFiftyBtn.addEventListener('click', useFiftyFifty);
+    helpShowAnswerBtn.addEventListener('click', useShowAnswer);
 
     howToPlayButton.addEventListener('click', () => {
         howToPlayModal.classList.add('visible');
