@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-/* Menggunakan custom properties untuk konsistensi */
 :root {
     --primary-color: #e91e63;
     --secondary-color: #4CAF50;
@@ -40,8 +39,98 @@ body {
 }
 
 h1 { color: var(--primary-color); font-weight: 700; }
-#level-select-screen .subtitle { margin-bottom: 30px; color: #777; font-size: 1.1em; }
-#level-map { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 20px; }
+.subtitle { margin-bottom: 30px; color: #777; font-size: 1.1em; }
+
+#start-screen {
+    text-align: center;
+}
+
+.primary-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(45deg, #FF9800, #F57C00);
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+    transition: all var(--transition-fast);
+}
+
+.primary-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.5);
+    outline: none;
+}
+
+/* === TAMPILAN KATEGORI === */
+#category-select-screen {
+    display: none;
+    text-align: center;
+}
+
+#category-select-screen h2#category-title {
+    color: var(--tertiary-color);
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+#category-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.category-icon {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    background: linear-gradient(145deg, var(--tertiary-color), #1976D2);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.category-icon:hover,
+.category-icon:focus-visible {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(33, 150, 243, 0.5);
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+    background: linear-gradient(45deg, var(--tertiary-color), #1976D2);
+}
+
+/* === TAMPILAN PETA LEVEL === */
+#level-select-screen {
+    display: none;
+}
+
+#level-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 20px;
+}
+
+#level-select-title { 
+    margin: 0; 
+    font-size: 1.5em; 
+    font-weight: 600; 
+    color: #4A5568; 
+}
+
 .level-icon { 
     width: 80px; 
     height: 80px; 
@@ -53,10 +142,12 @@ h1 { color: var(--primary-color); font-weight: 700; }
     cursor: pointer; 
     transition: transform var(--transition-fast), box-shadow var(--transition-fast); 
 }
+
 .level-icon.unlocked { 
     background: var(--secondary-color); 
     box-shadow: var(--box-shadow-hover); 
 }
+
 .level-icon.unlocked:hover,
 .level-icon.unlocked:focus-visible { 
     transform: translateY(-5px); 
@@ -64,10 +155,18 @@ h1 { color: var(--primary-color); font-weight: 700; }
     outline: 2px solid var(--primary-color);
     outline-offset: 3px;
 }
+
 .level-icon.locked { background: #bdbdbd; cursor: not-allowed; box-shadow: none; }
 
-.game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-#back-to-map-button { 
+/* === TAMPILAN GAME SCREEN === */
+.game-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 25px; 
+}
+
+#back-to-category-button, #back-to-map-button { 
     background: transparent; 
     border: 2px solid #6c757d; 
     color: #6c757d; 
@@ -77,15 +176,28 @@ h1 { color: var(--primary-color); font-weight: 700; }
     font-weight: 600; 
     transition: all var(--transition-fast); 
 }
-#back-to-map-button:hover,
-#back-to-map-button:focus-visible { 
+
+#back-to-category-button:hover, #back-to-map-button:hover,
+#back-to-category-button:focus-visible, #back-to-map-button:focus-visible { 
     background: #6c757d; 
     color: white; 
     outline: none;
 }
 
-#level-title { margin: 0; font-size: 1.8em; }
-#mystery-boxes-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+#level-title { 
+    margin: 0; 
+    font-size: 1.5em; 
+    font-weight: 600; 
+    color: #4A5568; 
+}
+
+#mystery-boxes-container { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    margin-bottom: 25px; 
+}
+
 .mystery-box { 
     height: 100px; 
     border-radius: 15px; 
@@ -100,11 +212,13 @@ h1 { color: var(--primary-color); font-weight: 700; }
     box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4); 
     transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast); 
 }
+
 .mystery-box:not(.completed):hover,
 .mystery-box:not(.completed):focus-visible { 
     transform: scale(1.05); 
     outline: none;
 }
+
 .mystery-box.completed { 
     background: linear-gradient(145deg, #8BC34A, #689F38); 
     transform: scale(0.95); 
@@ -112,10 +226,13 @@ h1 { color: var(--primary-color); font-weight: 700; }
     box-shadow: none; 
     transition: transform 0.4s ease-out, background 0.4s ease-out;
 }
+
 .mystery-box.highlight { box-shadow: 0 0 25px 8px #FFEB3B; }
 
 .dice-area { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+
 #dice-img { width: 80px; height: 80px; }
+
 #roll-button { 
     padding: 15px 30px; 
     font-size: 18px; 
@@ -128,31 +245,37 @@ h1 { color: var(--primary-color); font-weight: 700; }
     box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4); 
     transition: all var(--transition-fast); 
 }
+
 #roll-button:hover:not(:disabled),
 #roll-button:focus-visible:not(:disabled) { 
     transform: translateY(-3px); 
     box-shadow: 0 6px 20px rgba(255, 152, 0, 0.5); 
     outline: none;
 }
+
 #roll-button:disabled { background: #BDBDBD; cursor: not-allowed; box-shadow: none; }
+
 #info-text { font-size: 1.1em; font-weight: 600; color: #333; min-height: 25px; }
 
+/* === TAMPILAN MODAL PERTANYAAN === */
 #question-modal { 
     position: fixed; 
     top: 0; left: 0; 
     width: 100%; height: 100%; 
     background-color: rgba(0, 0, 0, 0.6); 
-    display: none; /* Ubah dari flex ke none saat tidak terlihat */
+    display: none; 
     justify-content: center; 
     align-items: center; 
     z-index: 1000; 
     opacity: 0; 
     transition: opacity 0.3s ease; 
 }
+
 #question-modal.visible { 
     opacity: 1; 
-    display: flex; /* Gunakan display flex saat terlihat */
+    display: flex; 
 }
+
 .modal-content { 
     background-color: white; 
     padding: 30px; 
@@ -163,11 +286,17 @@ h1 { color: var(--primary-color); font-weight: 700; }
     transform: scale(0.9); 
     transition: transform 0.3s ease; 
 }
+
 #question-modal.visible .modal-content { transform: scale(1); }
+
 #question-text { color: #1a237e; font-size: 1.3em; line-height: 1.4; }
+
 #timer-container { width: 100%; height: 10px; background-color: #e9ecef; border-radius: 5px; margin: 15px 0 25px 0; overflow: hidden; }
+
 #timer-bar { height: 100%; width: 100%; background: #8BC34A; border-radius: 5px; }
+
 .options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+
 .option-button { 
     padding: 12px 10px; 
     font-size: 1em; 
@@ -179,14 +308,86 @@ h1 { color: var(--primary-color); font-weight: 700; }
     background: #009688; 
     transition: background-color var(--transition-fast); 
 }
+
 .option-button:hover:not(:disabled),
 .option-button:focus-visible:not(:disabled) { 
     background: #00796B; 
     outline: none;
 }
+
 .option-button.correct { background: #4CAF50; }
+
 .option-button.incorrect { background: #f44336; }
+
 .option-button:disabled { background: #BDBDBD; cursor: not-allowed; }
+
 #result-text { font-weight: 700; font-size: 1.1em; margin-top: 25px; min-height: 28px; }
+
 .correct { color: #2E7D32; }
+
 .incorrect { color: #C62828; }
+
+/* === MEDIA QUERIES UNTUK TAMPILAN MOBILE === */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        min-height: 400px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+
+    .primary-button {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+
+    #level-select-title, #level-title {
+        font-size: 1.2em; /* Ukuran font lebih kecil */
+        font-weight: 600;
+    }
+
+    .level-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em; /* Ukuran font lebih kecil */
+    }
+    
+    #mystery-boxes-container {
+        grid-template-columns: repeat(2, 1fr); /* Tampilan 2 kolom di mobile */
+    }
+
+    .mystery-box {
+        height: 80px;
+        font-size: 2em; /* Ukuran font lebih kecil */
+    }
+
+    .dice-area #dice-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .dice-area #roll-button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+
+    #question-text {
+        font-size: 1.1em;
+    }
+
+    .options-container {
+        grid-template-columns: 1fr; /* Tampilan 1 kolom untuk tombol opsi */
+        gap: 10px;
+    }
+
+    .option-button {
+        font-size: 0.9em;
+    }
+}

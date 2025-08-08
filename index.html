@@ -11,9 +11,24 @@
 <body>
 
     <main class="container">
-        <section id="level-select-screen" aria-labelledby="main-title">
+        <section id="start-screen">
             <h1 id="main-title">Petualangan Kuis Dadu 🎲</h1>
             <p class="subtitle">Selesaikan setiap level untuk membuka level berikutnya!</p>
+            <button id="start-button" class="primary-button">MAINKAN</button>
+        </section>
+
+        <section id="category-select-screen" style="display: none;" aria-labelledby="category-title">
+            <h2 id="category-title">Pilih Kategori</h2>
+            <div id="category-map"></div>
+        </section>
+
+        <section id="level-select-screen" style="display: none;" aria-labelledby="level-select-title">
+            <header class="game-header">
+                <button id="back-to-category-button" aria-label="Kembali ke Peta Kategori">
+                    <span aria-hidden="true">⬅️</span> Kategori
+                </button>
+                <h2 id="level-select-title"></h2>
+            </header>
             <div id="level-map"></div>
         </section>
 

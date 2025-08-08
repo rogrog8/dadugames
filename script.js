@@ -1,11 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     // === PEMILIHAN ELEMEN ===
+    const startScreen = document.getElementById('start-screen');
+    const categorySelectScreen = document.getElementById('category-select-screen');
     const levelSelectScreen = document.getElementById('level-select-screen');
     const gameScreen = document.getElementById('game-screen');
     const questionModal = document.getElementById('question-modal');
+    const startButton = document.getElementById('start-button');
+    const categoryMap = document.getElementById('category-map');
     const levelMap = document.getElementById('level-map');
-    const levelTitle = document.getElementById('level-title');
+    const levelSelectTitle = document.getElementById('level-select-title');
+    const backToCategoryButton = document.getElementById('back-to-category-button');
     const backToMapButton = document.getElementById('back-to-map-button');
+    const levelTitle = document.getElementById('level-title');
     const mysteryBoxesContainer = document.getElementById('mystery-boxes-container');
     const diceImg = document.getElementById('dice-img');
     const rollButton = document.getElementById('roll-button');
@@ -17,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === STATE PERMAINAN ===
     let questions = {};
-    let unlockedLevel = 1;
+    let unlockedLevels = {};
+    let currentCategory = '';
     let currentLevel = 1;
     let levelQuestions = [];
     let completedBoxes = [];
@@ -38,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function initGame() {
         await loadQuestions();
         loadProgress();
-        showLevelSelect();
+        showStartScreen();
     }
     
     async function loadQuestions() {
@@ -48,26 +55,48 @@ document.addEventListener('DOMContentLoaded', () => {
             questions = await response.json();
         } catch (error) {
             console.error("Gagal memuat soal:", error);
-            levelMap.innerHTML = "<p>Gagal memuat data permainan. Pastikan file database.json ada dan formatnya benar.</p>";
+            startScreen.innerHTML = "<p>Gagal memuat data permainan. Pastikan file database.json ada dan formatnya benar.</p>";
         }
     }
 
     function loadProgress() {
-        const savedProgress = localStorage.getItem('unlockedLevel');
-        const totalLevels = Object.keys(questions).length;
+        const savedProgress = localStorage.getItem('unlockedLevels');
         if (savedProgress) {
-            const savedLevel = parseInt(savedProgress, 10);
-            // Menyesuaikan unlockedLevel agar tidak melebihi jumlah level yang ada
-            unlockedLevel = savedLevel > totalLevels ? totalLevels : savedLevel;
+            unlockedLevels = JSON.parse(savedProgress);
         } else {
-            unlockedLevel = 1;
+            // Inisialisasi awal, hanya level 1 dari setiap kategori yang terbuka
+            Object.keys(questions).forEach(category => {
+                unlockedLevels[category] = 1;
+            });
+            saveProgress();
         }
     }
 
-    function showLevelSelect() {
-        levelSelectScreen.style.display = 'block';
+    function saveProgress() {
+        localStorage.setItem('unlockedLevels', JSON.stringify(unlockedLevels));
+    }
+
+    function showStartScreen() {
+        startScreen.style.display = 'block';
+        categorySelectScreen.style.display = 'none';
+        levelSelectScreen.style.display = 'none';
         gameScreen.style.display = 'none';
         questionModal.classList.remove('visible');
+    }
+
+    function showCategorySelectScreen() {
+        startScreen.style.display = 'none';
+        categorySelectScreen.style.display = 'block';
+        levelSelectScreen.style.display = 'none';
+        gameScreen.style.display = 'none';
+        renderCategoryMap();
+    }
+
+    function showLevelSelectScreen(category) {
+        currentCategory = category;
+        categorySelectScreen.style.display = 'none';
+        levelSelectScreen.style.display = 'block';
+        levelSelectTitle.textContent = currentCategory;
         renderLevelMap();
     }
 
@@ -76,16 +105,27 @@ document.addEventListener('DOMContentLoaded', () => {
         gameScreen.style.display = 'block';
     }
     
+    function renderCategoryMap() {
+        categoryMap.innerHTML = '';
+        Object.keys(questions).forEach(category => {
+            const icon = document.createElement('button');
+            icon.classList.add('category-icon');
+            icon.textContent = category;
+            icon.addEventListener('click', () => showLevelSelectScreen(category));
+            categoryMap.appendChild(icon);
+        });
+    }
+    
     function renderLevelMap() {
         levelMap.innerHTML = '';
-        const totalLevels = Object.keys(questions).length;
-        if (totalLevels === 0 && levelMap.textContent.includes('Gagal')) { return; }
+        const totalLevels = Object.keys(questions[currentCategory]).length;
+        const currentUnlockedLevel = unlockedLevels[currentCategory] || 1;
         for (let i = 1; i <= totalLevels; i++) {
             const icon = document.createElement('button');
             icon.classList.add('level-icon');
             icon.dataset.level = i;
             icon.textContent = i;
-            if (i <= unlockedLevel) {
+            if (i <= currentUnlockedLevel) {
                 icon.classList.add('unlocked');
                 icon.addEventListener('click', () => startGame(i));
             } else {
@@ -98,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function startGame(levelNumber) {
         currentLevel = levelNumber;
         levelTitle.textContent = `Level ${currentLevel}`;
-        levelQuestions = [...questions[`level${currentLevel}`]];
+        levelQuestions = [...questions[currentCategory][`level${currentLevel}`]];
         completedBoxes = Array(6).fill(false);
         lastDiceRoll = 0;
         infoText.textContent = 'Kocok dadu untuk memulai!';
@@ -262,25 +302,28 @@ document.addEventListener('DOMContentLoaded', () => {
         infoText.textContent = `Selamat! Anda telah menyelesaikan Level ${currentLevel}!`;
         rollButton.disabled = true;
         
-        if (questions[`level${currentLevel + 1}`]) {
-            if (unlockedLevel < currentLevel + 1) { // Perbaikan di sini
-                unlockedLevel = currentLevel + 1;
-                localStorage.setItem('unlockedLevel', unlockedLevel);
+        const totalLevelsInCurrentCategory = Object.keys(questions[currentCategory]).length;
+        if (currentLevel < totalLevelsInCurrentCategory) {
+            if (unlockedLevels[currentCategory] < currentLevel + 1) {
+                unlockedLevels[currentCategory] = currentLevel + 1;
+                saveProgress();
             }
             setTimeout(() => {
                 startGame(currentLevel + 1);
             }, 3000);
         } else {
-            infoText.textContent = `Anda telah menyelesaikan semua level! 🎉`;
+            infoText.textContent = `Anda telah menyelesaikan semua level di kategori ini! 🎉`;
             setTimeout(() => {
-                showLevelSelect();
+                showCategorySelectScreen();
             }, 3000);
         }
     }
     
+    startButton.addEventListener('click', showCategorySelectScreen);
+    backToCategoryButton.addEventListener('click', showCategorySelectScreen);
     backToMapButton.addEventListener('click', () => {
         cancelAnimationFrame(timer);
-        showLevelSelect();
+        showLevelSelectScreen(currentCategory);
     });
     rollButton.addEventListener('click', rollDice);
 
