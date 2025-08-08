@@ -243,6 +243,250 @@
       { "question": "Apa nama zat yang memiliki sifat asam?", "options": ["Basa", "Garam", "Air", "Asam"], "answer": "Asam" }
     ]
   },
+  "Sejarah dan Budaya": {
+    "level1": [
+      { "question": "Siapa presiden pertama Indonesia?", "options": ["Soeharto", "Soekarno", "Joko Widodo", "B.J. Habibie"], "answer": "Soekarno" },
+      { "question": "Proklamasi kemerdekaan Indonesia dibacakan pada tanggal berapa?", "options": ["17 Agustus 1945", "28 Oktober 1928", "1 Juni 1945", "10 November 1945"], "answer": "17 Agustus 1945" },
+      { "question": "Bangsa apa yang menjajah Indonesia selama 350 tahun?", "options": ["Inggris", "Jepang", "Belanda", "Portugis"], "answer": "Belanda" },
+      { "question": "Siapa pahlawan wanita dari Aceh?", "options": ["Kartini", "Cut Nyak Dien", "Dewi Sartika", "Martha Christina Tiahahu"], "answer": "Cut Nyak Dien" },
+      { "question": "Apa nama monumen peringatan kemerdekaan Indonesia di Jakarta?", "options": ["Monas", "Tugu Tani", "Bundaran HI", "Patung Pancoran"], "answer": "Monas" },
+      { "question": "Peristiwa penting yang terjadi pada tanggal 28 Oktober 1928 adalah...", "options": ["Proklamasi Kemerdekaan", "Sumpah Pemuda", "Hari Pahlawan", "Hari Kesaktian Pancasila"], "answer": "Sumpah Pemuda" }
+    ],
+    "level2": [
+      { "question": "Siapa presiden pertama Amerika Serikat?", "options": ["Thomas Jefferson", "George Washington", "Abraham Lincoln", "Theodore Roosevelt"], "answer": "George Washington" },
+      { "question": "Kapan Perang Dunia II berakhir?", "options": ["1941", "1945", "1950", "1939"], "answer": "1945" },
+      { "question": "Di mana Tembok Besar China berada?", "options": ["Jepang", "Korea", "China", "India"], "answer": "China" },
+      { "question": "Apa nama dokumen yang memuat dasar negara Indonesia?", "options": ["UUD 1945", "Pancasila", "Bhinneka Tunggal Ika", "Sumpah Pemuda"], "answer": "Pancasila" },
+      { "question": "Siapa yang menciptakan teori relativitas?", "options": ["Isaac Newton", "Albert Einstein", "Stephen Hawking", "Galileo Galilei"], "answer": "Albert Einstein" },
+      { "question": "Apa nama ibu kota Kekaisaran Romawi?", "options": ["Athena", "Roma", "Mesir", "Sparta"], "answer": "Roma" }
+    ],
+    "level3": [
+      { "question": "Siapa penemu benua Amerika?", "options": ["Ferdinand Magellan", "Christopher Columbus", "Marco Polo", "Vasco da Gama"], "answer": "Christopher Columbus" },
+      { "question": "Apa nama revolusi yang membuat industri berkembang pesat di Inggris?", "options": ["Revolusi Perancis", "Revolusi Industri", "Revolusi Amerika", "Revolusi Hijau"], "answer": "Revolusi Industri" },
+      { "question": "Kapan Tembok Berlin runtuh?", "options": ["1985", "1989", "1991", "1995"], "answer": "1989" },
+      { "question": "Apa nama perayaan Tahun Baru di China?", "options": ["Hanukkah", "Diwali", "Imlek", "Natal"], "answer": "Imlek" },
+      { "question": "Apa yang dimaksud dengan Renaissance?", "options": ["Penemuan Amerika", "Masa Kegelapan", "Masa Pencerahan", "Kebangkitan kembali seni dan ilmu"], "answer": "Kebangkitan kembali seni dan ilmu" },
+      { "question": "Siapa penulis buku 'Romeo dan Juliet'?", "options": ["Charles Dickens", "William Shakespeare", "Jane Austen", "Leo Tolstoy"], "answer": "William Shakespeare" }
+    ],
+    "level4": [
+      { "question": "Siapa pahlawan Indonesia yang dijuluki 'Bapak Proklamator'?", "options": ["Soeharto", "Soekarno", "Joko Widodo", "B.J. Habibie"], "answer": "Soekarno" },
+      { "question": "Peristiwa penting apa yang terjadi di Hiroshima pada tahun 1945?", "options": ["Bom atom", "Penandatanganan perjanjian damai", "Pendudukan Jepang", "Pembukaan Olimpiade"], "answer": "Bom atom" },
+      { "question": "Apa nama budaya kuno di Mesir yang terkenal dengan piramida?", "options": ["Romawi", "Yunani", "Mesir Kuno", "Inca"], "answer": "Mesir Kuno" },
+      { "question": "Apa nama naga dalam budaya China?", "options": ["Nian", "Long", "Fenghuang", "Kirin"], "answer": "Long" },
+      { "question": "Apa nama penemuan penting oleh Thomas Edison?", "options": ["Telepon", "Mesin cetak", "Lampu pijar", "Radio"], "answer": "Lampu pijar" },
+      { "question": "Apa nama monumen terkenal di India?", "options": ["Tembok Besar China", "Menara Eiffel", "Taj Mahal", "Candi Borobudur"], "answer": "Taj Mahal" }
+    ],
+    "level5": [
+      { "question": "Apa nama mata uang kuno di Roma?", "options": ["Dolar", "Euro", "Denarius", "Lira"], "answer": "Denarius" },
+      { "question": "Siapa nama pahlawan super Batman?", "options": ["Clark Kent", "Peter Parker", "Bruce Wayne", "Tony Stark"], "answer": "Bruce Wayne" },
+      { "question": "Apa nama perayaan Tahun Baru di India?", "options": ["Natal", "Hanukkah", "Diwali", "Imlek"], "answer": "Diwali" },
+      { "question": "Apa nama tarian tradisional Bali?", "options": ["Saman", "Pendet", "Reog", "Jaipong"], "answer": "Pendet" },
+      { "question": "Apa nama peradaban kuno yang membangun Machu Picchu?", "options": ["Aztec", "Maya", "Inca", "Romawi"], "answer": "Inca" },
+      { "question": "Apa nama kota yang terkenal dengan Colosseum?", "options": ["Paris", "Roma", "Athena", "Madrid"], "answer": "Roma" }
+    ],
+    "level6": [
+      { "question": "Apa nama bahasa resmi di Brazil?", "options": ["Spanyol", "Inggris", "Portugis", "Perancis"], "answer": "Portugis" },
+      { "question": "Apa yang dimaksud dengan peninggalan purbakala?", "options": ["Bangunan modern", "Situs kuno", "Buku sejarah", "Alat musik"], "answer": "Situs kuno" },
+      { "question": "Apa nama dewa tertinggi dalam mitologi Yunani?", "options": ["Hades", "Poseidon", "Zeus", "Apollo"], "answer": "Zeus" },
+      { "question": "Apa nama bunga nasional Jepang?", "options": ["Mawar", "Melati", "Sakura", "Tulip"], "answer": "Sakura" },
+      { "question": "Siapa nama penemu telepon?", "options": ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla", "Wright Bersaudara"], "answer": "Alexander Graham Bell" },
+      { "question": "Apa nama perayaan yang merayakan kelahiran Yesus?", "options": ["Diwali", "Paskah", "Natal", "Ramadan"], "answer": "Natal" }
+    ],
+    "level7": [
+      { "question": "Kapan Perang Dunia I dimulai?", "options": ["1914", "1918", "1939", "1945"], "answer": "1914" },
+      { "question": "Apa nama tarian tradisional dari Jawa Barat?", "options": ["Jaipong", "Reog", "Saman", "Pendet"], "answer": "Jaipong" },
+      { "question": "Apa nama tarian tradisional dari Jawa Barat?", "options": ["Jaipong", "Reog", "Saman", "Pendet"], "answer": "Jaipong" },
+      { "question": "Apa nama gunung tertinggi di Afrika?", "options": ["Gunung Everest", "Gunung Kilimanjaro", "Gunung Fuji", "Gunung Elbrus"], "answer": "Gunung Kilimanjaro" },
+      { "question": "Apa nama monumen kuno di Roma yang digunakan untuk pertarungan gladiator?", "options": ["Parthenon", "Colosseum", "Forum", "Machu Picchu"], "answer": "Colosseum" },
+      { "question": "Apa nama perayaan yang merayakan kelahiran Yesus?", "options": ["Diwali", "Paskah", "Natal", "Ramadan"], "answer": "Natal" }
+    ],
+    "level8": [
+      { "question": "Apa nama bahasa yang digunakan di negara-negara Arab?", "options": ["Spanyol", "Inggris", "Arab", "Mandarin"], "answer": "Arab" },
+      { "question": "Apa nama tarian tradisional dari Sumatera Barat?", "options": ["Saman", "Pendet", "Jaipong", "Tari Piring"], "answer": "Tari Piring" },
+      { "question": "Apa nama mata uang Rusia?", "options": ["Euro", "Ruble", "Yen", "Dolar"], "answer": "Ruble" },
+      { "question": "Apa nama budaya kuno di Amerika yang terkenal dengan piramida?", "options": ["Romawi", "Yunani", "Aztec", "Mesir Kuno"], "answer": "Aztec" },
+      { "question": "Apa yang dimaksud dengan Sumpah Pemuda?", "options": ["Perjanjian damai", "Proklamasi", "Ikrar persatuan pemuda Indonesia", "Perundingan diplomatik"], "answer": "Ikrar persatuan pemuda Indonesia" },
+      { "question": "Siapa yang menciptakan lukisan 'The Starry Night'?", "options": ["Pablo Picasso", "Vincent van Gogh", "Leonardo da Vinci", "Claude Monet"], "answer": "Vincent van Gogh" }
+    ],
+    "level9": [
+      { "question": "Kapan proklamasi kemerdekaan Indonesia dibacakan?", "options": ["1945", "1946", "1947", "1948"], "answer": "1945" },
+      { "question": "Apa nama pahlawan dari Bali yang menolak penjajahan Belanda?", "options": ["Diponegoro", "Pattimura", "I Gusti Ketut Jelantik", "Imam Bonjol"], "answer": "I Gusti Ketut Jelantik" },
+      { "question": "Apa nama monumen kuno di Roma yang digunakan untuk pertarungan gladiator?", "options": ["Parthenon", "Colosseum", "Forum", "Machu Picchu"], "answer": "Colosseum" },
+      { "question": "Apa nama perayaan yang merayakan kelahiran Yesus?", "options": ["Diwali", "Paskah", "Natal", "Ramadan"], "answer": "Natal" },
+      { "question": "Apa nama agama terbesar di dunia?", "options": ["Islam", "Hindu", "Kristen", "Buddha"], "answer": "Kristen" },
+      { "question": "Apa nama benua dengan gurun terbesar?", "options": ["Asia", "Afrika", "Australia", "Amerika Selatan"], "answer": "Afrika" }
+    ],
+    "level10": [
+      { "question": "Siapa presiden kedua Indonesia?", "options": ["Soekarno", "Soeharto", "B.J. Habibie", "Abdurrahman Wahid"], "answer": "Soeharto" },
+      { "question": "Apa nama monumen peringatan kemerdekaan di Jakarta?", "options": ["Monas", "Tugu Tani", "Bundaran HI", "Patung Pancoran"], "answer": "Monas" },
+      { "question": "Apa nama tarian tradisional dari Bali?", "options": ["Saman", "Pendet", "Reog", "Jaipong"], "answer": "Pendet" },
+      { "question": "Siapa nama penemu telepon?", "options": ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla", "Wright Bersaudara"], "answer": "Alexander Graham Bell" },
+      { "question": "Apa nama ibu kota Kekaisaran Romawi?", "options": ["Athena", "Roma", "Mesir", "Sparta"], "answer": "Roma" },
+      { "question": "Apa yang dimaksud dengan Sumpah Pemuda?", "options": ["Perjanjian damai", "Proklamasi", "Ikrar persatuan pemuda Indonesia", "Perundingan diplomatik"], "answer": "Ikrar persatuan pemuda Indonesia" }
+    ],
+    "level11": [
+      { "question": "Siapa presiden pertama Amerika Serikat?", "options": ["Thomas Jefferson", "George Washington", "Abraham Lincoln", "Theodore Roosevelt"], "answer": "George Washington" },
+      { "question": "Kapan Perang Dunia II berakhir?", "options": ["1941", "1945", "1950", "1939"], "answer": "1945" },
+      { "question": "Di mana Tembok Besar China berada?", "options": ["Jepang", "Korea", "China", "India"], "answer": "China" },
+      { "question": "Apa nama dokumen yang memuat dasar negara Indonesia?", "options": ["UUD 1945", "Pancasila", "Bhinneka Tunggal Ika", "Sumpah Pemuda"], "answer": "Pancasila" },
+      { "question": "Siapa yang menciptakan teori relativitas?", "options": ["Isaac Newton", "Albert Einstein", "Stephen Hawking", "Galileo Galilei"], "answer": "Albert Einstein" },
+      { "question": "Apa nama ibu kota Kekaisaran Romawi?", "options": ["Athena", "Roma", "Mesir", "Sparta"], "answer": "Roma" }
+    ],
+    "level12": [
+      { "question": "Siapa penemu benua Amerika?", "options": ["Ferdinand Magellan", "Christopher Columbus", "Marco Polo", "Vasco da Gama"], "answer": "Christopher Columbus" },
+      { "question": "Apa nama revolusi yang membuat industri berkembang pesat di Inggris?", "options": ["Revolusi Perancis", "Revolusi Industri", "Revolusi Amerika", "Revolusi Hijau"], "answer": "Revolusi Industri" },
+      { "question": "Kapan Tembok Berlin runtuh?", "options": ["1985", "1989", "1991", "1995"], "answer": "1989" },
+      { "question": "Apa nama perayaan Tahun Baru di China?", "options": ["Hanukkah", "Diwali", "Imlek", "Natal"], "answer": "Imlek" },
+      { "question": "Apa yang dimaksud dengan Renaissance?", "options": ["Penemuan Amerika", "Masa Kegelapan", "Masa Pencerahan", "Kebangkitan kembali seni dan ilmu"], "answer": "Kebangkitan kembali seni dan ilmu" },
+      { "question": "Siapa penulis buku 'Romeo dan Juliet'?", "options": ["Charles Dickens", "William Shakespeare", "Jane Austen", "Leo Tolstoy"], "answer": "William Shakespeare" }
+    ],
+    "level13": [
+      { "question": "Siapa pahlawan Indonesia yang dijuluki 'Bapak Proklamator'?", "options": ["Soeharto", "Soekarno", "Joko Widodo", "B.J. Habibie"], "answer": "Soekarno" },
+      { "question": "Peristiwa penting apa yang terjadi di Hiroshima pada tahun 1945?", "options": ["Bom atom", "Penandatanganan perjanjian damai", "Pendudukan Jepang", "Pembukaan Olimpiade"], "answer": "Bom atom" },
+      { "question": "Apa nama budaya kuno di Mesir yang terkenal dengan piramida?", "options": ["Romawi", "Yunani", "Mesir Kuno", "Inca"], "answer": "Mesir Kuno" },
+      { "question": "Apa nama naga dalam budaya China?", "options": ["Nian", "Long", "Fenghuang", "Kirin"], "answer": "Long" },
+      { "question": "Apa nama penemuan penting oleh Thomas Edison?", "options": ["Telepon", "Mesin cetak", "Lampu pijar", "Radio"], "answer": "Lampu pijar" },
+      { "question": "Apa nama monumen terkenal di India?", "options": ["Tembok Besar China", "Menara Eiffel", "Taj Mahal", "Candi Borobudur"], "answer": "Taj Mahal" }
+    ],
+    "level14": [
+      { "question": "Apa nama mata uang kuno di Roma?", "options": ["Dolar", "Euro", "Denarius", "Lira"], "answer": "Denarius" },
+      { "question": "Siapa nama pahlawan super Batman?", "options": ["Clark Kent", "Peter Parker", "Bruce Wayne", "Tony Stark"], "answer": "Bruce Wayne" },
+      { "question": "Apa nama perayaan Tahun Baru di India?", "options": ["Natal", "Hanukkah", "Diwali", "Imlek"], "answer": "Diwali" },
+      { "question": "Apa nama tarian tradisional Bali?", "options": ["Saman", "Pendet", "Reog", "Jaipong"], "answer": "Pendet" },
+      { "question": "Apa nama peradaban kuno yang membangun Machu Picchu?", "options": ["Aztec", "Maya", "Inca", "Romawi"], "answer": "Inca" },
+      { "question": "Apa nama kota yang terkenal dengan Colosseum?", "options": ["Paris", "Roma", "Athena", "Madrid"], "answer": "Roma" }
+    ],
+    "level15": [
+      { "question": "Apa nama bahasa resmi di Brazil?", "options": ["Spanyol", "Inggris", "Portugis", "Perancis"], "answer": "Portugis" },
+      { "question": "Apa yang dimaksud dengan peninggalan purbakala?", "options": ["Bangunan modern", "Situs kuno", "Buku sejarah", "Alat musik"], "answer": "Situs kuno" },
+      { "question": "Apa nama dewa tertinggi dalam mitologi Yunani?", "options": ["Hades", "Poseidon", "Zeus", "Apollo"], "answer": "Zeus" },
+      { "question": "Apa nama bunga nasional Jepang?", "options": ["Mawar", "Melati", "Sakura", "Tulip"], "answer": "Sakura" },
+      { "question": "Siapa nama penemu telepon?", "options": ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla", "Wright Bersaudara"], "answer": "Alexander Graham Bell" },
+      { "question": "Apa nama perayaan yang merayakan kelahiran Yesus?", "options": ["Diwali", "Paskah", "Natal", "Ramadan"], "answer": "Natal" }
+    ]
+  },
+  "Geografi": {
+    "level1": [
+      { "question": "Apa nama benua terbesar di dunia?", "options": ["Afrika", "Amerika", "Antartika", "Asia"], "answer": "Asia" },
+      { "question": "Apa nama samudra yang memisahkan Amerika dari Eropa?", "options": ["Pasifik", "Atlantik", "Hindia", "Arktik"], "answer": "Atlantik" },
+      { "question": "Apa nama gunung tertinggi di dunia?", "options": ["Gunung Fuji", "Gunung Everest", "Gunung Kilimanjaro", "Gunung Elbrus"], "answer": "Gunung Everest" },
+      { "question": "Negara apa yang terkenal dengan piramida-nya?", "options": ["Yunani", "Mesir", "Roma", "India"], "answer": "Mesir" },
+      { "question": "Apa nama ibu kota Brazil?", "options": ["Rio de Janeiro", "Sao Paulo", "Brasilia", "Buenos Aires"], "answer": "Brasilia" },
+      { "question": "Sungai terpanjang di dunia adalah?", "options": ["Sungai Nil", "Sungai Amazon", "Sungai Mississippi", "Sungai Yangtze"], "answer": "Sungai Nil" }
+    ],
+    "level2": [
+      { "question": "Apa ibu kota Australia?", "options": ["Sydney", "Melbourne", "Canberra", "Perth"], "answer": "Canberra" },
+      { "question": "Negara mana yang dijuluki 'Negeri Matahari Terbit'?", "options": ["China", "Korea", "Jepang", "Thailand"], "answer": "Jepang" },
+      { "question": "Apa nama gurun terpanas di dunia?", "options": ["Gurun Gobi", "Gurun Sahara", "Gurun Atacama", "Gurun Kalahari"], "answer": "Gurun Sahara" },
+      { "question": "Apa nama laut terbesar di dunia?", "options": ["Laut Merah", "Laut Mediterania", "Laut Arab", "Laut Cina Selatan"], "answer": "Laut Cina Selatan" },
+      { "question": "Berapa banyak negara di benua Asia?", "options": ["40", "45", "50", "55"], "answer": "48" },
+      { "question": "Apa nama ibu kota Kanada?", "options": ["Toronto", "Vancouver", "Montreal", "Ottawa"], "answer": "Ottawa" }
+    ],
+    "level3": [
+      { "question": "Apa nama selat yang memisahkan Sumatra dan Jawa?", "options": ["Selat Malaka", "Selat Sunda", "Selat Karimata", "Selat Makassar"], "answer": "Selat Sunda" },
+      { "question": "Apa nama sungai terpanjang di Amerika Selatan?", "options": ["Sungai Nil", "Sungai Amazon", "Sungai Mississippi", "Sungai Colorado"], "answer": "Sungai Amazon" },
+      { "question": "Apa nama pulau terbesar di Indonesia?", "options": ["Jawa", "Sumatra", "Kalimantan", "Sulawesi"], "answer": "Kalimantan" },
+      { "question": "Apa nama ibu kota Mesir?", "options": ["Alexandria", "Kairo", "Giza", "Luxor"], "answer": "Kairo" },
+      { "question": "Apa yang dimaksud dengan delta sungai?", "options": ["Air terjun", "Muara sungai", "Danau", "Gurun"], "answer": "Muara sungai" },
+      { "question": "Apa nama terusan yang menghubungkan Samudra Atlantik dan Pasifik?", "options": ["Terusan Suez", "Terusan Panama", "Terusan Kiel", "Terusan Corinth"], "answer": "Terusan Panama" }
+    ],
+    "level4": [
+      { "question": "Apa nama ibu kota Mesir?", "options": ["Alexandria", "Kairo", "Giza", "Luxor"], "answer": "Kairo" },
+      { "question": "Siapa penulis buku 'Harry Potter'?", "options": ["Stephen King", "J.R.R. Tolkien", "J.K. Rowling", "George R.R. Martin"], "answer": "J.K. Rowling" },
+      { "question": "Apa nama planet terpanas di tata surya?", "options": ["Merkurius", "Mars", "Venus", "Jupiter"], "answer": "Venus" },
+      { "question": "Berapa kecepatan cahaya?", "options": ["300.000 km/s", "150.000 km/s", "400.000 km/s", "500.000 km/s"], "answer": "300.000 km/s" },
+      { "question": "Apa nama mata uang Jepang?", "options": ["Yen", "Won", "Baht", "Rupiah"], "answer": "Yen" },
+      { "question": "Siapa yang menciptakan telepon?", "options": ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla", "Wright Bersaudara"], "answer": "Alexander Graham Bell" }
+    ],
+    "level5": [
+      { "question": "Negara apa yang terkenal dengan piramida-nya?", "options": ["Yunani", "Mesir", "Roma", "India"], "answer": "Mesir" },
+      { "question": "Apa nama ibu kota China?", "options": ["Shanghai", "Beijing", "Hong Kong", "Guangzhou"], "answer": "Beijing" },
+      { "question": "Berapa jumlah kaki pada laba-laba?", "options": ["6", "8", "10", "12"], "answer": "8" },
+      { "question": "Berapa jumlah benang pada sarang laba-laba?", "options": ["6", "8", "10", "12"], "answer": "8" },
+      { "question": "Apa nama ikan terbesar di dunia?", "options": ["Paus Biru", "Paus Orca", "Paus Hiu", "Hiu Putih"], "answer": "Paus Hiu" },
+      { "question": "Apa nama benua terkecil di dunia?", "options": ["Asia", "Eropa", "Australia", "Amerika Selatan"], "answer": "Australia" }
+    ],
+    "level6": [
+      { "question": "Apa ibu kota India?", "options": ["Mumbai", "Kalkuta", "New Delhi", "Chennai"], "answer": "New Delhi" },
+      { "question": "Planet apa yang memiliki cincin paling menonjol?", "options": ["Jupiter", "Uranus", "Neptunus", "Saturnus"], "answer": "Saturnus" },
+      { "question": "Apa nama ibu kota Brazil?", "options": ["Rio de Janeiro", "Sao Paulo", "Brasilia", "Buenos Aires"], "answer": "Brasilia" },
+      { "question": "Siapa yang menulis 'Hamlet'?", "options": ["J.K. Rowling", "William Shakespeare", "Charles Dickens", "Leo Tolstoy"], "answer": "William Shakespeare" },
+      { "question": "Apa nama molekul air?", "options": ["CO2", "O2", "H2O", "N2"], "answer": "H2O" },
+      { "question": "Apa nama hewan nasional Australia?", "options": ["Kangguru", "Koala", "Wombat", "Platypus"], "answer": "Kangguru" }
+    ],
+    "level7": [
+      { "question": "Apa mata uang Amerika Serikat?", "options": ["Euro", "Pound", "Dolar", "Yuan"], "answer": "Dolar" },
+      { "question": "Siapa penemu listrik?", "options": ["Thomas Edison", "Nikola Tesla", "Benjamin Franklin", "Albert Einstein"], "answer": "Benjamin Franklin" },
+      { "question": "Berapa jumlah provinsi di Indonesia?", "options": ["30", "34", "38", "32"], "answer": "38" },
+      { "question": "Apa nama planet terdingin di tata surya?", "options": ["Neptunus", "Uranus", "Saturnus", "Pluto"], "answer": "Uranus" },
+      { "question": "Apa nama sungai terpanjang di dunia?", "options": ["Sungai Nil", "Sungai Amazon", "Sungai Mississippi", "Sungai Yangtze"], "answer": "Sungai Nil" },
+      { "question": "Siapa pencipta Facebook?", "options": ["Bill Gates", "Steve Jobs", "Mark Zuckerberg", "Jack Dorsey"], "answer": "Mark Zuckerberg" }
+    ],
+    "level8": [
+      { "question": "Apa nama ibu kota Afrika Selatan?", "options": ["Cape Town", "Johannesburg", "Pretoria", "Durban"], "answer": "Pretoria" },
+      { "question": "Apa nama unsur kimia dengan simbol 'Fe'?", "options": ["Emas", "Perak", "Besi", "Tembaga"], "answer": "Besi" },
+      { "question": "Apa nama samudera terkecil?", "options": ["Pasifik", "Atlantik", "Hindia", "Arktik"], "answer": "Arktik" },
+      { "question": "Siapa nama pahlawan super Batman?", "options": ["Clark Kent", "Peter Parker", "Bruce Wayne", "Tony Stark"], "answer": "Bruce Wayne" },
+      { "question": "Apa nama ibu kota Italia?", "options": ["Venice", "Milan", "Roma", "Florence"], "answer": "Roma" },
+      { "question": "Siapa yang menemukan benua Amerika?", "options": ["Ferdinand Magellan", "Christopher Columbus", "Marco Polo", "Vasco da Gama"], "answer": "Christopher Columbus" }
+    ],
+    "level9": [
+      { "question": "Berapa jumlah tulang di tubuh manusia dewasa?", "options": ["206", "210", "212", "208"], "answer": "206" },
+      { "question": "Apa nama mata uang Korea Selatan?", "options": ["Yen", "Won", "Rupiah", "Dolar"], "answer": "Won" },
+      { "question": "Apa ibu kota Jerman?", "options": ["Munich", "Hamburg", "Berlin", "Frankfurt"], "answer": "Berlin" },
+      { "question": "Apa nama gas yang paling banyak di atmosfer Bumi?", "options": ["Oksigen", "Nitrogen", "Karbon dioksida", "Argon"], "answer": "Nitrogen" },
+      { "question": "Siapa nama presiden pertama Amerika Serikat?", "options": ["Abraham Lincoln", "George Washington", "Thomas Jefferson", "Theodore Roosevelt"], "answer": "George Washington" },
+      { "question": "Apa yang dipelajari dalam Geologi?", "options": ["Bintang", "Laut", "Tanah", "Batu dan Bumi"], "answer": "Batu dan Bumi" }
+    ],
+    "level10": [
+      { "question": "Apa nama hewan yang dikenal sebagai 'Raja Hutan'?", "options": ["Harimau", "Singa", "Beruang", "Serigala"], "answer": "Singa" },
+      { "question": "Berapa lama waktu yang dibutuhkan Bumi untuk mengelilingi Matahari?", "options": ["24 jam", "7 hari", "28 hari", "365 hari"], "answer": "365 hari" },
+      { "question": "Apa nama bahan bakar utama Matahari?", "options": ["Oksigen", "Hidrogen", "Helium", "Karbon"], "answer": "Hidrogen" },
+      { "question": "Siapa yang menciptakan teori relativitas?", "options": ["Isaac Newton", "Albert Einstein", "Nikola Tesla", "Stephen Hawking"], "answer": "Albert Einstein" },
+      { "question": "Apa nama bahasa resmi di Brazil?", "options": ["Spanyol", "Inggris", "Portugis", "Perancis"], "answer": "Portugis" },
+      { "question": "Apa nama benda langit yang jatuh ke Bumi?", "options": ["Komet", "Asteroid", "Meteor", "Bulan"], "answer": "Meteor" }
+    ],
+    "level11": [
+      { "question": "Siapa yang menemukan Amerika?", "options": ["Christopher Columbus", "Vasco da Gama", "Marco Polo", "Ferdinand Magellan"], "answer": "Christopher Columbus" },
+      { "question": "Apa nama ibu kota Thailand?", "options": ["Phuket", "Chiang Mai", "Bangkok", "Pattaya"], "answer": "Bangkok" },
+      { "question": "Apa nama gas yang kita hirup untuk bertahan hidup?", "options": ["Nitrogen", "Oksigen", "Helium", "Karbon dioksida"], "answer": "Oksigen" },
+      { "question": "Apa nama mata uang India?", "options": ["Rupee", "Ringgit", "Yuan", "Yen"], "answer": "Rupee" },
+      { "question": "Apa nama hewan terbesar di darat?", "options": ["Gajah", "Jerapah", "Badak", "Kuda Nil"], "answer": "Gajah" },
+      { "question": "Apa nama organ terbesar di tubuh manusia?", "options": ["Jantung", "Otak", "Kulit", "Paru-paru"], "answer": "Kulit" }
+    ],
+    "level12": [
+      { "question": "Apa nama ibu kota Vietnam?", "options": ["Hanoi", "Ho Chi Minh City", "Da Nang", "Hue"], "answer": "Hanoi" },
+      { "question": "Berapa total warna dalam RGB?", "options": ["2", "3", "4", "5"], "answer": "3" },
+      { "question": "Siapa nama penemu telepon?", "options": ["Thomas Edison", "Alexander Graham Bell", "Graham Bell", "Nikola Tesla"], "answer": "Alexander Graham Bell" },
+      { "question": "Apa nama sungai terpanjang di Amerika Selatan?", "options": ["Sungai Nil", "Sungai Amazon", "Sungai Mississippi", "Sungai Colorado"], "answer": "Sungai Amazon" },
+      { "question": "Apa nama hewan yang bisa mengubah warna kulitnya?", "options": ["Kura-kura", "Ular", "Bunglon", "Buaya"], "answer": "Bunglon" },
+      { "question": "Apa nama bahan bakar utama Matahari?", "options": ["Oksigen", "Hidrogen", "Helium", "Karbon"], "answer": "Hidrogen" }
+    ],
+    "level13": [
+      { "question": "Apa nama ibu kota Swedia?", "options": ["Oslo", "Copenhagen", "Helsinki", "Stockholm"], "answer": "Stockholm" },
+      { "question": "Berapa banyak negara yang ada di benua Eropa?", "options": ["40", "44", "50", "55"], "answer": "44" },
+      { "question": "Apa nama mata uang Inggris?", "options": ["Euro", "Pound Sterling", "Dolar", "Franc"], "answer": "Pound Sterling" },
+      { "question": "Apa nama planet kelima dari Matahari?", "options": ["Jupiter", "Mars", "Saturnus", "Uranus"], "answer": "Jupiter" },
+      { "question": "Siapa yang menulis novel 'Don Quixote'?", "options": ["Miguel de Cervantes", "William Shakespeare", "Jane Austen", "Leo Tolstoy"], "answer": "Miguel de Cervantes" },
+      { "question": "Apa nama struktur tulang yang melindungi otak?", "options": ["Tengkorak", "Tulang rusuk", "Tulang belakang", "Tulang paha"], "answer": "Tengkorak" }
+    ],
+    "level14": [
+      { "question": "Apa nama ibu kota Swiss?", "options": ["Zurich", "Geneva", "Bern", "Lausanne"], "answer": "Bern" },
+      { "question": "Apa nama danau terbesar di dunia?", "options": ["Danau Superior", "Laut Kaspia", "Danau Baikal", "Danau Victoria"], "answer": "Laut Kaspia" },
+      { "question": "Siapa yang menciptakan lampu pijar?", "options": ["Thomas Edison", "Nikola Tesla", "Benjamin Franklin", "Isaac Newton"], "answer": "Thomas Edison" },
+      { "question": "Apa nama benua dengan gurun terbesar?", "options": ["Asia", "Afrika", "Australia", "Amerika Selatan"], "answer": "Afrika" },
+      { "question": "Siapa penemu telepon?", "options": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Wright Bersaudara"], "answer": "Alexander Graham Bell" },
+      { "question": "Berapa jumlah planet dalam tata surya kita?", "options": ["8", "9", "10", "7"], "answer": "8" }
+    ],
+    "level15": [
+      { "question": "Apa nama ibu kota Swiss?", "options": ["Zurich", "Geneva", "Bern", "Lausanne"], "answer": "Bern" },
+      { "question": "Apa nama danau terbesar di dunia?", "options": ["Danau Superior", "Laut Kaspia", "Danau Baikal", "Danau Victoria"], "answer": "Laut Kaspia" },
+      { "question": "Siapa yang menciptakan lampu pijar?", "options": ["Thomas Edison", "Nikola Tesla", "Benjamin Franklin", "Isaac Newton"], "answer": "Thomas Edison" },
+      { "question": "Apa nama benua dengan gurun terbesar?", "options": ["Asia", "Afrika", "Australia", "Amerika Selatan"], "answer": "Afrika" },
+      { "question": "Siapa penemu telepon?", "options": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Wright Bersaudara"], "answer": "Alexander Graham Bell" },
+      { "question": "Berapa jumlah planet dalam tata surya kita?", "options": ["8", "9", "10", "7"], "answer": "8" }
+    ]
+  },
   "Sains dan Teknologi": {
     "level1": [
       { "question": "Apa unsur kimia dengan simbol 'O'?", "options": ["Emas", "Oksigen", "Hidrogen", "Besi"], "answer": "Oksigen" },
@@ -756,9 +1000,9 @@
       { "question": "Apa nama olahraga yang menggunakan pemukul dan bola di lapangan rumput?", "options": ["Bisbol", "Kriket", "Hoki", "Golf"], "answer": "Golf" }
     ],
     "level4": [
+      { "question": "Berapa jumlah set dalam pertandingan tenis tunggal?", "options": ["1", "3", "5", "7"], "answer": "3" },
+      { "question": "Apa nama perlombaan sepeda paling terkenal di dunia?", "options": ["Giro d'Italia", "Vuelta a España", "Tour de France", "Tour de Suisse"], "answer": "Tour de France" },
       { "question": "Apa nama olahraga yang menggunakan pemukul dan bola di lapangan rumput?", "options": ["Bisbol", "Kriket", "Hoki", "Golf"], "answer": "Golf" },
-      { "question": "Apa nama olahraga yang dimainkan di atas es dengan sepatu roda?", "options": ["Hoki Es", "Skateboard", "Skating", "Seluncur"], "answer": "Hoki Es" },
-      { "question": "Apa nama olahraga bela diri dari Jepang?", "options": ["Karate", "Taekwondo", "Pencak Silat", "Kung Fu"], "answer": "Karate" },
       { "question": "Siapa yang dianggap sebagai pemain golf terbaik sepanjang masa?", "options": ["Tiger Woods", "Jack Nicklaus", "Arnold Palmer", "Rory McIlroy"], "answer": "Jack Nicklaus" },
       { "question": "Berapa jumlah set dalam pertandingan tenis tunggal?", "options": ["1", "3", "5", "7"], "answer": "3" },
       { "question": "Apa nama perlombaan sepeda paling terkenal di dunia?", "options": ["Giro d'Italia", "Vuelta a España", "Tour de France", "Tour de Suisse"], "answer": "Tour de France" }

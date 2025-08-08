@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const timerBar = document.getElementById('timer-bar');
     const optionsContainer = document.getElementById('options-container');
     const resultText = document.getElementById('result-text');
-
+    const nextButton = document.getElementById('next-button');
+    
     // === STATE PERMAINAN ===
     let questions = {};
     let unlockedLevels = {};
@@ -64,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedProgress) {
             unlockedLevels = JSON.parse(savedProgress);
         } else {
-            // Inisialisasi awal, hanya level 1 dari setiap kategori yang terbuka
             Object.keys(questions).forEach(category => {
                 unlockedLevels[category] = 1;
             });
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function renderLevelMap() {
         levelMap.innerHTML = '';
-        const totalLevels = Object.keys(questions[currentCategory]).length;
+        const totalLevels = questions[currentCategory] ? Object.keys(questions[currentCategory]).length : 0;
         const currentUnlockedLevel = unlockedLevels[currentCategory] || 1;
         for (let i = 1; i <= totalLevels; i++) {
             const icon = document.createElement('button');
@@ -138,7 +138,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function startGame(levelNumber) {
         currentLevel = levelNumber;
         levelTitle.textContent = `Level ${currentLevel}`;
-        levelQuestions = [...questions[currentCategory][`level${currentLevel}`]];
+        if (questions[currentCategory] && questions[currentCategory][`level${currentLevel}`]) {
+            levelQuestions = [...questions[currentCategory][`level${currentLevel}`]];
+        } else {
+            console.error(`Gagal memuat level ${currentLevel} untuk kategori ${currentCategory}. Kembali ke peta level.`);
+            showLevelSelectScreen(currentCategory);
+            return;
+        }
+
         completedBoxes = Array(6).fill(false);
         lastDiceRoll = 0;
         infoText.textContent = 'Kocok dadu untuk memulai!';
@@ -213,6 +220,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayQuestionModal() {
+        if (!currentQuestion || !currentQuestion.options) {
+            console.error("Kesalahan: Data pertanyaan atau opsi tidak ditemukan.");
+            closeModal();
+            return;
+        }
+
         questionText.textContent = currentQuestion.question;
         optionsContainer.innerHTML = '';
         currentQuestion.options.forEach(option => {
@@ -223,6 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             optionsContainer.appendChild(button);
         });
         resultText.textContent = '';
+        nextButton.style.display = 'none';
         questionModal.style.display = 'flex';
         setTimeout(() => questionModal.classList.add('visible'), 10);
         startTimer();
@@ -269,17 +283,41 @@ document.addEventListener('DOMContentLoaded', () => {
             resultText.textContent = 'Benar! 🎉';
             resultText.className = 'correct';
             completedBoxes[currentQuestion.boxId - 1] = true;
-            if (completedBoxes.every(status => status === true)) {
-                setTimeout(levelComplete, 1500);
+
+            const isLevelComplete = completedBoxes.every(status => status === true);
+            const totalLevelsInCurrentCategory = questions[currentCategory] ? Object.keys(questions[currentCategory]).length : 0;
+            
+            // PERBAIKAN: Pisahkan logika pengecekan selesai dari penanganan tombol
+            if (isLevelComplete) {
+                if (currentLevel < totalLevelsInCurrentCategory) {
+                    nextButton.textContent = "Lanjutkan Level";
+                    // Hapus event listener lama sebelum menambahkan yang baru
+                    nextButton.removeEventListener('click', nextLevel);
+                    nextButton.addEventListener('click', nextLevel);
+                } else {
+                    nextButton.textContent = "Selesai";
+                    // Hapus event listener lama sebelum menambahkan yang baru
+                    nextButton.removeEventListener('click', levelComplete);
+                    nextButton.addEventListener('click', levelComplete);
+                }
             } else {
-                setTimeout(closeModal, 2000);
+                nextButton.textContent = "Lanjutkan";
+                // Hapus event listener lama sebelum menambahkan yang baru
+                nextButton.removeEventListener('click', closeModal);
+                nextButton.addEventListener('click', closeModal);
             }
+            
+            nextButton.style.display = 'block';
+
         } else {
             incorrectSound.currentTime = 0;
             incorrectSound.play();
             resultText.textContent = selectedOption === null ? 'Waktu Habis!' : 'Jawaban Salah!';
             resultText.className = 'incorrect';
-            setTimeout(closeModal, 2000);
+            nextButton.textContent = "Coba Lagi";
+            nextButton.style.display = 'block';
+            nextButton.removeEventListener('click', closeModal);
+            nextButton.addEventListener('click', closeModal);
         }
     }
     
@@ -296,27 +334,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
-    function levelComplete() {
-        levelUpSound.currentTime = 0;
-        levelUpSound.play();
-        infoText.textContent = `Selamat! Anda telah menyelesaikan Level ${currentLevel}!`;
-        rollButton.disabled = true;
-        
-        const totalLevelsInCurrentCategory = Object.keys(questions[currentCategory]).length;
+    function nextLevel() {
+        const totalLevelsInCurrentCategory = questions[currentCategory] ? Object.keys(questions[currentCategory]).length : 0;
         if (currentLevel < totalLevelsInCurrentCategory) {
             if (unlockedLevels[currentCategory] < currentLevel + 1) {
                 unlockedLevels[currentCategory] = currentLevel + 1;
                 saveProgress();
             }
-            setTimeout(() => {
-                startGame(currentLevel + 1);
-            }, 3000);
-        } else {
-            infoText.textContent = `Anda telah menyelesaikan semua level di kategori ini! 🎉`;
-            setTimeout(() => {
-                showCategorySelectScreen();
-            }, 3000);
+            closeModal(); // PERBAIKAN: Tutup modal sebelum memulai level baru
+            startGame(currentLevel + 1);
         }
+    }
+
+    function levelComplete() {
+        levelUpSound.currentTime = 0;
+        levelUpSound.play();
+        infoText.textContent = `Selamat! Anda telah menyelesaikan semua level di kategori ini! 🎉`;
+        rollButton.disabled = true;
+        closeModal(); // PERBAIKAN: Tutup modal sebelum kembali ke halaman kategori
+        setTimeout(() => {
+            showCategorySelectScreen();
+        }, 3000);
     }
     
     startButton.addEventListener('click', showCategorySelectScreen);

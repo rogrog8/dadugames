@@ -349,23 +349,23 @@ h1 { color: var(--primary-color); font-weight: 700; }
     }
 
     #level-select-title, #level-title {
-        font-size: 1.2em; /* Ukuran font lebih kecil */
+        font-size: 1.2em;
         font-weight: 600;
     }
 
     .level-icon {
         width: 60px;
         height: 60px;
-        font-size: 1.5em; /* Ukuran font lebih kecil */
+        font-size: 1.5em;
     }
     
     #mystery-boxes-container {
-        grid-template-columns: repeat(2, 1fr); /* Tampilan 2 kolom di mobile */
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .mystery-box {
         height: 80px;
-        font-size: 2em; /* Ukuran font lebih kecil */
+        font-size: 2em;
     }
 
     .dice-area #dice-img {
@@ -383,7 +383,7 @@ h1 { color: var(--primary-color); font-weight: 700; }
     }
 
     .options-container {
-        grid-template-columns: 1fr; /* Tampilan 1 kolom untuk tombol opsi */
+        grid-template-columns: 1fr;
         gap: 10px;
     }
 
