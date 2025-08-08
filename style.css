@@ -587,7 +587,6 @@ h1 { color: var(--primary-color); font-weight: 700; }
         min-height: 20px;
     }
 
-    /* Penyesuaian Modal di Mobile */
     .modal-content {
         padding: 25px 20px;
         width: calc(100% - 30px);
@@ -605,5 +604,19 @@ h1 { color: var(--primary-color); font-weight: 700; }
     .option-button {
         font-size: 0.9rem;
         padding: 14px 10px;
+    }
+
+    /* === PERBAIKAN FONT BANTUAN 50:50 === */
+    .help-button {
+        width: 40px; /* Perkecil tombol bantuan */
+        height: 40px;
+    }
+
+    #help-fifty-fifty {
+        font-size: 1rem; /* Perkecil font khusus 50:50 */
+    }
+
+    #help-show-answer {
+        font-size: 1.2rem; /* Sesuaikan ukuran ikon lampu */
     }
 }
