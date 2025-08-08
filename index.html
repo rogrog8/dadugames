@@ -12,9 +12,12 @@
 
     <main class="container">
         <section id="start-screen">
-            <h1 id="main-title">Petualangan Kuis Dadu 🎲</h1>
-            <p class="subtitle">Selesaikan setiap level untuk membuka level berikutnya!</p>
-            <button id="start-button" class="primary-button">MAINKAN</button>
+        <h1 id="main-title">Petualangan Kuis Dadu 🎲</h1>
+        <p class="subtitle">Selesaikan setiap level untuk membuka level berikutnya!</p>
+    
+        <button id="start-button" class="primary-button">MAINKAN</button>
+    
+        <button id="how-to-play-button" class="secondary-button">Cara Bermain</button>
         </section>
 
         <section id="category-select-screen" style="display: none;" aria-labelledby="category-title">
@@ -57,6 +60,21 @@
             <div id="options-container" class="options-container"></div>
             <p id="result-text" role="status" aria-live="polite"></p>
             <button id="next-button" class="primary-button" style="display: none; margin-top: 20px;">Lanjutkan</button>
+        </div>
+    </div>
+
+    <div id="how-to-play-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal-button" class="close-button">&times;</button>
+            <h2>Cara Bermain</h2>
+            <ul class="instructions-list">
+                <li>Pilih <b>kategori</b> dan <b>level</b> yang ingin kamu mainkan.</li>
+                <li>Di papan permainan, <b>kocok dadu</b> untuk mendapatkan angka.</li>
+                <li><b>Klik kotak misteri</b> yang nomornya sesuai dengan hasil kocokan dadu.</li>
+                <li>Jawab pertanyaan yang muncul sebelum <b>waktu habis</b>.</li>
+                <li>Jika jawaban benar, kotak akan terbuka. Jika salah, kamu harus mengocok dadu lagi.</li>
+                <li>Buka semua <b>6 kotak misteri</b> untuk menyelesaikan level dan lanjut ke level berikutnya!</li>
+            </ul>
         </div>
     </div>
 
